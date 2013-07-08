@@ -9,11 +9,13 @@ CdlUI is a library  that provide some basic graphic components
    - MultiStateButton
    - Fader
    - Knobs
-and 3 layout 
+   
+3 layouts : 
    - Free Layout
    - GridLayout
    - FlowLayout with scrollbar
-and a 
+
+And
    - Palette tool.
 
 The goal of this lib is to provide a very simple easy and light way to add many controls in one single view
