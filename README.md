@@ -22,7 +22,7 @@ The goal of this lib is to provide a very simple easy and light way to add many 
 So, to make this lib as easy as possible for developpers,  there is 
   - No XML
   - No bitmaps
-  - Automatic scalability with resolution of the device 
+  - Automatic scalable with resolution of the device 
   - Default values 
   - Default behaviriuos 
-  - Callbacks 
+  - Callbacks on events
