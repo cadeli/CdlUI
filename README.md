@@ -19,4 +19,10 @@ And
    - Palette tool.
 
 The goal of this lib is to provide a very simple easy and light way to add many controls in one single view
-So, there is no XML, default values and default behaviriuos to make this lib as easy as possible 
+So, to make this lib as easy as possible for developpers,  there is 
+  - No XML
+  - No bitmaps
+  - Automatic scalability with resolution of the device 
+  - Default values 
+  - Default behaviriuos 
+  - Callbacks 
