@@ -26,3 +26,7 @@ So, to make this lib as easy as possible for developpers,  there is
   - Default values 
   - Default behaviriuos 
   - Callbacks on events
+  
+
+  ![ScreenShot](https://raw.github.com/{username}/{repository}/{branch}/{path})
+
