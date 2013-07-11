@@ -76,7 +76,7 @@ public class SimpleGridDemoActivity extends Activity {
 		//in this sample, we use same listeners for all buttons
 		mCdlPushButton.setOnTapUpCdlListener(onTapUpCdlListener);
 		mCdlPushButton.setOnLongPressCdlListener(onLongPressCdlListener);
-		// add to the vieq
+		// add to the view
 		mCdlView.addCdlBaseButton(mCdlPushButton);		
 	}
 	
