@@ -64,7 +64,7 @@ public class SimpleGridDemoActivity extends Activity {
 		mCdlView.setGrid_nbCols(3); // define nb buttons per row
 		mCdlView.setCdlLayout(CdlView.CDL_LAYOUT_GRID);
 		
-		// Create push buttons
+		// Create push buttons 
 		for (int i=0; i < 16; i++) {
 			createCdlPushButton(i, mCdlView,onTapUpCdlListener, onLongPressCdlListener );
 		}
