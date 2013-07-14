@@ -76,7 +76,7 @@ public class SimpleGridDemoActivity extends Activity {
 		mCdlView.setCdlLayout(CdlView.CDL_LAYOUT_GRID);
 		
 		// Create push buttons 
-		for (int i=0; i <= 16; i++) {
+		for (int i=0; i <=  16; i++) {
 			createCdlPushButton(i, mCdlView,onTapUpCdlListener, onLongPressCdlListener );
 		}
 	}

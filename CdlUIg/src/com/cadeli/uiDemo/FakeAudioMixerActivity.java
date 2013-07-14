@@ -61,7 +61,7 @@ public class FakeAudioMixerActivity extends Activity {
 		// create fader button
 		for (int i = 0; i < 6; i++) {
 			CdlFader mCdlButton = new CdlFader("fader " + (i + 1));
-			mCdlButton.setGridSize(1, 4);
+			mCdlButton.setGridSize(1, 4 );
 			mCdlView.addCdlBaseButton(mCdlButton);
 			mCdlButton.setBackgroundColor(4);
 		}		
