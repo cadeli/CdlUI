@@ -48,6 +48,13 @@ With 40 lines of code
 
   ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr1.png?raw=true)
 
+A row o on/off buttons with scrollbar
+----
+
+With 40 lines of code
+
+  ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr2.png?raw=true)
+
 
 
 Sample code at 
