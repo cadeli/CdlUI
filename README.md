@@ -28,7 +28,7 @@ So, to make this lib as easy as possible for developpers,  there is
   - Callbacks on events
   
 
-  ![ScreenShot](https://github.com/cadeli/CdlUI/tree/master/CdlUIg/screenshots/scr1.png)
+  ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr1.png?raw=true)
 
 
 
