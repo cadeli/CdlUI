@@ -20,6 +20,8 @@ package com.cadeli.uiDemo;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -32,6 +34,8 @@ import com.cadeli.ui.interfaces.OnLongPressCdlListener;
 import com.cadeli.ui.interfaces.OnTapUpCdlListener;
 
 public class SimpleGridDemoActivity extends Activity {
+	
+	Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,9 @@ public class SimpleGridDemoActivity extends Activity {
 			@Override
 			public void tapUp(CdlBaseButton cdlBaseButton, MotionEvent e) {
 				Toast.makeText(getApplicationContext(), "You clicked the button" + cdlBaseButton.getLabel(), Toast.LENGTH_SHORT).show();
+				if (cdlBaseButton.getLabel().contains("3")) {
+					((Activity)context).startActivityForResult(new Intent(context, SimpleRowOfVariousButtons.class), 0);
+				}
 			}
 		};
 
@@ -60,6 +67,7 @@ public class SimpleGridDemoActivity extends Activity {
 
 		// Use View and init
 		CdlView mCdlView = (CdlView) findViewById(R.id.cdlView1);
+		context = mCdlView.getContext();
 		mCdlView.setPadding(4);
 		mCdlView.setGrid_nbCols(3); // define nb buttons per row
 		mCdlView.setCdlLayout(CdlView.CDL_LAYOUT_GRID);
