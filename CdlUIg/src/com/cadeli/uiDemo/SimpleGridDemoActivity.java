@@ -53,7 +53,10 @@ public class SimpleGridDemoActivity extends Activity {
 			public void tapUp(CdlBaseButton cdlBaseButton, MotionEvent e) {
 				Toast.makeText(getApplicationContext(), "You clicked the button" + cdlBaseButton.getLabel(), Toast.LENGTH_SHORT).show();
 				if (cdlBaseButton.getLabel().contains("3")) {
-					((Activity)context).startActivityForResult(new Intent(context, SimpleRowOfVariousButtons.class), 0);
+					((Activity)context).startActivityForResult(new Intent(context, SimpleRowOfVariousButtonsActivity.class), 0);
+				}
+				if (cdlBaseButton.getLabel().contains("4")) {
+					((Activity)context).startActivityForResult(new Intent(context, FakeAudioMixerActivity.class), 0);
 				}
 			}
 		};
@@ -73,7 +76,7 @@ public class SimpleGridDemoActivity extends Activity {
 		mCdlView.setCdlLayout(CdlView.CDL_LAYOUT_GRID);
 		
 		// Create push buttons 
-		for (int i=0; i < 16; i++) {
+		for (int i=0; i <= 16; i++) {
 			createCdlPushButton(i, mCdlView,onTapUpCdlListener, onLongPressCdlListener );
 		}
 	}

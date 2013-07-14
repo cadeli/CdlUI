@@ -14,7 +14,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-*/
+ */
 
 package com.cadeli.ui;
 
@@ -73,7 +73,6 @@ public class CdlView extends View implements OnGestureListener {
 
 	private int sizeInWCase;
 
-
 	public CdlView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -104,41 +103,37 @@ public class CdlView extends View implements OnGestureListener {
 			}
 		}
 		if (cdlLayout == CDL_LAYOUT_FLOW) {
-//			if (startBtnId > cdlBaseButtons.size() - grid_nbCols) {
-//				startBtnId = cdlBaseButtons.size() - grid_nbCols;
-//			}
-//
-			 sizeInWCase = computeSizeInWCase();
+			sizeInWCase = computeSizeInWCase();
 			int jPosBtn = 0;
 			for (int idBtn = 0; idBtn < cdlBaseButtons.size(); idBtn++) {
 				if ((jPosBtn * w_btn - startXScroll) < w) {
 					drawBtn(idBtn, jPosBtn, canvas);
 				}
-				jPosBtn+=cdlBaseButtons.get(idBtn).getGrid_width();
+				jPosBtn += cdlBaseButtons.get(idBtn).getGrid_width();
 			}
 			drawScrollBar(canvas, sizeInWCase);
 		}
 	}
 
-	private int  computeSizeInWCase() {
+	private int computeSizeInWCase() {
 		int jPosBtn = 0;
 		for (int idBtn = 0; idBtn < cdlBaseButtons.size(); idBtn++) {
-			jPosBtn+=cdlBaseButtons.get(idBtn).getGrid_width();
+			jPosBtn += cdlBaseButtons.get(idBtn).getGrid_width();
 		}
-		return jPosBtn*w_btn;
+		return jPosBtn * w_btn;
 	}
 
-	private void drawBtn(int idBtn,int jPosBtn,  Canvas canvas) {
+	private void drawBtn(int idBtn, int jPosBtn, Canvas canvas) {
 		if (idBtn < 0 || idBtn >= cdlBaseButtons.size())
 			return;
-		CdlUtils.cdlLog(TAG, "drawBtn id="+ idBtn + " jPos="+ jPosBtn);
+		CdlUtils.cdlLog(TAG, "drawBtn id=" + idBtn + " jPos=" + jPosBtn);
 		CdlBaseButton cdlBaseButton = cdlBaseButtons.get(idBtn);
 		int sLeft = (int) (jPosBtn * w_btn - startXScroll);
 		cdlBaseButton.setSize(sLeft + padding, padding, w_btn * cdlBaseButton.getGrid_width() - padding, getHeight() - scrollBarHeight - padding);
 		cdlBaseButton.draw(canvas);
 	}
 
-	private void drawScrollBar(Canvas canvas,int sizeInWCase) {
+	private void drawScrollBar(Canvas canvas, int sizeInWCase) {
 		if (cdlBaseButtons.size() == 0)
 			return;
 		if (sizeInWCase < w)
@@ -148,8 +143,8 @@ public class CdlView extends View implements OnGestureListener {
 		int sRight = getRight() - padding;
 		urect.set(sLeft, getHeight() - scrollBarHeight, sRight, getHeight());
 		canvas.drawRect(urect, CdlPalette.getBlackPaint());
-		int lgr = (int)((w*w)/ sizeInWCase);
-		sLeft = (int) (startXScroll*w / sizeInWCase) + getLeft()+ padding;
+		int lgr = (int) ((w * w) / sizeInWCase);
+		sLeft = (int) (startXScroll * w / sizeInWCase) + getLeft() + padding;
 		sRight = sLeft + lgr - padding;
 		if (sRight > getRight() - padding) {
 			sRight = getRight() - padding;
@@ -183,8 +178,12 @@ public class CdlView extends View implements OnGestureListener {
 		if (grid_nbCols <= 0)
 			grid_nbCols = 1;
 		int nbRows = (nbBtn + 1) / grid_nbCols;
+		int realNbRow = nbRows;
 		int maxGHforRow = 1;
 		int h_btn = h / nbRows;
+		if (h % nbRows != 0) {
+			h_btn++;
+		}
 		int col = 0;
 		int row = 0;
 		for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
@@ -198,22 +197,47 @@ public class CdlView extends View implements OnGestureListener {
 				if (col >= grid_nbCols) {
 					col = 0;
 					row += maxGHforRow;
+					if (row  > realNbRow) {
+						realNbRow = row ;
+					}
 					maxGHforRow = 1;
+				}
+			}
+		}
+		if (realNbRow != nbRows) {
+			 maxGHforRow = 1;
+			h_btn = h / realNbRow;
+			if (h % nbRows != 0) {
+				h_btn++;
+			}
+			row=0;
+			for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
+				cdlBaseButton.setSize(w_btn * col, h_btn * row, w_btn * cdlBaseButton.grid_width, h_btn * cdlBaseButton.grid_height);
+				col += cdlBaseButton.grid_width;
+				if (maxGHforRow < cdlBaseButton.grid_height) {
+					maxGHforRow = cdlBaseButton.grid_height;
+				}
+				if (cdlLayout == CDL_LAYOUT_GRID) {
+					if (col >= grid_nbCols) {
+						col = 0;
+						row += maxGHforRow;
+						maxGHforRow = 1;
+					}
 				}
 			}
 		}
 	}
 
-	//just for flaw mode
+	// just for flaw mode
 	protected int getIdBtnFromX(float x) {
 		int id = 0;
-		for (CdlBaseButton cdlBaseButton: cdlBaseButtons) {
+		for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
 			if (cdlBaseButton.getLeft() < x && cdlBaseButton.getRight() > x) {
 				return id;
 			}
 			id++;
 		}
-		return  id;
+		return id;
 	}
 
 	public void addCdlBaseButton(CdlBaseButton cdlBaseButton) {
@@ -277,12 +301,12 @@ public class CdlView extends View implements OnGestureListener {
 			if (Math.abs((int) distanceX) > Math.abs((int) distanceY)) {
 				d = (int) distanceX;
 			}
-			startXScroll +=d;
+			startXScroll += d;
 			if (startXScroll < 0) {
 				startXScroll = 0;
 			}
-			if (startXScroll > (sizeInWCase-w) ) {
-				startXScroll = ( sizeInWCase-w);
+			if (startXScroll > (sizeInWCase - w)) {
+				startXScroll = (sizeInWCase - w);
 			}
 			invalidate();
 		}

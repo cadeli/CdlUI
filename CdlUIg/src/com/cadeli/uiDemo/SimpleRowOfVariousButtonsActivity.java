@@ -13,7 +13,7 @@ import com.cadeli.ui.buttons.CdlPushButton;
 import com.cadeli.ui.interfaces.OnLongPressCdlListener;
 import com.cadeli.ui.interfaces.OnTapUpCdlListener;
 
-public class SimpleRowOfVariousButtons extends Activity {
+public class SimpleRowOfVariousButtonsActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
