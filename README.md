@@ -48,10 +48,11 @@ With 40 lines of code
 
   ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr1.png?raw=true)
 
-A row o on/off buttons with scrollbar
+A row of on/off buttons with scrollbar
 ----
 
-With 40 lines of code
+With 40 lines of code. On/off buttons are two states buttons, the color of the button depends of the current state. 
+A toggle is associed to the tapUp.   
 
   ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr2.png?raw=true)
 
