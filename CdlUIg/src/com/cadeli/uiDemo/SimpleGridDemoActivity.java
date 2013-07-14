@@ -65,7 +65,7 @@ public class SimpleGridDemoActivity extends Activity {
 			}
 		};
 
-		// Use View and init
+		// Use View and  init
 		CdlView mCdlView = (CdlView) findViewById(R.id.cdlView1);
 		context = mCdlView.getContext();
 		mCdlView.setPadding(4);
