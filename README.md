@@ -26,7 +26,23 @@ So, to make this lib as easy as possible for developpers,  there is
   - Default values 
   - Default behaviriuos 
   - Callbacks on events
+
   
+This lib is used in app
+http://play.google.com/store/apps/details?id=com.cadeli.dmFree
+  
+
+  
+Sample code at 
+https://github.com/cadeli/CdlUI/tree/master/CdlUIg/src/com/cadeli/uiDemo
+
+
+
+Demo
+====
+
+A grid of push buttons
+----
 
   ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr1.png?raw=true)
 
@@ -35,6 +51,4 @@ So, to make this lib as easy as possible for developpers,  there is
 Sample code at 
 https://github.com/cadeli/CdlUI/tree/master/CdlUIg/src/com/cadeli/uiDemo
 
-This lib is used in app
-http://play.google.com/store/apps/details?id=com.cadeli.dmFree
 
