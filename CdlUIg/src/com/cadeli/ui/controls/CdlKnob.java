@@ -38,7 +38,7 @@ public class CdlKnob extends CdlBaseButton {
 	public void draw(Canvas canvas) {
 		if (isVisible()) {
 			super.draw(canvas);
-			int wl=8;
+			int wl=12;
 			int	dispVal = (int) (valueControler.getValue() * 100);
 			String text = "" + dispVal;
 			//XmlUtil.myLog(TAG," drawFader " + frameCursorRect);

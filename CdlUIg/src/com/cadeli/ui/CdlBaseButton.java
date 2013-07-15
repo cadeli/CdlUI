@@ -14,7 +14,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-*/
+ */
 
 package com.cadeli.ui;
 
@@ -66,6 +66,8 @@ public class CdlBaseButton {
 
 	protected float round_h;
 	protected float round_w;
+
+	private boolean isBorder=true;
 
 	/**
 	 * 
@@ -131,6 +133,9 @@ public class CdlBaseButton {
 				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
 			} else {
 				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(backgroundColor));
+			}
+			if (isBorder) {
+				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
 			}
 		}
 	}
@@ -405,6 +410,14 @@ public class CdlBaseButton {
 
 	public int getGrid_height() {
 		return grid_height;
+	}
+
+	public boolean isBorder() {
+		return isBorder;
+	}
+
+	public void setBorder(boolean isBorder) {
+		this.isBorder = isBorder;
 	}
 
 }

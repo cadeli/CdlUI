@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.cadeli.ui.CdlBaseButton;
 import com.cadeli.ui.CdlView;
 import com.cadeli.ui.R;
+import com.cadeli.ui.buttons.CdlNStatesButton;
 import com.cadeli.ui.buttons.CdlOnOffButton;
 import com.cadeli.ui.controls.CdlFader;
 import com.cadeli.ui.controls.CdlKnob;
@@ -56,7 +57,9 @@ public class FakeAudioMixerActivity extends Activity {
 		// create push button
 		for (int i = 0; i < 6; i++) {
 			CdlOnOffButton mCdlButton = new CdlOnOffButton("btn " + (i + 1));
+			mCdlButton.setBorder(false);
 			mCdlView.addCdlBaseButton(mCdlButton);
+			mCdlButton.setBackgroundColor(4);
 		}
 		// create fader button
 		for (int i = 0; i < 6; i++) {
@@ -68,12 +71,18 @@ public class FakeAudioMixerActivity extends Activity {
 		// create knob button
 		for (int i = 0; i < 12; i++) {
 			CdlKnob mCdlButton = new CdlKnob("knob " + (i + 1));
+			mCdlButton.getValueControler().setValues(0, 1, (float)(i*1)/12.0f);
 			mCdlView.addCdlBaseButton(mCdlButton);
 			mCdlButton.setBackgroundColor(5);
 		}
 		for (int i = 0; i < 6; i++) {
-			CdlOnOffButton mCdlButton = new CdlOnOffButton("-- " + (i + 1));
+			CdlNStatesButton mCdlButton = new CdlNStatesButton("aaa");
+			mCdlButton.addState("st1");
+			mCdlButton.addState("st2");
+			mCdlButton.addState("st3");
+			mCdlButton.addState("---");
 			mCdlView.addCdlBaseButton(mCdlButton);
+			mCdlButton.setBackgroundColor(5);
 		}
 
 	}

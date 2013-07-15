@@ -28,6 +28,7 @@ import android.graphics.Paint.Style;
 public class CdlPalette {
 	static List<Paint> colorList = new ArrayList<Paint>();
 	static Paint txtPaint;
+	static Paint borderPaint;
 	static Paint hilightPaint;
 	static Paint hilightPaintLarge;
 	static Paint blackPaint;
@@ -64,6 +65,7 @@ public class CdlPalette {
 		addColor(Color.rgb(149, 255, 149));
 		addColor(Color.rgb(228, 239, 135));
 		addColor(Color.rgb(239, 135, 228));
+		addColor(Color.rgb(0, 0, 0));
 	}
 
 	public static Paint getTxtPaint(int w, int h) {
@@ -79,6 +81,20 @@ public class CdlPalette {
 		}
 		txtPaint.setColor(txtPaintColor);
 		return txtPaint;
+	}
+	
+	public static Paint getBorderPaint() {
+		if (borderPaint == null) {
+			borderPaint = new Paint();
+			borderPaint.setAntiAlias(true);
+			borderPaint.setDither(true);
+			borderPaint.setAlpha(192);
+			borderPaint.setStyle(Style.STROKE);
+			borderPaint.setStrokeWidth(2);
+		}
+		
+		borderPaint.setColor(txtPaintColor);
+		return borderPaint;
 	}
 
 	public static Paint getFlashPaint() {
@@ -97,6 +113,7 @@ public class CdlPalette {
 			hilightPaint.setColor(hilightColor);
 			hilightPaint.setAntiAlias(true);
 			hilightPaint.setDither(true);
+			hilightPaint.setAlpha(127);
 		}
 		return hilightPaint;
 	}
@@ -138,4 +155,5 @@ public class CdlPalette {
 	public static void setHilightColor(int hilightColor) {
 		CdlPalette.hilightColor = hilightColor;
 	}
+
 }
