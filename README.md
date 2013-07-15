@@ -1,7 +1,7 @@
 CdlUI
 =====
 
-Simple and easy basic UI components
+Simple and easy basic UI components for android 
 
 CdlUI is a library  that provide some basic graphic components 
    - PushButton
