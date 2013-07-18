@@ -14,7 +14,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-*/
+ */
 
 package com.cadeli.ui.controls;
 
@@ -25,10 +25,9 @@ import android.view.MotionEvent;
 import com.cadeli.ui.CdlBaseButton;
 import com.cadeli.ui.CdlPalette;
 
-
 public class CdlKnob extends CdlBaseButton {
 	private CdlValue valueControler;
-	
+
 	public CdlKnob(String label) {
 		super();
 		setLabel(label);
@@ -38,21 +37,21 @@ public class CdlKnob extends CdlBaseButton {
 	public void draw(Canvas canvas) {
 		if (isVisible()) {
 			super.draw(canvas);
-			int wl=12;
-			int	dispVal = (int) (valueControler.getValue() * 100);
+			int wl = 12;
+			int dispVal = (int) (valueControler.getValue() * 100);
 			String text = "" + dispVal;
-			//XmlUtil.myLog(TAG," drawFader " + frameCursorRect);
+			// XmlUtil.myLog(TAG," drawFader " + frameCursorRect);
 			RectF oval2 = new RectF(rect.left + wl, rect.top + wl, rect.right - wl, rect.bottom - wl);
-			canvas.drawArc(oval2, -90f, 360f, false, CdlPalette.getBlackPaintLarge());
-			float alpha = getValueControler().computeAlphaFromVal(dispVal, 360, 0);
-			canvas.drawArc(oval2, -90f, alpha, false, CdlPalette.getHilightPaintLarge());
-			drawCenterText(canvas, text, CdlPalette.getTxtPaint(w,h));
+			canvas.drawArc(oval2, 100f, 340f, false, CdlPalette.getBlackPaintLarge());
+			float alpha = getValueControler().computeAlphaFromVal(dispVal, 340, 0);
+			canvas.drawArc(oval2, 100f, alpha, false, CdlPalette.getHilightPaintLarge());
+			drawCenterText(canvas, text, CdlPalette.getTxtPaint(w, h));
 		}
 	}
-	
+
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		super.scroll(e1, e2, distanceX, distanceY);
-		valueControler.setValueFromDistance(distanceY, rect.height());
+		valueControler.setValueFromDistance(distanceY, rect.height(),2);
 	}
 
 	public CdlValue getValueControler() {

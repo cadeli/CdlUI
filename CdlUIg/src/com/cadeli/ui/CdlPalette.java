@@ -124,6 +124,7 @@ public class CdlPalette {
 			hilightPaintLarge.setStyle(Style.STROKE);
 			hilightPaintLarge.setStrokeWidth(12);
 			hilightPaintLarge.setColor(hilightColor);
+			hilightPaintLarge.setAlpha(127);
 			hilightPaintLarge.setAntiAlias(true);
 			hilightPaintLarge.setDither(true);
 		}
@@ -143,7 +144,7 @@ public class CdlPalette {
 	public static Paint getBlackPaintLarge() {
 		if (blackPaintLarge == null) {
 			blackPaintLarge = new Paint();
-			blackPaintLarge.setColor(Color.BLACK);
+			blackPaintLarge.setColor(Color.DKGRAY);
 			blackPaintLarge.setStyle(Style.STROKE);
 			blackPaintLarge.setStrokeWidth(12);
 			blackPaintLarge.setAntiAlias(true);

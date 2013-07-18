@@ -54,8 +54,13 @@ public class CdlValue {
 
 	// fader scroll
 	public float setValueFromDistance(float distance, int deviceHeigth) {
+		return setValueFromDistance(distance, deviceHeigth,1);
+	}
+	
+	// fader scroll
+	public float setValueFromDistance(float distance, int deviceHeigth,float coef) {
 		float incr = 0;
-		incr = (float) ((float) (distance) / (float) deviceHeigth);
+		incr = (float) ((float) (distance) / (float) (deviceHeigth*coef));
 		float newVal = value + incr;
 		//CdlUtils.cdlLog(TAG, "setValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
 		setValue(newVal);
