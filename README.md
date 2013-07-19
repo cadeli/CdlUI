@@ -107,4 +107,11 @@ A sample of design by this UI. State/value of each controler is available.
 Sample code at 
 https://github.com/cadeli/CdlUI/tree/master/CdlUIg/src/com/cadeli/uiDemo
 
+LICENSE
+====
+Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+
 
