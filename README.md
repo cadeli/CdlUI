@@ -27,6 +27,45 @@ So, to make this lib as easy as possible for developpers,  there is
   - Default behaviriuos 
   - Callbacks on events
 
+
+How to use 
+===
+Layout XML file : 
+----
+
+First add  a view in your layout xml file, just as any standard view.
+Exemple in activity_simple_grid_demo.xml   
+  
+  ```xml
+  <com.cadeli.ui.CdlView
+          android:id="@+id/cdlView1"
+         android:layout_width="fill_parent"
+         android:layout_height="0dp"
+         android:layout_weight="3"
+         android:background="#000000" />
+   ```
+
+Java Activity file :
+---- 
+
+In your activity in the onCreate method just after the setContentView  
+      
+   ```java
+      protected void onCreate(Bundle savedInstanceState) {
+      		super.onCreate(savedInstanceState);
+      		setContentView(R.layout.activity_simple_grid_demo);
+      		// retrieve your view
+		CdlView mCdlView = (CdlView) findViewById(R.id.cdlView1);
+		//create a button
+		CdlPushButton mCdlPushButton = new CdlPushButton("push "+ (i+1));
+		// add the button to the view to the view
+		mCdlView.addCdlBaseButton(mCdlPushButton);		
+		//create another  button
+		CdlOnOffButton mCdlButton = new CdlOnOffButton("btn_" + (i + 1));
+		// add the button to the view
+		mCdlView.addCdlBaseButton(mCdlButton);
+	}
+   ```
   
 This lib is used in app
 http://play.google.com/store/apps/details?id=com.cadeli.dmFree
