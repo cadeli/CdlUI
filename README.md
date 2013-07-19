@@ -24,7 +24,7 @@ And
    - Palette tool.
 
 To make this lib as easy as possible for developers,  there is 
-  - No XML
+  - No XML ( except for one initial view this is all programmatically )
   - No bitmaps
   - Automatic scalable with resolution of the device 
   - Default values 
