@@ -28,6 +28,22 @@ So, to make this lib as easy as possible for developpers,  there is
   - Callbacks on events
 
 
+Installation
+===
+
+- Download the library git clone :
+        git://github.com/cadeli/CdlUI.git
+        
+- Import CdlUI project into Eclipse: 
+       File -> Import Existing Projects into Workspace -> Select root directory choose CdlUI folder and Finish.
+
+- Set CdlUI project as library into Eclipse : 
+       Right click on your Android Project, choose Properties -> Android -> Library -> select isLibrary
+
+- Add CdlUI as a reference to your project: 
+        Right click on your Android Project, choose Properties -> Android -> Library -> Add and select "CdlUI" project.
+
+
 How to use 
 ===
 Layout XML file : 
