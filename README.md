@@ -54,14 +54,19 @@ In your activity in the onCreate method just after the setContentView
       protected void onCreate(Bundle savedInstanceState) {
       		super.onCreate(savedInstanceState);
       		setContentView(R.layout.activity_simple_grid_demo);
+      		
       		// retrieve your view
 		CdlView mCdlView = (CdlView) findViewById(R.id.cdlView1);
+		
 		//create a button
 		CdlPushButton mCdlPushButton = new CdlPushButton("My label");
+		
 		// add the button to the view to the view
 		mCdlView.addCdlBaseButton(mCdlPushButton);		
+		
 		//create another  button
 		CdlOnOffButton mCdlButton = new CdlOnOffButton("My Button");
+		
 		// add the button to the view
 		mCdlView.addCdlBaseButton(mCdlButton);
 	}
