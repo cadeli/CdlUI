@@ -3,6 +3,11 @@ CdlUI
 
 Simple and easy basic UI components for android 
 
+~~~~
+The goal of this lib is to provide a very simple easy and light way to add many controls 
+in one single view as easy as possible for developers.
+~~~~
+
 CdlUI is a library  that provide some basic graphic components 
    - PushButton
    - OnOffButton
@@ -18,13 +23,13 @@ CdlUI is a library  that provide some basic graphic components
 And
    - Palette tool.
 
-The goal of this lib is to provide a very simple easy and light way to add many controls in one single view
-So, to make this lib as easy as possible for developpers,  there is 
+To make this lib as easy as possible for developers,  there is 
   - No XML
   - No bitmaps
   - Automatic scalable with resolution of the device 
   - Default values 
   - Default behaviriuos 
+  - Very easy layouts
   - Callbacks on events
 
 
