@@ -3,6 +3,11 @@ CdlUI
 
 Simple and easy basic UI components for android 
 
+~~~~
+The goal of this lib is to provide a very simple easy and light way to add many controls 
+in one single view as easy as possible for developers.
+~~~~
+
 CdlUI is a library  that provide some basic graphic components 
    - PushButton
    - OnOffButton
@@ -18,15 +23,75 @@ CdlUI is a library  that provide some basic graphic components
 And
    - Palette tool.
 
-The goal of this lib is to provide a very simple easy and light way to add many controls in one single view
-So, to make this lib as easy as possible for developpers,  there is 
-  - No XML
+To make this lib as easy as possible for developers,  there is 
+  - No XML ( except for one initial view this is all programmatically )
   - No bitmaps
   - Automatic scalable with resolution of the device 
   - Default values 
   - Default behaviriuos 
+  - Very easy layouts
   - Callbacks on events
 
+
+Installation
+===
+
+- Download the library git clone :
+        git://github.com/cadeli/CdlUI.git
+        
+- Import CdlUI project into Eclipse: 
+       File -> Import Existing Projects into Workspace -> Select root directory choose CdlUI folder and Finish.
+
+- Set CdlUI project as library into Eclipse : 
+       Right click on your Android Project, choose Properties -> Android -> Library -> select isLibrary
+
+- Add CdlUI as a reference to your project: 
+        Right click on your Android Project, choose Properties -> Android -> Library -> Add and select "CdlUI" project.
+
+
+How to use 
+===
+Layout XML file : 
+----
+
+First add  a view in your layout xml file, just as any standard view.
+Exemple in activity_simple_grid_demo.xml   
+  
+  ```xml
+  <com.cadeli.ui.CdlView
+          android:id="@+id/cdlView1"
+         android:layout_width="fill_parent"
+         android:layout_height="0dp"
+         android:layout_weight="3"
+         android:background="#000000" />
+   ```
+
+Java Activity file :
+---- 
+
+In your activity in the onCreate method just after the setContentView  
+      
+   ```java
+      protected void onCreate(Bundle savedInstanceState) {
+      		super.onCreate(savedInstanceState);
+      		setContentView(R.layout.activity_simple_grid_demo);
+      		
+      		// retrieve your view
+      		CdlView mCdlView = (CdlView) findViewById(R.id.cdlView1);
+		
+      		//create a button
+      		CdlPushButton mCdlPushButton = new CdlPushButton("My label");
+		
+      		// add the button to the view to the view
+      		mCdlView.addCdlBaseButton(mCdlPushButton);		
+		
+      		//create another  button
+      		CdlOnOffButton mCdlButton = new CdlOnOffButton("My Button");
+		
+      		// add the button to the view
+      		mCdlView.addCdlBaseButton(mCdlButton);
+	}
+   ```
   
 This lib is used in app
 http://play.google.com/store/apps/details?id=com.cadeli.dmFree
@@ -67,5 +132,12 @@ A sample of design by this UI. State/value of each controler is available.
 
 Sample code at 
 https://github.com/cadeli/CdlUI/tree/master/CdlUIg/src/com/cadeli/uiDemo
+
+LICENSE
+====
+Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
 
 
