@@ -57,7 +57,7 @@ public class CdlFader extends CdlBaseButton {
 			dispVal = (int) (valueControler.getValue() * 100);
 			//
 			String text = "" + dispVal;
-			drawCenterText(canvas, text, CdlPalette.getTxtPaint(w *2, h));
+			drawCenterText(canvas, text, CdlPalette.getTxtPaint(w *2-2*padding, h-2*padding));
 			//
 		}
 	}

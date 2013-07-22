@@ -45,7 +45,7 @@ public class CdlKnob extends CdlBaseButton {
 			canvas.drawArc(oval2, 100f, 340f, false, CdlPalette.getBlackPaintLarge());
 			float alpha = getValueControler().computeAlphaFromVal(dispVal, 340, 0);
 			canvas.drawArc(oval2, 100f, alpha, false, CdlPalette.getHilightPaintLarge());
-			drawCenterText(canvas, text, CdlPalette.getTxtPaint(w, h));
+			drawCenterText(canvas, text, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
 		}
 	}
 

@@ -22,10 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Shader;
 
 public class CdlPalette {
+	private static final String TAG = "CdlPalette";
 	static List<Paint> colorList = new ArrayList<Paint>();
 	static Paint txtPaint;
 	static Paint borderPaint;
@@ -36,6 +39,10 @@ public class CdlPalette {
 	static int txtPaintColor = Color.WHITE;
 	private static Paint flashPaint;
 	private static int hilightColor = Color.GREEN;
+	private static float borderSize=2;
+	private static int defaultAlpha=192;
+	private static float defaulStrokeWidth=12;
+	private static boolean isGradient=false;
 
 	// protected static final int ACTIVETEXT_COLOR = 0xFFFFFFFF;
 	// private static final int INACTIVETEXT_COLOR = 0xFF808080;
@@ -44,17 +51,26 @@ public class CdlPalette {
 		Paint paint = new Paint();
 		paint.setColor(color);
 		paint.setAntiAlias(true);
-		paint.setDither(true);
+		paint.setDither(true);		
 		colorList.add(paint);
 	}
 
-	public static Paint getPaint(int i) {
+	public static Paint getPaint(int i,int x, int y, int w, int h) {
 		int size = colorList.size();
 		if (size == 0) {
 			createDefaultColors();
 		}
 		if (i > 0) {
-			return (Paint) colorList.get(i % size);
+			Paint p =  (Paint) colorList.get(i % size);
+			if (isGradient) {  //TODO avoid new  
+			p.setShader(new LinearGradient(x, y, x, y+h, 
+				p.getColor(), 
+				Color.parseColor("#FF000000"), Shader.TileMode.REPEAT));			
+	//		Shader s = p.getShader();
+	//		LinearGradient lg = s.getLocalMatrix(localM);
+			CdlUtils.cdlLog(TAG, "new Grdient");
+			}
+			return p;
 		}
 		return (Paint) colorList.get(0);
 	}
@@ -65,7 +81,6 @@ public class CdlPalette {
 		addColor(Color.rgb(149, 255, 149));
 		addColor(Color.rgb(228, 239, 135));
 		addColor(Color.rgb(239, 135, 228));
-		addColor(Color.rgb(0, 0, 0));
 	}
 
 	public static Paint getTxtPaint(int w, int h) {
@@ -88,9 +103,9 @@ public class CdlPalette {
 			borderPaint = new Paint();
 			borderPaint.setAntiAlias(true);
 			borderPaint.setDither(true);
-			borderPaint.setAlpha(192);
+			borderPaint.setAlpha(defaultAlpha);
 			borderPaint.setStyle(Style.STROKE);
-			borderPaint.setStrokeWidth(2);
+			borderPaint.setStrokeWidth(borderSize);
 		}
 		
 		borderPaint.setColor(txtPaintColor);
@@ -113,7 +128,7 @@ public class CdlPalette {
 			hilightPaint.setColor(hilightColor);
 			hilightPaint.setAntiAlias(true);
 			hilightPaint.setDither(true);
-			hilightPaint.setAlpha(127);
+			hilightPaint.setAlpha(defaultAlpha);
 		}
 		return hilightPaint;
 	}
@@ -122,9 +137,9 @@ public class CdlPalette {
 		if (hilightPaintLarge == null) {
 			hilightPaintLarge = new Paint();
 			hilightPaintLarge.setStyle(Style.STROKE);
-			hilightPaintLarge.setStrokeWidth(12);
+			hilightPaintLarge.setStrokeWidth(defaulStrokeWidth);
 			hilightPaintLarge.setColor(hilightColor);
-			hilightPaintLarge.setAlpha(127);
+			hilightPaintLarge.setAlpha(defaultAlpha);
 			hilightPaintLarge.setAntiAlias(true);
 			hilightPaintLarge.setDither(true);
 		}
@@ -146,7 +161,7 @@ public class CdlPalette {
 			blackPaintLarge = new Paint();
 			blackPaintLarge.setColor(Color.DKGRAY);
 			blackPaintLarge.setStyle(Style.STROKE);
-			blackPaintLarge.setStrokeWidth(12);
+			blackPaintLarge.setStrokeWidth(defaulStrokeWidth);
 			blackPaintLarge.setAntiAlias(true);
 			blackPaintLarge.setDither(true);
 		}

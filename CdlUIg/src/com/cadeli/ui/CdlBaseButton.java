@@ -68,6 +68,7 @@ public class CdlBaseButton {
 	protected float round_w;
 
 	private boolean isBorder=true;
+	private boolean isEnabled=true;
 
 	/**
 	 * 
@@ -132,7 +133,7 @@ public class CdlBaseButton {
 			if (flashing) {
 				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
 			} else {
-				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(backgroundColor));
+				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(backgroundColor,getLeft(),getTop(),w,h));
 			}
 			if (isBorder) {
 				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
@@ -142,15 +143,14 @@ public class CdlBaseButton {
 
 	protected void drawLabel(Canvas canvas) {
 		if (getLabel().contains(" ") && getSubLabel() == null) {
-			drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w, h));
-			drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w, h));
+			drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
+			drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
 		} else {
-			drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w, h));
+			drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
 			if (getSubLabel() != null) {
-				drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint(w / 3, h / 3));
+				drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w-2*padding) / 3, (h-2*padding) / 3));
 			}
 		}
-
 	}
 
 	protected void drawCenterText(Canvas canvas, String text, Paint paint) {
@@ -418,6 +418,14 @@ public class CdlBaseButton {
 
 	public void setBorder(boolean isBorder) {
 		this.isBorder = isBorder;
+	}
+
+	public void setEnabled(boolean b) {
+		isEnabled=b;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
 	}
 
 }

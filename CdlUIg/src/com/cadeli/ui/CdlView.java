@@ -244,6 +244,12 @@ public class CdlView extends View implements OnGestureListener {
 		cdlBaseButton.setBackgroundColor(cdlBaseButtons.size());
 		cdlBaseButtons.add(cdlBaseButton);
 	}
+	
+	public void setButtonsEnabled(boolean b) {
+		for (CdlBaseButton cdlBaseButton:cdlBaseButtons) {
+			cdlBaseButton.setEnabled(b);
+		}
+	}
 
 	public boolean onTouchEvent(MotionEvent event) {
 		return gestureDetector.onTouchEvent(event);
@@ -359,6 +365,19 @@ public class CdlView extends View implements OnGestureListener {
 			CdlUtils.cdlLog(TAG, "invalidate : " + cdlBaseButton.getLabel());
 		}
 	}
+	
+	public CdlBaseButton getButtonFromLabel(String s) {
+		for (CdlBaseButton cdlBaseButton: cdlBaseButtons) {
+			if (cdlBaseButton.getLabel().equals(s)) {
+				return cdlBaseButton;
+			}
+		}
+		return null;
+	}
+
+	public CdlBaseButton getButtonFromId(int id) {
+		return cdlBaseButtons.get(id);
+	}
 
 	public void setCdlLayout(int cdlLayout) {
 		this.cdlLayout = cdlLayout;
@@ -371,5 +390,7 @@ public class CdlView extends View implements OnGestureListener {
 	public void setPadding(int padding) {
 		this.padding = padding;
 	}
+	
+	
 
 }
