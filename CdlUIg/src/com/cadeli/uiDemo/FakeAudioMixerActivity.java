@@ -1,11 +1,13 @@
 package com.cadeli.uiDemo;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.cadeli.ui.CdlBaseButton;
+import com.cadeli.ui.CdlPalette;
 import com.cadeli.ui.CdlView;
 import com.cadeli.ui.R;
 import com.cadeli.ui.buttons.CdlNStatesButton;
@@ -16,6 +18,8 @@ import com.cadeli.ui.interfaces.OnLongPressCdlListener;
 import com.cadeli.ui.interfaces.OnTapUpCdlListener;
 
 public class FakeAudioMixerActivity extends Activity {
+
+	private int colorIndexForBlack;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,11 @@ public class FakeAudioMixerActivity extends Activity {
 				Toast.makeText(getApplicationContext(), "You long clicked the button" + cdlBaseButton.getLabel(), Toast.LENGTH_SHORT).show();
 			}
 		};
+		
+		//add black color to palette
+		CdlPalette.addColor(Color.rgb(0, 0, 0));
+		//retrieve color index
+		 colorIndexForBlack = CdlPalette.getLastColorIndex();
 
 		// Use View and init
 		CdlView mCdlView = (CdlView) findViewById(R.id.cdlView2);
@@ -73,7 +82,7 @@ public class FakeAudioMixerActivity extends Activity {
 			CdlKnob mCdlButton = new CdlKnob("knob " + (i + 1));
 			mCdlButton.getValueControler().setValues(0, 1, (float)(i*1.3)/12.0f);
 			mCdlView.addCdlBaseButton(mCdlButton);
-			mCdlButton.setBackgroundColor(5);
+			mCdlButton.setBackgroundColor(colorIndexForBlack);
 		}
 		for (int i = 0; i < 6; i++) {
 			CdlNStatesButton mCdlButton = new CdlNStatesButton("aaa");
@@ -82,7 +91,7 @@ public class FakeAudioMixerActivity extends Activity {
 			mCdlButton.addState("st3");
 			mCdlButton.addState("---");
 			mCdlView.addCdlBaseButton(mCdlButton);
-			mCdlButton.setBackgroundColor(5);
+			mCdlButton.setBackgroundColor(colorIndexForBlack);
 		}
 
 	}

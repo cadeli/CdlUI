@@ -63,9 +63,9 @@ public class CdlPalette {
 		if (i > 0) {
 			Paint p =  (Paint) colorList.get(i % size);
 			if (isGradient) {  //TODO avoid new  
-			p.setShader(new LinearGradient(x, y, x, y+h, 
-				p.getColor(), 
-				Color.parseColor("#FF000000"), Shader.TileMode.REPEAT));			
+//			p.setShader(new LinearGradient(x, y, x, y+h, 
+//				p.getColor(), 
+//				Color.parseColor("#FF000000"), Shader.TileMode.REPEAT));			
 	//		Shader s = p.getShader();
 	//		LinearGradient lg = s.getLocalMatrix(localM);
 			CdlUtils.cdlLog(TAG, "new Grdient");
@@ -170,6 +170,10 @@ public class CdlPalette {
 
 	public static void setHilightColor(int hilightColor) {
 		CdlPalette.hilightColor = hilightColor;
+	}
+
+	public static int getLastColorIndex() {
+		return colorList.size()-1;
 	}
 
 }

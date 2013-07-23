@@ -177,12 +177,16 @@ public class CdlView extends View implements OnGestureListener {
 			return;
 		if (grid_nbCols <= 0)
 			grid_nbCols = 1;
-		int nbRows = (nbBtn + 1) / grid_nbCols ;
+		int nbRows = (nbBtn + 1) / grid_nbCols;
 		int realNbRow = nbRows;
 		int maxGHforRow = 1;
-		int h_btn = h / nbRows;
-		if (h % nbRows != 0) {
-			h_btn++;
+		int h_btn = h;
+		if (nbRows != 0) {
+			h_btn = h / nbRows;
+
+			if (h % nbRows != 0) {
+				h_btn++;
+			}
 		}
 		int col = 0;
 		int row = 0;
@@ -197,20 +201,20 @@ public class CdlView extends View implements OnGestureListener {
 				if (col >= grid_nbCols) {
 					col = 0;
 					row += maxGHforRow;
-					if (row  > realNbRow) {
-						realNbRow = row ;
+					if (row > realNbRow) {
+						realNbRow = row;
 					}
 					maxGHforRow = 1;
 				}
 			}
 		}
 		if (realNbRow != nbRows) {
-			 maxGHforRow = 1;
+			maxGHforRow = 1;
 			h_btn = h / realNbRow;
 			if (h % nbRows != 0) {
 				h_btn++;
 			}
-			row=0;
+			row = 0;
 			for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
 				cdlBaseButton.setSize(w_btn * col, h_btn * row, w_btn * cdlBaseButton.grid_width, h_btn * cdlBaseButton.grid_height);
 				col += cdlBaseButton.grid_width;
@@ -244,9 +248,9 @@ public class CdlView extends View implements OnGestureListener {
 		cdlBaseButton.setBackgroundColor(cdlBaseButtons.size());
 		cdlBaseButtons.add(cdlBaseButton);
 	}
-	
+
 	public void setButtonsEnabled(boolean b) {
-		for (CdlBaseButton cdlBaseButton:cdlBaseButtons) {
+		for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
 			cdlBaseButton.setEnabled(b);
 		}
 	}
@@ -287,7 +291,7 @@ public class CdlView extends View implements OnGestureListener {
 	}
 
 	private void longPressOnCdlBaseButton(CdlBaseButton cdlBaseButton, MotionEvent e) {
-		if (cdlBaseButton.isVisible()) {
+		if (cdlBaseButton.isVisible() && cdlBaseButton.isEnabled()) {
 			if (cdlBaseButton.isFlashCapable()) {
 				timerCountFlash = 2;
 				flashingBtn = cdlBaseButton;
@@ -353,7 +357,7 @@ public class CdlView extends View implements OnGestureListener {
 	}
 
 	private void tapUpOnCdlBaseButton(CdlBaseButton cdlBaseButton, MotionEvent e) {
-		if (cdlBaseButton.isVisible()) {
+		if (cdlBaseButton.isVisible() &&  cdlBaseButton.isEnabled()) {
 			if (cdlBaseButton.isFlashCapable()) {
 				timerCountFlash = 2;
 				flashingBtn = cdlBaseButton;
@@ -365,9 +369,9 @@ public class CdlView extends View implements OnGestureListener {
 			CdlUtils.cdlLog(TAG, "invalidate : " + cdlBaseButton.getLabel());
 		}
 	}
-	
+
 	public CdlBaseButton getButtonFromLabel(String s) {
-		for (CdlBaseButton cdlBaseButton: cdlBaseButtons) {
+		for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
 			if (cdlBaseButton.getLabel().equals(s)) {
 				return cdlBaseButton;
 			}
@@ -390,7 +394,5 @@ public class CdlView extends View implements OnGestureListener {
 	public void setPadding(int padding) {
 		this.padding = padding;
 	}
-	
-	
 
 }
