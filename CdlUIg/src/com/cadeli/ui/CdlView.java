@@ -39,7 +39,7 @@ public class CdlView extends View implements OnGestureListener {
 	public static final int CDL_LAYOUT_ABSOLUTE = 2;
 	protected static final long FLASH_DURATION = 200;
 
-	private List<CdlBaseButton> cdlBaseButtons = new ArrayList<CdlBaseButton>();
+	protected List<CdlBaseButton> cdlBaseButtons = new ArrayList<CdlBaseButton>();
 	private int cdlLayout = CDL_LAYOUT_GRID; // default val
 	private int grid_nbCols = 3; // defaultval
 	private boolean sized;
@@ -149,7 +149,7 @@ public class CdlView extends View implements OnGestureListener {
 		if (sRight > getRight() - padding) {
 			sRight = getRight() - padding;
 		}
-		urect.set(sLeft, getHeight() - scrollBarHeight, sRight, getHeight());
+		urect.set(sLeft-getLeft(), getHeight() - scrollBarHeight, sRight-getLeft(), getHeight());
 		canvas.drawRect(urect, CdlPalette.getHilightPaint());
 	}
 

@@ -69,6 +69,13 @@ public class CdlBaseButton {
 
 	private boolean isBorder=true;
 	private boolean isEnabled=true;
+	
+	
+
+	public CdlBaseButton() {
+		super();
+		CdlUtils.cdlLog(TAG, "new cdlBaseButton");
+	}
 
 	/**
 	 * 
@@ -262,10 +269,10 @@ public class CdlBaseButton {
 	}
 
 	public void singleTapUp(MotionEvent e) {
+		CdlUtils.cdlLog(TAG, "singleTapUp: " + label);
 		if (onTapUpCdlListener != null) {
 			onTapUpCdlListener.tapUp(this, e);
 		}
-		CdlUtils.cdlLog(TAG, "singleTapUp: " + label);
 	}
 
 	public void longPress(MotionEvent e) {
