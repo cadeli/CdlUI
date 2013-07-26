@@ -121,7 +121,7 @@ A toggle is associed to the tapUp.
 
   ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr2.png?raw=true)
 
-A fake audio mixer with faders and knobs
+An audio mixer interface with faders and knobs
 ----
 
 A sample of design by this UI. State/value of each controler is available.
