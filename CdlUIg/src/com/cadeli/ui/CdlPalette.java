@@ -22,10 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.Shader;
 
 public class CdlPalette {
 	private static final String TAG = "CdlPalette";
