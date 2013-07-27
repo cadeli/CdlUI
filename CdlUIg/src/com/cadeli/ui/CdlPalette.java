@@ -46,6 +46,7 @@ public class CdlPalette {
 
 	// protected static final int ACTIVETEXT_COLOR = 0xFFFFFFFF;
 	// private static final int INACTIVETEXT_COLOR = 0xFF808080;
+	
 
 	public static void addColor(int color) {
 		Paint paint = new Paint();
@@ -55,12 +56,10 @@ public class CdlPalette {
 		colorList.add(paint);
 	}
 
+
 	public static Paint getPaint(int i,int x, int y, int w, int h) {
 		int size = colorList.size();
-		if (size == 0) {
-			createDefaultColors();
-		}
-		if (i > 0) {
+		if (i >= 0 && size >0) {
 			Paint p =  (Paint) colorList.get(i % size);
 			if (isGradient) {  //TODO avoid new  
 //			p.setShader(new LinearGradient(x, y, x, y+h, 
@@ -75,7 +74,8 @@ public class CdlPalette {
 		return (Paint) colorList.get(0);
 	}
 
-	private static void createDefaultColors() {
+	public static void createDefaultColors() {
+		addColor(Color.rgb(0, 0, 0));
 		addColor(Color.rgb(225, 149, 149));
 		addColor(Color.rgb(135, 228, 239));
 		addColor(Color.rgb(149, 255, 149));

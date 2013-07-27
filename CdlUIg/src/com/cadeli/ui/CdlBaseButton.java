@@ -198,24 +198,6 @@ public class CdlBaseButton {
 		canvas.drawText(text, x, y, paint);
 	}
 
-	protected void drawTopText(Canvas canvas, String text, Paint forePaint, Paint backPaint) {
-		if (text == null)
-			return;
-		text = schrinkText(forePaint, bounds, text);
-		forePaint.getTextBounds(text, 0, text.length(), bounds);
-		rectf.top = rect.top - rect.width() / 4 - bounds.height();
-		rectf.bottom = rect.top - 4;
-		rectf.left = rect.left;
-		rectf.right = rect.right;
-		canvas.drawRoundRect(rectf, 5.0f, 5.0f, backPaint);
-
-		// paint.getTextBounds(text, 0, text.length(), bounds);
-		int x = (int) (rectf.left + rectf.width() / 2 - bounds.centerX());
-		int y = (int) (rectf.top + rectf.height() / 2 - bounds.centerY());
-		canvas.drawText(text, x, y, forePaint);
-		return;
-	}
-
 	protected void drawBottomText(Canvas canvas, String text, Paint paint) {
 		if (text == null)
 			return;
@@ -433,6 +415,10 @@ public class CdlBaseButton {
 
 	public boolean isEnabled() {
 		return isEnabled;
+	}
+
+	public static RectF getRectf() {
+		return rectf;
 	}
 
 }

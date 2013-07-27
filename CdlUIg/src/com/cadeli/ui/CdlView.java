@@ -24,6 +24,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -90,6 +91,9 @@ public class CdlView extends View implements OnGestureListener {
 
 	private void init(Context context) {
 		gestureDetector = new GestureDetector(context, this);
+		if (CdlPalette.getLastColorIndex() <= 0) {
+			CdlPalette.createDefaultColors();
+		}
 	}
 
 	public void draw(Canvas canvas) {
@@ -113,6 +117,10 @@ public class CdlView extends View implements OnGestureListener {
 			}
 			drawScrollBar(canvas, sizeInWCase);
 		}
+		urect.set(0, getTop(), padding, getBottom());
+		canvas.drawRect(urect, CdlPalette.getBlackPaint()); // TODO this.getBackgroundPaint()
+		urect.set(getWidth() - padding, getTop(), getWidth(), getBottom());
+		canvas.drawRect(urect, CdlPalette.getBlackPaint());
 	}
 
 	private int computeSizeInWCase() {
@@ -149,14 +157,14 @@ public class CdlView extends View implements OnGestureListener {
 		if (sRight > getRight() - padding) {
 			sRight = getRight() - padding;
 		}
-		urect.set(sLeft-getLeft(), getHeight() - scrollBarHeight, sRight-getLeft(), getHeight());
+		urect.set(sLeft - getLeft(), getHeight() - scrollBarHeight, sRight - getLeft(), getHeight());
 		canvas.drawRect(urect, CdlPalette.getHilightPaint());
 	}
 
 	private void size() {
 		w = getWidth();
 		h = getHeight();
-		w_btn = w / grid_nbCols;
+		w_btn = (w - 2 * padding) / grid_nbCols;
 		if (cdlLayout == CDL_LAYOUT_GRID) {
 			size_gridMode(w, h);
 		}
@@ -245,7 +253,8 @@ public class CdlView extends View implements OnGestureListener {
 	}
 
 	public void addCdlBaseButton(CdlBaseButton cdlBaseButton) {
-		cdlBaseButton.setBackgroundColor(cdlBaseButtons.size());
+		int color = cdlBaseButtons.size() % (CdlPalette.getLastColorIndex());// avoid first color index
+		cdlBaseButton.setBackgroundColor(color + 1);
 		cdlBaseButtons.add(cdlBaseButton);
 	}
 
@@ -312,11 +321,11 @@ public class CdlView extends View implements OnGestureListener {
 				d = (int) distanceX;
 			}
 			startXScroll += d;
-			if (startXScroll < 0) {
-				startXScroll = 0;
+			if (startXScroll < 0 - padding) {
+				startXScroll = -padding;
 			}
-			if (startXScroll > (sizeInWCase - w)) {
-				startXScroll = (sizeInWCase - w);
+			if (startXScroll > (sizeInWCase - w) + 2 * padding) {
+				startXScroll = (sizeInWCase - w) + 2 * padding;
 			}
 			invalidate();
 		}
@@ -357,7 +366,7 @@ public class CdlView extends View implements OnGestureListener {
 	}
 
 	private void tapUpOnCdlBaseButton(CdlBaseButton cdlBaseButton, MotionEvent e) {
-		if (cdlBaseButton.isVisible() &&  cdlBaseButton.isEnabled()) {
+		if (cdlBaseButton.isVisible() && cdlBaseButton.isEnabled()) {
 			if (cdlBaseButton.isFlashCapable()) {
 				timerCountFlash = 2;
 				flashingBtn = cdlBaseButton;
