@@ -133,7 +133,7 @@ public class CdlView extends View implements OnGestureListener {
 	private void drawBtn(int idBtn, int jPosBtn, Canvas canvas) {
 		if (idBtn < 0 || idBtn >= cdlBaseButtons.size())
 			return;
-		CdlUtils.cdlLog(TAG, "drawBtn id=" + idBtn + " jPos=" + jPosBtn);
+		//CdlUtils.cdlLog(TAG, "drawBtn id=" + idBtn + " jPos=" + jPosBtn);
 		CdlBaseButton cdlBaseButton = cdlBaseButtons.get(idBtn);
 		int sLeft = (int) (jPosBtn * w_btn - startXScroll);
 		cdlBaseButton.setSize(sLeft + padding, padding, w_btn * cdlBaseButton.getGrid_width() - padding, getHeight() - scrollBarHeight - padding);
@@ -254,6 +254,7 @@ public class CdlView extends View implements OnGestureListener {
 	public void addCdlBaseButton(CdlBaseButton cdlBaseButton) {
 		int color = cdlBaseButtons.size() % (CdlPalette.getLastColorIndex());// avoid first color index
 		cdlBaseButton.setBackgroundColor(color + 1);
+		cdlBaseButton.setId(cdlBaseButtons.size());
 		cdlBaseButtons.add(cdlBaseButton);
 	}
 

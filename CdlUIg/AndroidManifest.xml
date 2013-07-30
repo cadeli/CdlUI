@@ -30,6 +30,10 @@
             android:name="com.cadeli.uiDemo.FakeAudioMixerActivity"
             android:label="@string/app_name" >
         </activity>
-       </application>
+      <activity
+            android:name="com.cadeli.uiDemo.AnotherGridDemo"
+            android:label="@string/app_name" >
+        </activity>
+      </application>
 
 </manifest>

@@ -58,6 +58,9 @@ public class SimpleGridDemoActivity extends Activity {
 				if (cdlBaseButton.getLabel().contains("4")) {
 					((Activity)context).startActivityForResult(new Intent(context, FakeAudioMixerActivity.class), 0);
 				}
+				if (cdlBaseButton.getLabel().contains("5")) {
+					((Activity)context).startActivityForResult(new Intent(context, AnotherGridDemo.class), 0);
+				}
 			}
 		};
 

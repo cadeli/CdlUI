@@ -126,5 +126,19 @@ public class CdlValue {
 	public String getName() {
 		return name;
 	}
+	
+	public static float computeNormalizedVal(int val, int min, int max) {
+		float intervalle = (max - min);
+		float ret = (float) (val-min)/intervalle;
+		return ret;
+	}
+
+	public static float computeExternalVal(float val, int min, int max) {
+		float intervalle = (max - min);
+		float ret = (float) ((val*intervalle)+min);
+		return ret;
+	}
+
+
 
 }

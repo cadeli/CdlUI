@@ -14,7 +14,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-*/
+ */
 
 package com.cadeli.ui;
 
@@ -27,6 +27,11 @@ import android.graphics.Paint.Style;
 
 public class CdlPalette {
 	private static final String TAG = "CdlPalette";
+	public static final int COLORSCHEME1 = 10;
+	public static final int COLORSCHEME2 = 20;
+	public static final int COLORSCHEME3 = 30;
+	public static final int COLORSCHEME4 = 40;
+
 	static List<Paint> colorList = new ArrayList<Paint>();
 	static Paint txtPaint;
 	static Paint borderPaint;
@@ -37,35 +42,33 @@ public class CdlPalette {
 	static int txtPaintColor = Color.WHITE;
 	private static Paint flashPaint;
 	private static int hilightColor = Color.GREEN;
-	private static float borderSize=2;
-	private static int defaultAlpha=192;
-	private static float defaulStrokeWidth=12;
-	private static boolean isGradient=false;
+	private static float borderSize = 2;
+	private static int defaultAlpha = 192;
+	private static float defaulStrokeWidth = 12;
+	private static boolean isGradient = false;
 
 	// protected static final int ACTIVETEXT_COLOR = 0xFFFFFFFF;
 	// private static final int INACTIVETEXT_COLOR = 0xFF808080;
-	
 
 	public static void addColor(int color) {
 		Paint paint = new Paint();
 		paint.setColor(color);
 		paint.setAntiAlias(true);
-		paint.setDither(true);		
+		paint.setDither(true);
 		colorList.add(paint);
 	}
 
-
-	public static Paint getPaint(int i,int x, int y, int w, int h) {
+	public static Paint getPaint(int i, int x, int y, int w, int h) {
 		int size = colorList.size();
-		if (i >= 0 && size >0) {
-			Paint p =  (Paint) colorList.get(i % size);
-			if (isGradient) {  //TODO avoid new  
-//			p.setShader(new LinearGradient(x, y, x, y+h, 
-//				p.getColor(), 
-//				Color.parseColor("#FF000000"), Shader.TileMode.REPEAT));			
-	//		Shader s = p.getShader();
-	//		LinearGradient lg = s.getLocalMatrix(localM);
-			CdlUtils.cdlLog(TAG, "new Grdient");
+		if (i >= 0 && size > 0) {
+			Paint p = (Paint) colorList.get(i % size);
+			if (isGradient) { // TODO avoid new
+				// p.setShader(new LinearGradient(x, y, x, y+h,
+				// p.getColor(),
+				// Color.parseColor("#FF000000"), Shader.TileMode.REPEAT));
+				// Shader s = p.getShader();
+				// LinearGradient lg = s.getLocalMatrix(localM);
+				CdlUtils.cdlLog(TAG, "new Grdient");
 			}
 			return p;
 		}
@@ -73,12 +76,43 @@ public class CdlPalette {
 	}
 
 	public static void createDefaultColors() {
+		setColorScreme(COLORSCHEME3);
+	}
+
+	public static void setColorScreme(int colorscheme) {
+		colorList.clear();
+
 		addColor(Color.rgb(0, 0, 0));
-		addColor(Color.rgb(225, 149, 149));
-		addColor(Color.rgb(135, 228, 239));
-		addColor(Color.rgb(149, 255, 149));
-		addColor(Color.rgb(228, 239, 135));
-		addColor(Color.rgb(239, 135, 228));
+		if (colorscheme == COLORSCHEME1) {
+			addColor(Color.rgb(255, 0, 0));
+			addColor(Color.rgb(57, 20, 175));
+			addColor(Color.rgb(255, 211, 0));
+			addColor(Color.rgb(0, 204, 0));
+
+		} else if (colorscheme == COLORSCHEME2) {
+			addColor(Color.rgb(191, 48, 48));
+			addColor(Color.rgb(65, 44, 132));
+			addColor(Color.rgb(191, 167, 48));
+			addColor(Color.rgb(38, 153, 38));
+
+		} else if (colorscheme == COLORSCHEME3) {
+			addColor(Color.rgb(166, 0, 0));
+			addColor(Color.rgb(32, 7, 114));
+			addColor(Color.rgb(166, 137, 0));
+			addColor(Color.rgb(0, 133, 0));
+
+		} else if (colorscheme == COLORSCHEME4) {
+			addColor(Color.rgb(255, 64, 64));
+			addColor(Color.rgb(106, 72, 215));
+			addColor(Color.rgb(255, 222, 64));
+			addColor(Color.rgb(57, 230, 57));
+
+		} else {
+			addColor(Color.rgb(255, 115, 115));
+			addColor(Color.rgb(135, 110, 215));
+			addColor(Color.rgb(255, 231, 115));
+			addColor(Color.rgb(103, 230, 103));
+		}
 	}
 
 	public static Paint getTxtPaint(int w, int h) {
@@ -87,7 +121,7 @@ public class CdlPalette {
 			txtPaint.setAntiAlias(true);
 			txtPaint.setDither(true);
 		}
-		if (w < 2 * h) {
+		if (w < h) {
 			txtPaint.setTextSize(w / 4);
 		} else {
 			txtPaint.setTextSize(h / 4);
@@ -95,7 +129,7 @@ public class CdlPalette {
 		txtPaint.setColor(txtPaintColor);
 		return txtPaint;
 	}
-	
+
 	public static Paint getBorderPaint() {
 		if (borderPaint == null) {
 			borderPaint = new Paint();
@@ -105,7 +139,7 @@ public class CdlPalette {
 			borderPaint.setStyle(Style.STROKE);
 			borderPaint.setStrokeWidth(borderSize);
 		}
-		
+
 		borderPaint.setColor(txtPaintColor);
 		return borderPaint;
 	}
@@ -171,7 +205,7 @@ public class CdlPalette {
 	}
 
 	public static int getLastColorIndex() {
-		return colorList.size()-1;
+		return colorList.size() - 1;
 	}
 
 }

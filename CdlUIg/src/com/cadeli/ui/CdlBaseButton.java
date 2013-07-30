@@ -62,13 +62,14 @@ public class CdlBaseButton {
 
 	private OnTapUpCdlListener onTapUpCdlListener;
 	private OnLongPressCdlListener onLongPressCdlListener;
-	private OnScrollCdlListener scrollCdlListener;
+	private OnScrollCdlListener onScrollCdlListener;
 
 	protected float round_h;
 	protected float round_w;
 
 	private boolean isBorder=true;
 	private boolean isEnabled=true;
+	private int id;
 	
 	
 
@@ -155,7 +156,7 @@ public class CdlBaseButton {
 		} else {
 			drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
 			if (getSubLabel() != null) {
-				drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w-2*padding) / 3, (h-2*padding) / 3));
+				drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w-2*padding) / 2, (h-2*padding) / 2));
 			}
 		}
 	}
@@ -265,8 +266,8 @@ public class CdlBaseButton {
 	}
 
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		if (scrollCdlListener != null) {
-			scrollCdlListener.scroll(this, e1, e2, distanceX, distanceY);
+		if (onScrollCdlListener != null) {
+			onScrollCdlListener.scroll(this, e1, e2, distanceX, distanceY);
 		}
 		CdlUtils.cdlLog(TAG, "scroll on cdl: " + label);
 	}
@@ -377,12 +378,12 @@ public class CdlBaseButton {
 		this.onLongPressCdlListener = onLongPressCdlListener;
 	}
 
-	public OnScrollCdlListener getScrollCdlListener() {
-		return scrollCdlListener;
+	public OnScrollCdlListener getOnScrollCdlListener() {
+		return onScrollCdlListener;
 	}
 
-	public void setScrollCdlListener(OnScrollCdlListener scrollCdlListener) {
-		this.scrollCdlListener = scrollCdlListener;
+	public void setOnScrollCdlListener(OnScrollCdlListener scrollCdlListener) {
+		this.onScrollCdlListener = scrollCdlListener;
 	}
 
 	public void setRound(float round) {
@@ -419,6 +420,14 @@ public class CdlBaseButton {
 
 	public static RectF getRectf() {
 		return rectf;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id=id;
 	}
 
 }
