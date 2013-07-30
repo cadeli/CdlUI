@@ -30,6 +30,7 @@ To make this lib as easy as possible for developers,  there is
   - Default values 
   - Default behaviriuos 
   - Very easy layouts
+  - Color Schemes
   - Callbacks on events
 
 
