@@ -15,7 +15,7 @@ import com.cadeli.ui.buttons.CdlPushButton;
 import com.cadeli.ui.interfaces.OnLongPressCdlListener;
 import com.cadeli.ui.interfaces.OnTapUpCdlListener;
 
-public class AnotherGridDemo extends Activity { 
+public class AnotherGridDemo extends Activity {  
 	
 	Context context;
 
