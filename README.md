@@ -132,8 +132,11 @@ A toggle is associed to the tapUp.
 
   ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr2.png?raw=true)
 
-An audio mixer interface with faders and knobs, with some interactions ( push button to set faders value, display knobs values in button label, etc... )
+An audio mixer interface with faders and knobs
 ----
+
+Some interactions are available (push button to set faders value, display knobs values in button label, etc... )
+
 
 A sample of design by this UI. State/value of each controler is available.
 
