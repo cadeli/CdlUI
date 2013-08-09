@@ -22,10 +22,10 @@ import com.cadeli.ui.CdlUtils;
 
 public class CdlValue {
 	private static final String TAG = "CdlValue";
-	protected float maxVal = 1f;
-	protected float minVal = 0f;
-	protected float value = 0.5f;
-	protected float interval = 1f;
+	protected double maxVal = 1f;
+	protected double minVal = 0f;
+	protected double value = 0.5f;
+	protected double interval = 1f;
 	private String name;
 
 	public CdlValue(String name) {
@@ -33,7 +33,7 @@ public class CdlValue {
 		this.name = name;
 	}
 
-	public void setValues(float minVal, float maxVal, float value) {
+	public void setValues(double  minVal, double  maxVal, double  value) {
 		this.minVal = minVal;
 		this.maxVal = maxVal;
 		if (maxVal >= 0 && minVal >= 0) {
@@ -48,62 +48,62 @@ public class CdlValue {
 		setValue(value);
 	}
 
-	public float getValue() {
+	public double getValue() {
 		return value;
 	}
 
 	// fader scroll
-	public float setValueFromDistance(float distance, int deviceHeigth) {
+	public double setValueFromDistance(double distance, int deviceHeigth) {
 		return setValueFromDistance(distance, deviceHeigth,1);
 	}
 	
 	// fader scroll
-	public float setValueFromDistance(float distance, int deviceHeigth,float coef) {
-		float incr = 0;
-		incr = (float) ((float) (distance) / (float) (deviceHeigth*coef));
-		float newVal = value + incr;
+	public double setValueFromDistance(double distance, int deviceHeigth,double  coef) {
+		double  incr = 0;
+		incr = (double ) ((double ) (distance) / (double ) (deviceHeigth*coef));
+		double newVal = value + incr;
 		//CdlUtils.cdlLog(TAG, "setValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
 		setValue(newVal);
 		return newVal;
 	}
 
 	// fader tap
-	public float setAbsValueFromDistance(float distance, int deviceHeigth) {
-		float incr = 0;
-		incr = (float) ((float) (distance) / (float) deviceHeigth);
-		float newVal =  incr;
+	public double  setAbsValueFromDistance(double  distance, int deviceHeigth) {
+		double  incr = 0;
+		incr = (double ) ((double ) (distance) / (double ) deviceHeigth);
+		double  newVal =  incr;
 		//CdlUtils.cdlLog(TAG, "setAbsValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
 		setValue(newVal);
 		return newVal;
 	}
 
-	protected int computeYMarkFromValue(float top, float bottom) {
-		float y = bottom - ((bottom - top) * (value - minVal)) / interval;
+	protected int computeYMarkFromValue(double  top, double  bottom) {
+		double y = bottom - ((bottom - top) * (value - minVal)) / interval;
 		// XmlUtil.myLog(TAG, "computeYMarkFromValue" + value + " -> " + y + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal+ " "+ name);
 		return (int) y;
 	}
 
-	protected float computeValueFromYMark(float y, float top, float bottom) {
-		float newVal = minVal + (interval) * (bottom - y) / (bottom - top);
+	protected double computeValueFromYMark(double  y, double  top, double  bottom) {
+		double newVal = minVal + (interval) * (bottom - y) / (bottom - top);
 		// XmlUtil.myLog(TAG, "computeValueFromYMark y=" + y + " val-> " + newVal + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal);
 		setValue(newVal);
 		return newVal;
 	}
 
-	public float computeAlphaFromVal(int pitch, int top, int bottom) {
+	public double computeAlphaFromVal(int pitch, int top, int bottom) {
 		if ((maxVal - minVal) == 0) {
 			CdlUtils.cdlLog(TAG, "*** ERREUR " + " min=" + minVal + " max=" + maxVal);
 			return 0;
 		}
-		float ret = bottom - ((bottom - top) * value) / (maxVal - minVal);
+		double ret = bottom - ((bottom - top) * value) / (maxVal - minVal);
 		return ret;
 	}
 
-	public float getMaxVal() {
+	public double getMaxVal() {
 		return maxVal;
 	}
 
-	public void setValue(float newVal) {
+	public void setValue(double newVal) {
 		//CdlUtils.cdlLog(TAG, "1setvalue: " + newVal + " max=" + maxVal + " min=" + minVal + " " + name);
 		if (newVal > maxVal)
 			newVal = maxVal;
@@ -113,8 +113,8 @@ public class CdlValue {
 		value = newVal;
 	}
 
-	public float getValueFromDistance(float distance, int w) {
-		float newVal = value - ((distance * 4) / w);
+	public double getValueFromDistance(double distance, int w) {
+		double newVal = value - ((distance * 4) / w);
 		if (newVal > maxVal)
 			newVal = maxVal;
 		if (newVal < minVal)
@@ -127,15 +127,15 @@ public class CdlValue {
 		return name;
 	}
 	
-	public static float computeNormalizedVal(int val, int min, int max) {
-		float intervalle = (max - min);
-		float ret = (float) (val-min)/intervalle;
+	public static double  computeNormalizedVal(int val, int min, int max) {
+		double  intervalle = (max - min);
+		double  ret = (double ) (val-min)/intervalle;
 		return ret;
 	}
 
-	public static float computeExternalVal(float val, int min, int max) {
-		float intervalle = (max - min);
-		float ret = (float) ((val*intervalle)+min);
+	public static double  computeExternalVal(double  val, int min, int max) {
+		double  intervalle = (max - min);
+		double  ret = (double ) ((val*intervalle)+min);
 		return ret;
 	}
 

@@ -269,7 +269,7 @@ public class CdlBaseButton {
 		if (onScrollCdlListener != null) {
 			onScrollCdlListener.scroll(this, e1, e2, distanceX, distanceY);
 		}
-		CdlUtils.cdlLog(TAG, "scroll on cdl: " + label);
+		//CdlUtils.cdlLog(TAG, "scroll on cdl: " + label);
 	}
 
 	public void setLabel(String s) {

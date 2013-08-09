@@ -63,8 +63,8 @@ public class CdlFader extends CdlBaseButton {
 	}
 
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		super.scroll(e1, e2, distanceX, distanceY);
 		valueControler.setValueFromDistance(distanceY, rect.height());
+		super.scroll(e1, e2, distanceX, distanceY);
 	}
 
 	public CdlValue getValueControler() {
@@ -77,6 +77,7 @@ public class CdlFader extends CdlBaseButton {
 
 	public void singleTapUp(MotionEvent e) {
 		valueControler.setAbsValueFromDistance(getBottom() - e.getY(), rect.height());
+		super.singleTapUp(e);
 		return;
 	}
 

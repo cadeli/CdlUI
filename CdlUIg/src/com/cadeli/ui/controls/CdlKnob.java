@@ -24,8 +24,10 @@ import android.view.MotionEvent;
 
 import com.cadeli.ui.CdlBaseButton;
 import com.cadeli.ui.CdlPalette;
+import com.cadeli.ui.CdlUtils;
 
 public class CdlKnob extends CdlBaseButton {
+	private static final String TAG = "CdlKnob";
 	private CdlValue valueControler;
 
 	public CdlKnob(String label) {
@@ -43,19 +45,25 @@ public class CdlKnob extends CdlBaseButton {
 			// XmlUtil.myLog(TAG," drawFader " + frameCursorRect);
 			RectF oval2 = new RectF(rect.left + wl, rect.top + wl, rect.right - wl, rect.bottom - wl);
 			canvas.drawArc(oval2, 100f, 340f, false, CdlPalette.getBlackPaintLarge());
-			float alpha = getValueControler().computeAlphaFromVal(dispVal, 340, 0);
-			canvas.drawArc(oval2, 100f, alpha, false, CdlPalette.getHilightPaintLarge());
+			double alpha = getValueControler().computeAlphaFromVal(dispVal, 340, 0);
+			canvas.drawArc(oval2, 100f, (float)alpha, false, CdlPalette.getHilightPaintLarge());
 			drawCenterText(canvas, text, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
 		}
 	}
 
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		super.scroll(e1, e2, distanceX, distanceY);
 		valueControler.setValueFromDistance(distanceY, rect.height(),2);
+		super.scroll(e1, e2, distanceX, distanceY);
 	}
 
 	public CdlValue getValueControler() {
 		return valueControler;
+	}
+	
+	public void longPress(MotionEvent e) {
+		CdlUtils.cdlLog(TAG, "longpress" + e);
+		valueControler.setValue(0.5f);
+		super.longPress(e);
 	}
 
 }
