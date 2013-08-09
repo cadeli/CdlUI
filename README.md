@@ -135,17 +135,15 @@ A toggle is associed to the tapUp.
 An audio mixer interface with faders and knobs
 ----
 
-Some interactions are available (push button to set faders value, display knobs values in button label, etc... )
+A sample of design by this UI. State/value of each controler is available. Some interactions are available (push button to set faders value, display knobs values in button label, etc... )
 
-
-A sample of design by this UI. State/value of each controler is available.
 
   ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr3.png?raw=true)
 
 
 
 Sample code at 
-https://github.com/cadeli/CdlUI/tree/master/CdlUIg/src/com/cadeli/uiDemo
+https://github.com/cadeli/CdlUI/tree/master/CdlUIg/src/com/cadeli/uiDemo/FakeAudioMixerActivity.java
 
 LICENSE
 ====
