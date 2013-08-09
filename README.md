@@ -94,10 +94,8 @@ In your activity in the onCreate method just after the setContentView
 	}
    ```
   
-This lib is used in app
+This lib is used in a free app on google play 
 http://play.google.com/store/apps/details?id=com.cadeli.dmFree
-  
-
   
 Sample code at 
 https://github.com/cadeli/CdlUI/tree/master/CdlUIg/src/com/cadeli/uiDemo
