@@ -112,9 +112,12 @@ A grid of push buttons
 
 With 40 lines of code
 
+Sample code at 
+https://github.com/cadeli/CdlUI/tree/master/CdlUIg/src/com/cadeli/uiDemo/AnotherGridDemo.java
+
   ![ScreenShot](https://raw.github.com/cadeli/CdlUI/master/CdlUIg/screenshots/scr4.png?raw=true)
 
-Another  grid of push buttons whith style options
+Another  grid of push buttons with more style options
 ----
 
 With 40 lines of code
@@ -131,6 +134,9 @@ A toggle is associed to the tapUp.
 
 An audio mixer interface with faders and knobs
 ----
+
+Some interactions are available (push button to set faders value, display knobs values in button label, etc... )
+
 
 A sample of design by this UI. State/value of each controler is available.
 
