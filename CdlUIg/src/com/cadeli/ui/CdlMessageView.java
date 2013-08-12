@@ -13,8 +13,6 @@ public class CdlMessageView extends CdlView {
 	public static int MESSAGETYPE_WARNING = 2;
 
 	private Handler handler = new Handler();
-	private Rect bounds = new Rect();
-	private RectF rectf = new RectF();
 
 	private static final long MESSAGE_DURATION = 500;
 	private static final String TAG = "MessageView";
@@ -97,6 +95,7 @@ public class CdlMessageView extends CdlView {
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
 		canvas.drawText(text, x, y, paint);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
-
 	}
+	
+	
 }

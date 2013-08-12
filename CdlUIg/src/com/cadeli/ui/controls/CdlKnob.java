@@ -46,22 +46,26 @@ public class CdlKnob extends CdlBaseButton {
 			RectF oval2 = new RectF(rect.left + wl, rect.top + wl, rect.right - wl, rect.bottom - wl);
 			canvas.drawArc(oval2, 100f, 340f, false, CdlPalette.getBlackPaintLarge());
 			double alpha = getValueControler().computeAlphaFromVal(dispVal, 340, 0);
-			canvas.drawArc(oval2, 100f, (float)alpha, false, CdlPalette.getHilightPaintLarge());
-			drawCenterText(canvas, text, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
+			canvas.drawArc(oval2, 100f, (float) alpha, false, CdlPalette.getHilightPaintLarge());
+			if (isEnable()) {
+				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+			}
 		}
 	}
 
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		valueControler.setValueFromDistance(distanceY, rect.height(),2);
+		if (!isEnable()) return;
+		valueControler.setValueFromDistance(distanceY, rect.height(), 2);
 		super.scroll(e1, e2, distanceX, distanceY);
 	}
 
 	public CdlValue getValueControler() {
 		return valueControler;
 	}
-	
+
 	public void longPress(MotionEvent e) {
 		CdlUtils.cdlLog(TAG, "longpress" + e);
+		if (!isEnable()) return;
 		valueControler.setValue(0.5f);
 		super.longPress(e);
 	}

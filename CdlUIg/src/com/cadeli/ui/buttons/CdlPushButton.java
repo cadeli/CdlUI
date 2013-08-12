@@ -47,7 +47,4 @@ public class CdlPushButton extends CdlBaseButton {
 			drawLabel(canvas);
 		}
 	}
-
-
-
 }

@@ -58,6 +58,7 @@ public class CdlOnOffButton extends CdlBaseButton {
 
 	public void singleTapUp(MotionEvent e) {
 		CdlUtils.cdlLog(TAG, "tap on cdl: " + label + "state=" + state);
+		if (!isEnable()) return;
 		setState(!state);
 		super.singleTapUp(e);
 	}

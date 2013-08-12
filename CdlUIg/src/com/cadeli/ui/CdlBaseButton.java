@@ -36,6 +36,7 @@ public class CdlBaseButton {
 	public static final int DISPLAYMODE_LIST = 2;
 
 	private boolean visible = true;
+	private boolean enable =true;
 	private boolean hilight = false;
 
 	protected Rect rect = new Rect(100, 10, 200, 200);
@@ -150,6 +151,7 @@ public class CdlBaseButton {
 	}
 
 	protected void drawLabel(Canvas canvas) {
+		if (isEnabled) {
 		if (getLabel().contains(" ") && getSubLabel() == null) {
 			drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
 			drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
@@ -159,7 +161,7 @@ public class CdlBaseButton {
 				drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w-2*padding) / 2, (h-2*padding) / 2));
 			}
 		}
-	}
+	}}
 
 	protected void drawCenterText(Canvas canvas, String text, Paint paint) {
 		if (text == null)
@@ -253,12 +255,14 @@ public class CdlBaseButton {
 
 	public void singleTapUp(MotionEvent e) {
 		CdlUtils.cdlLog(TAG, "singleTapUp: " + label);
+		if (!isEnable()) return;
 		if (onTapUpCdlListener != null) {
 			onTapUpCdlListener.tapUp(this, e);
 		}
 	}
 
 	public void longPress(MotionEvent e) {
+		if (!isEnable()) return;
 		if (onLongPressCdlListener != null) {
 			onLongPressCdlListener.longPress(this, e);
 		}
@@ -266,6 +270,7 @@ public class CdlBaseButton {
 	}
 
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		if (!isEnable()) return;
 		if (onScrollCdlListener != null) {
 			onScrollCdlListener.scroll(this, e1, e2, distanceX, distanceY);
 		}
@@ -428,6 +433,14 @@ public class CdlBaseButton {
 
 	public void setId(int id) {
 		this.id=id;
+	}
+
+	public boolean isEnable() {
+		return enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 
 }
