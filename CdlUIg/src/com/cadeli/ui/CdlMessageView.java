@@ -55,7 +55,7 @@ public class CdlMessageView extends CdlView {
 	}
 
 	public void displayMessage(String messageString, int messageType) {
-		CdlUtils.cdlLog(TAG, "displayMessage::" + messageString);
+		//CdlUtils.cdlLog(TAG, "displayMessage::" + messageString);
 		this.messageType = messageType;
 		this.messageString = messageString;
 		invalidate();

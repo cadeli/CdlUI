@@ -47,7 +47,7 @@ public class CdlView extends View implements OnGestureListener {
 	private boolean sized;
 	private int padding = 2; // defaultval
 	private int scrollBarHeight = 8;
-	private int startXScroll;
+	protected int startXScroll;
 	private int w_btn;
 	private static Rect urect = new Rect();
 	protected static Rect bounds = new Rect();
@@ -198,7 +198,6 @@ public class CdlView extends View implements OnGestureListener {
 		int h_btn = h;
 		if (nbRows != 0) {
 			h_btn = h / nbRows;
-
 			if (h % nbRows != 0) {
 				h_btn++;
 			}
@@ -214,7 +213,7 @@ public class CdlView extends View implements OnGestureListener {
 					maxGHforRow = cdlBaseButton.grid_height;
 				}
 				if (cdlLayout == CDL_LAYOUT_GRID) {
-					if (col >= grid_nbCols) {
+					if (col >= grid_nbCols|| cdlBaseButton.equals(cdlBaseButtons.get(cdlBaseButtons.size()-1))) {
 						col = 0;
 						row += maxGHforRow;
 						if (row > realNbRow) {
@@ -225,6 +224,7 @@ public class CdlView extends View implements OnGestureListener {
 				}
 			}
 		}
+		CdlUtils.cdlLog(TAG,"realrow="+ realNbRow + " row="+ row);
 		if (realNbRow != nbRows) {
 			maxGHforRow = 1;
 			h_btn = h / realNbRow;
