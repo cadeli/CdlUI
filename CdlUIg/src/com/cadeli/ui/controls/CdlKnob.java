@@ -40,12 +40,15 @@ public class CdlKnob extends CdlBaseButton {
 		if (isVisible()) {
 			super.draw(canvas);
 			int wl = 12;
-			int dispVal = (int) (valueControler.getValue() * 100);
-			String text = "" + dispVal;
+			double dispVal = valueControler.getValue();
+			if(valueControler.isNormalized()) {
+				dispVal*=100;
+			}
+			String text = "" + (int)dispVal;
 			// XmlUtil.myLog(TAG," drawFader " + frameCursorRect);
 			RectF oval2 = new RectF(rect.left + wl, rect.top + wl, rect.right - wl, rect.bottom - wl);
 			canvas.drawArc(oval2, 100f, 340f, false, CdlPalette.getBlackPaintLarge());
-			double alpha = getValueControler().computeAlphaFromVal(dispVal, 340, 0);
+			double alpha = getValueControler().computeAlphaFromVal((int)dispVal, 340, 0);
 			canvas.drawArc(oval2, 100f, (float) alpha, false, CdlPalette.getHilightPaintLarge());
 			if (isEnable()) {
 				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
@@ -66,7 +69,7 @@ public class CdlKnob extends CdlBaseButton {
 	public void longPress(MotionEvent e) {
 		CdlUtils.cdlLog(TAG, "longpress" + e);
 		if (!isEnable()) return;
-		valueControler.setValue(0.5f);
+		valueControler.setValues(0f,1f,0.5f);
 		super.longPress(e);
 	}
 

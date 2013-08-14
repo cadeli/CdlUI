@@ -14,7 +14,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-*/
+ */
 
 package com.cadeli.ui.controls;
 
@@ -27,13 +27,14 @@ public class CdlValue {
 	protected double value = 0.5f;
 	protected double interval = 1f;
 	private String name;
+	private boolean normalized = true;
 
 	public CdlValue(String name) {
 		super();
 		this.name = name;
 	}
 
-	public void setValues(double  minVal, double  maxVal, double  value) {
+	public void setValues(double minVal, double maxVal, double value) {
 		this.minVal = minVal;
 		this.maxVal = maxVal;
 		if (maxVal >= 0 && minVal >= 0) {
@@ -45,72 +46,91 @@ public class CdlValue {
 		if (maxVal <= 0 && minVal <= 0) {
 			interval = Math.abs(maxVal - minVal);
 		}
+		if (minVal == 0 && maxVal == 1) {
+			normalized = true;
+		} else {
+			normalized = false;
+		}
 		setValue(value);
 	}
 
+	private void setValue(double newVal) {
+		// CdlUtils.cdlLog(TAG, "1setvalue: " + newVal + " max=" + maxVal + " min=" + minVal + " " + name);
+		if (newVal > maxVal)
+			newVal = maxVal;
+		if (newVal < minVal)
+			newVal = minVal;
+		if (!isNormalized()) {
+			value = computeNormalizedVal(newVal);
+		} else {
+			value = newVal;
+		}
+		//CdlUtils.cdlLog(TAG, "3setvalue: " + newVal + " max=" + maxVal + " min=" + minVal + " " + name);
+	}
+
 	public double getValue() {
-		return value;
+		if (isNormalized()) {
+			return value;
+		} else {
+			return computeExternalVal(value);
+		}
 	}
 
 	// fader scroll
-	public double setValueFromDistance(double distance, int deviceHeigth) {
-		return setValueFromDistance(distance, deviceHeigth,1);
+	public void setValueFromDistance(double distance, int deviceHeigth) {
+		setValueFromDistance(distance, deviceHeigth, 1);
 	}
-	
+
 	// fader scroll
-	public double setValueFromDistance(double distance, int deviceHeigth,double  coef) {
-		double  incr = 0;
-		incr = (double ) ((double ) (distance) / (double ) (deviceHeigth*coef));
+	public void setValueFromDistance(double distance, int deviceHeigth, double coef) {
+		double incr = 0;
+		incr = (double) ((double) (distance) / (double) (deviceHeigth * coef));
 		double newVal = value + incr;
-		//CdlUtils.cdlLog(TAG, "setValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
-		setValue(newVal);
-		return newVal;
+		// CdlUtils.cdlLog(TAG, "setValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
+		value = inRange(newVal);
 	}
 
 	// fader tap
-	public double  setAbsValueFromDistance(double  distance, int deviceHeigth) {
-		double  incr = 0;
-		incr = (double ) ((double ) (distance) / (double ) deviceHeigth);
-		double  newVal =  incr;
+	public void setAbsValueFromDistance(double distance, int deviceHeigth) {
+		double incr = 0;
+		incr = (double) ((double) (distance) / (double) deviceHeigth);
+		double newVal = incr;
 		//CdlUtils.cdlLog(TAG, "setAbsValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
-		setValue(newVal);
-		return newVal;
+		value = inRange(newVal);
 	}
 
-	protected int computeYMarkFromValue(double  top, double  bottom) {
-		double y = bottom - ((bottom - top) * (value - minVal)) / interval;
-		// XmlUtil.myLog(TAG, "computeYMarkFromValue" + value + " -> " + y + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal+ " "+ name);
+	protected int computeYMarkFromValue(double top, double bottom) {
+		double y = bottom - (bottom - top) * value ;
+//		CdlUtils.cdlLog(TAG, "computeYMarkFromValue" + value + " -> " + y + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal + " " + name);
 		return (int) y;
 	}
 
-	protected double computeValueFromYMark(double  y, double  top, double  bottom) {
-		double newVal = minVal + (interval) * (bottom - y) / (bottom - top);
-		// XmlUtil.myLog(TAG, "computeValueFromYMark y=" + y + " val-> " + newVal + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal);
-		setValue(newVal);
+	protected double computeValueFromYMark(double y, double top, double bottom) {
+		double newVal = (bottom - y) / (bottom - top);
+//		CdlUtils.cdlLog(TAG, "computeValueFromYMark y=" + y + " val-> " + newVal + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal);
+		value = inRange(newVal);
+		return newVal;
+	}
+
+	private double inRange(double newVal) {
+		if (newVal > 1)
+			newVal = 1;
+		if (newVal < 0)
+			newVal = 0;
 		return newVal;
 	}
 
 	public double computeAlphaFromVal(int pitch, int top, int bottom) {
 		if ((maxVal - minVal) == 0) {
-			CdlUtils.cdlLog(TAG, "*** ERREUR " + " min=" + minVal + " max=" + maxVal);
+			CdlUtils.cdlLog(TAG, "*** ERROR " + " min=" + minVal + " max=" + maxVal);
 			return 0;
 		}
-		double ret = bottom - ((bottom - top) * value) / (maxVal - minVal);
+		double ret = bottom - ((bottom - top) * value) ;
 		return ret;
 	}
 
 	public double getMaxVal() {
 		return maxVal;
-	}
-
-	public void setValue(double newVal) {
-		//CdlUtils.cdlLog(TAG, "1setvalue: " + newVal + " max=" + maxVal + " min=" + minVal + " " + name);
-		if (newVal > maxVal)
-			newVal = maxVal;
-		if (newVal < minVal)
-			newVal = minVal;
-		//CdlUtils.cdlLog(TAG, "2setvalue: " + newVal + " max=" + maxVal + " min=" + minVal + " " + name);
-		value = newVal;
 	}
 
 	public double getValueFromDistance(double distance, int w) {
@@ -126,19 +146,21 @@ public class CdlValue {
 	public String getName() {
 		return name;
 	}
-	
-	public static double  computeNormalizedVal(int val, int min, int max) {
-		double  intervalle = (max - min);
-		double  ret = (double ) (val-min)/intervalle;
+
+	private double computeNormalizedVal(double val) {
+		double intervalle = (maxVal - minVal);
+		double ret = (double) (val - minVal) / intervalle;
 		return ret;
 	}
 
-	public static double  computeExternalVal(double  val, int min, int max) {
-		double  intervalle = (max - min);
-		double  ret = (double ) ((val*intervalle)+min);
+	private double computeExternalVal(double val) {
+		double intervalle = (maxVal - minVal);
+		double ret = (double) ((val * intervalle) + minVal);
 		return ret;
 	}
 
-
+	public boolean isNormalized() {
+		return normalized;
+	}
 
 }

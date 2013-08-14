@@ -39,7 +39,7 @@ public class CdlFader extends CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		int yMark = valueControler.computeYMarkFromValue(rect.top, rect.bottom);
+		int yMark = valueControler.computeYMarkFromValue(rect.top+2*padding, rect.bottom - 2*padding);
 		if (isVisible()) {
 			super.draw(canvas);
 			rect2.left = rect.left + padding;
@@ -53,19 +53,19 @@ public class CdlFader extends CdlBaseButton {
 			rect2.bottom = yMark + wl;
 			if (isEnable()) {
 				canvas.drawRoundRect(rect2, 5f, 5f, CdlPalette.getHilightPaint());
-
-				int dispVal = 0;
-				dispVal = (int) (valueControler.getValue() * 100);
-				//
-				String text = "" + dispVal;
+				double dispVal =  valueControler.getValue();
+				if (valueControler.isNormalized()) {
+					dispVal *= 100;
+				}
+				String text = "" + (int)dispVal;
 				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w * 2 - 2 * padding, h - 2 * padding));
-				//
 			}
 		}
 	}
 
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		if (!isEnable()) return;
+		if (!isEnable())
+			return;
 		valueControler.setValueFromDistance(distanceY, rect.height());
 		super.scroll(e1, e2, distanceX, distanceY);
 	}
@@ -79,7 +79,8 @@ public class CdlFader extends CdlBaseButton {
 	}
 
 	public void singleTapUp(MotionEvent e) {
-		if (!isEnable()) return;
+		if (!isEnable())
+			return;
 		valueControler.setAbsValueFromDistance(getBottom() - e.getY(), rect.height());
 		super.singleTapUp(e);
 		return;
@@ -87,8 +88,9 @@ public class CdlFader extends CdlBaseButton {
 
 	public void longPress(MotionEvent e) {
 		CdlUtils.cdlLog(TAG, "longpress" + e);
-		if (!isEnable()) return;
-		valueControler.setValue(0.5f);
+		if (!isEnable())
+			return;
+		valueControler.setValues(0f,1f,0.5f);
 		super.longPress(e);
 	}
 }

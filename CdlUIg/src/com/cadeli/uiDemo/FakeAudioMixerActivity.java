@@ -89,21 +89,21 @@ public class FakeAudioMixerActivity extends Activity {
 		if (cdlNStatesButton.getId() == 25 && cdlNStatesButton.getState() == 3) {
 			for (int id = 7; id <= 12; id++) {
 				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id);
-				cdlFader.getValueControler().setValue((id - 7) / 6.0);
+				cdlFader.getValueControler().setValues(0f,1f,(id - 7) / 6.0);
 			}
 		}
 		// trigg action
 		if (cdlNStatesButton.getId() == 25 && cdlNStatesButton.getState() == 2) {
 			for (int id = 7; id <= 12; id++) {
 				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id);
-				cdlFader.getValueControler().setValue((12-id ) / 6.0);
+				cdlFader.getValueControler().setValues(0f,1f,(12-id ) / 6.0);
 			}
 		}
 		// trigg action
 		if (cdlNStatesButton.getId() == 25 && cdlNStatesButton.getState() == 1) {
 			for (int id = 7; id <= 12; id++) {
 				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id);
-				cdlFader.getValueControler().setValue(0.4);
+				cdlFader.getValueControler().setValues(0f,1f,0.4f);
 			}
 		}
 	}
