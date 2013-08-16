@@ -61,6 +61,9 @@ public class SimpleGridDemoActivity extends Activity {
 				if (cdlBaseButton.getLabel().contains("5")) {
 					((Activity)context).startActivityForResult(new Intent(context, AnotherGridDemo.class), 0);
 				}
+				if (cdlBaseButton.getLabel().contains("6")) {
+					((Activity)context).startActivityForResult(new Intent(context, NstatesBtnDemo.class), 0);
+				}
 			}
 		};
 
@@ -76,7 +79,7 @@ public class SimpleGridDemoActivity extends Activity {
 		context = mCdlView.getContext();
 		mCdlView.setPadding(4);
 		mCdlView.setGrid_nbCols(3); // define nb buttons per row
-		mCdlView.setCdlLayout(CdlView.CDL_LAYOUT_GRID);
+		mCdlView.setCdlLayoutType(CdlView.CDL_LAYOUT_GRID);
 		
 		// Create push buttons 
 		for (int i=0; i <=  16; i++) {

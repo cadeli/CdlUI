@@ -1,5 +1,8 @@
 package com.cadeli.uiDemo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -75,7 +78,7 @@ public class FakeAudioMixerActivity extends Activity {
 		mCdlView = (CdlView) findViewById(R.id.cdlView2);
 		mCdlView.setPadding(4);
 		mCdlView.setGrid_nbCols(6); // define nb buttons per row
-		mCdlView.setCdlLayout(CdlView.CDL_LAYOUT_GRID);
+		mCdlView.setCdlLayoutType(CdlView.CDL_LAYOUT_GRID);
 
 		// Create push buttons
 		createStrips();
@@ -152,13 +155,17 @@ public class FakeAudioMixerActivity extends Activity {
 			mCdlButton.setBackgroundColor(0);
 			mCdlButton.setOnScrollCdlListener(onScrollCdlKnobListener);
 		}
+		
+		List<TestElement> stateValuesForButtons = new ArrayList<TestElement>();
+		stateValuesForButtons.add(new TestElement("st1"));
+		stateValuesForButtons.add(new TestElement("st2"));
+		stateValuesForButtons.add(new TestElement("st3"));
+		stateValuesForButtons.add(new TestElement("---"));
+		
 		// create multistates buttons
 		for (int i = 0; i < 6; i++) {
-			CdlNStatesButton mCdlButton = new CdlNStatesButton("aaa");
-			mCdlButton.addState("st1");
-			mCdlButton.addState("st2");
-			mCdlButton.addState("st3");
-			mCdlButton.addState("---");
+			CdlNStatesButton mCdlButton = new CdlNStatesButton("dummy");
+			mCdlButton.setList((List<Object> )(List<?>)stateValuesForButtons);
 			mCdlView.addCdlBaseButton(mCdlButton);
 			mCdlButton.setBackgroundColor(colorIndexForBlack);
 			mCdlButton.setOnTapUpCdlListener(onTapUpCdlListener);

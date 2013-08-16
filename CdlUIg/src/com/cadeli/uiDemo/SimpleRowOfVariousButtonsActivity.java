@@ -62,7 +62,7 @@ public class SimpleRowOfVariousButtonsActivity extends Activity {
 		CdlView mCdlView = (CdlView) findViewById(R.id.cdlView1);
 		mCdlView.setPadding(4);
 		mCdlView.setGrid_nbCols(6); // define nb buttons per row
-		mCdlView.setCdlLayout(CdlView.CDL_LAYOUT_FLOW);
+		mCdlView.setCdlLayoutType(CdlView.CDL_LAYOUT_FLOW);
 		
 		// Create push  buttons 
 		for (int i=0; i < 12; i++) {

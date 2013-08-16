@@ -34,9 +34,10 @@ public class CdlBaseButton {
 	public static final int DISPLAYMODE_COMPACT = 0;
 	public static final int DISPLAYMODE_EXPANDED = 1;
 	public static final int DISPLAYMODE_LIST = 2;
+	public static final int DISPLAYMODE_WITH_ARROW_BTN = 3;
 
 	private boolean visible = true;
-	private boolean enable =true;
+	private boolean enable = true;
 	private boolean hilight = false;
 
 	protected Rect rect = new Rect(100, 10, 200, 200);
@@ -68,11 +69,9 @@ public class CdlBaseButton {
 	protected float round_h;
 	protected float round_w;
 
-	private boolean isBorder=true;
-	private boolean isEnabled=true;
+	private boolean isBorder = true;
+	private boolean isEnabled = true;
 	private int id;
-	
-	
 
 	public CdlBaseButton() {
 		super();
@@ -139,29 +138,32 @@ public class CdlBaseButton {
 	public void draw(Canvas canvas) {
 		if (isVisible()) {
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
+			float rw = round_w;
+			float rh = round_h;
 			if (flashing) {
-				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
+				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getFlashPaint());
 			} else {
-				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(backgroundColor,getLeft(),getTop(),w,h));
+				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getPaint(backgroundColor, getLeft(), getTop(), w, h));
 			}
 			if (isBorder) {
-				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
+				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getBorderPaint());
 			}
 		}
 	}
 
 	protected void drawLabel(Canvas canvas) {
 		if (isEnabled) {
-		if (getLabel().contains(" ") && getSubLabel() == null) {
-			drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
-			drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
-		} else {
-			drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w-2*padding, h-2*padding));
-			if (getSubLabel() != null) {
-				drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w-2*padding) / 2, (h-2*padding) / 2));
+			if (getLabel().contains(" ") && getSubLabel() == null) {
+				drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+				drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+			} else {
+				drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+				if (getSubLabel() != null) {
+					drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w - 2 * padding) / 2, (h - 2 * padding) / 2));
+				}
 			}
 		}
-	}}
+	}
 
 	protected void drawCenterText(Canvas canvas, String text, Paint paint) {
 		if (text == null)
@@ -228,7 +230,7 @@ public class CdlBaseButton {
 		return;
 	}
 
-	private String schrinkText(Paint paint, Rect bounds2, String text) {
+	protected String schrinkText(Paint paint, Rect bounds2, String text) {
 		paint.getTextBounds(text, 0, text.length(), bounds2);
 		// CdlUtils.cdlLog(TAG, "schrinkText b="+ bounds2.width() + " getW="+ getWidth());
 		if (bounds2.width() < getWidth() - 2 * padding) {
@@ -255,14 +257,16 @@ public class CdlBaseButton {
 
 	public void singleTapUp(MotionEvent e) {
 		CdlUtils.cdlLog(TAG, "singleTapUp: " + label);
-		if (!isEnable()) return;
+		if (!isEnable())
+			return;
 		if (onTapUpCdlListener != null) {
 			onTapUpCdlListener.tapUp(this, e);
 		}
 	}
 
 	public void longPress(MotionEvent e) {
-		if (!isEnable()) return;
+		if (!isEnable())
+			return;
 		if (onLongPressCdlListener != null) {
 			onLongPressCdlListener.longPress(this, e);
 		}
@@ -270,11 +274,12 @@ public class CdlBaseButton {
 	}
 
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		if (!isEnable()) return;
+		if (!isEnable())
+			return;
 		if (onScrollCdlListener != null) {
 			onScrollCdlListener.scroll(this, e1, e2, distanceX, distanceY);
 		}
-		//CdlUtils.cdlLog(TAG, "scroll on cdl: " + label);
+		// CdlUtils.cdlLog(TAG, "scroll on cdl: " + label);
 	}
 
 	public void setLabel(String s) {
@@ -392,6 +397,8 @@ public class CdlBaseButton {
 	}
 
 	public void setRound(float round) {
+		round=Math.abs(round);
+		while (round>1) round/=2; //TODO
 		this.round = round;
 	}
 
@@ -416,7 +423,7 @@ public class CdlBaseButton {
 	}
 
 	public void setEnabled(boolean b) {
-		isEnabled=b;
+		isEnabled = b;
 	}
 
 	public boolean isEnabled() {
@@ -432,7 +439,7 @@ public class CdlBaseButton {
 	}
 
 	public void setId(int id) {
-		this.id=id;
+		this.id = id;
 	}
 
 	public boolean isEnable() {

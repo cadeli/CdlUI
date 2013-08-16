@@ -73,7 +73,7 @@ public class AnotherGridDemo extends Activity {
 		context = mCdlView.getContext();
 		mCdlView.setPadding(4);
 		mCdlView.setGrid_nbCols(4); // define nb buttons per row
-		mCdlView.setCdlLayout(CdlView.CDL_LAYOUT_GRID);
+		mCdlView.setCdlLayoutType(CdlView.CDL_LAYOUT_GRID);
 		
 		//define colorscheme 
 		CdlPalette.setColorScreme(CdlPalette.COLORSCHEME4);
