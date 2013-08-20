@@ -35,6 +35,8 @@ public class CdlNStatesButton extends CdlBaseButton {
 	private String stateTxt;
 	private int state;
 	private int defaultState = 0;
+	private int nbLig = 4;
+	private float startVisuLig;
 
 	public CdlNStatesButton(String title) {
 		super();
@@ -72,27 +74,59 @@ public class CdlNStatesButton extends CdlBaseButton {
 			if (displayMode == CdlBaseButton.DISPLAYMODE_WITH_ARROW_BTN) {
 				drawWithArrowBtn(canvas);
 			}
+			if (isBorder()) {
+				rectf.set(rect.left,rect.top,rect.right,rect.bottom);
+				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
+			}
 		}
 	}
 
 	private void drawWithArrowBtn(Canvas canvas) {
-		rectf.set(getLeft(),getTop(),getLeft()+w,getTop()+h);
-		drawCenterTextInrectCase(canvas, ""+(state+1)+"/"+ (stateValues.size()) + " - "+  stateValues.get(state).toString(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-		rectf.set(getLeft(),getTop(),getLeft()+ w/5,getTop()+h);
+		rectf.set(getLeft(), getTop(), getLeft() + w, getTop() + h);
+		drawCenterTextInrectCase(canvas, "" + (state + 1) + "/" + (stateValues.size()) + " - " + stateValues.get(state).toString(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+		rectf.set(getLeft(), getTop(), getLeft() + w / 5, getTop() + h);
 		drawCenterTextInrectCase(canvas, "<", CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-		rectf.set(getRight()-w/5,getTop(),getRight(),getTop()+h);
+		rectf.set(getRight() - w / 5, getTop(), getRight(), getTop() + h);
 		drawCenterTextInrectCase(canvas, ">", CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 	}
 
 	private void drawList(Canvas canvas) {
-		int h_case = h / stateValues.size();
-		for (int i = 0; i < stateValues.size(); i++) {
-			rectf.set(padding + rect.left, 2 * padding + rect.top + i * h_case, rect.right - padding, (i + 1) * h_case + rect.top);
-			if (i == getState()) {
-				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
+		int h_case = (h - (2 * padding + (int) round_w / 2)) / getNbLig();
+		for (int i = (int) startVisuLig; i < stateValues.size(); i++) {
+			float hstart = (i - startVisuLig) * h_case + rect.top + (int) round_w / 2;
+			if (hstart >= rect.top) {
+				if (hstart + h_case <= rect.bottom) {
+					rectf.set(padding + rect.left + (int) round_w / 2, hstart, rect.right - padding - (int) round_w / 2, hstart + h_case);
+					CdlUtils.cdlLog(TAG, "DrawList:" + stateValues.get(0).toString() + "recf=" + rectf);
+					if (i == getState()) {
+						canvas.drawRect(rectf, CdlPalette.getHilightPaint());
+					} else {
+						canvas.drawRect(rectf, CdlPalette.getPaint(backgroundColor, 0, 0, w, h_case));
+					}
+					// canvas.drawRect(rectf, CdlPalette.getBorderPaint());
+					drawCenterTextInrectCase(canvas, stateValues.get(i).toString(), CdlPalette.getTxtPaint(w - 2 * padding, h_case - 2 * padding));
+				}
 			}
-			drawCenterTextInrectCase(canvas, stateValues.get(i).toString(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 		}
+		if (stateValues.size() > nbLig) {
+			drawVScrollbar(canvas);
+		} else {
+			startVisuLig = 0;
+		}
+	}
+
+	private void drawVScrollbar(Canvas canvas) {
+		int sLeft = rect.right - 8 - padding - (int) round_w / 2;
+		int sRight = rect.right - padding - (int) round_w / 2;
+		int sTop = rect.top + padding + (int) round_w / 2;
+		int sBottom = rect.bottom - padding - (int) round_w / 2;
+		int sHeigth = sBottom - sTop;
+		rectf.set(sLeft, sTop, sRight, sBottom);
+		canvas.drawRect(rectf, CdlPalette.getFlashPaint());
+		sTop = (int) ((startVisuLig * sHeigth) / stateValues.size()) + sTop;
+		sBottom = (int) (((startVisuLig + getNbLig()) * sHeigth) / stateValues.size());
+		rectf.set(sLeft, sTop, sRight, sBottom);
+		canvas.drawRect(rectf, CdlPalette.getHilightPaint());
 	}
 
 	private void drawExpanded(Canvas canvas) {
@@ -133,17 +167,35 @@ public class CdlNStatesButton extends CdlBaseButton {
 		this.stateTxt = s;
 	}
 
+	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		if (displayMode == DISPLAYMODE_LIST) {
+			int h_case = (h - (2 * padding + (int) round_w / 2)) / getNbLig();
+			startVisuLig += ((float) distanceY / h_case);
+			if (startVisuLig < 0)
+				startVisuLig = 0;
+			if (startVisuLig + getNbLig() >= stateValues.size()) {
+				startVisuLig = stateValues.size() - getNbLig();
+			}
+		}
+		super.scroll(e1, e2, distanceX, distanceY);
+	}
+
 	public void singleTapUp(MotionEvent e) {
 		if (stateValues.isEmpty())
 			return;
-		if (displayMode == DISPLAYMODE_COMPACT || displayMode == DISPLAYMODE_LIST) {
+		if (displayMode == DISPLAYMODE_COMPACT) {
 			gotToNextState();
+		}
+		if (displayMode == DISPLAYMODE_LIST) {
+			int h_case = (h - (2 * padding + (int) round_w / 2)) / getNbLig();
+			float statef = ((e.getY() / h_case) + startVisuLig);
+			setState((int) statef);
 		}
 		if (displayMode == DISPLAYMODE_EXPANDED) {
 			setState(getNewStateFromX(e.getX()));
 		}
 		if (displayMode == DISPLAYMODE_WITH_ARROW_BTN) {
-			if (e.getX() > getLeft() + getWidth()/2) {
+			if (e.getX() > getLeft() + getWidth() / 2) {
 				gotToNextState();
 			} else {
 				gotToPrevState();
@@ -183,8 +235,8 @@ public class CdlNStatesButton extends CdlBaseButton {
 
 	public void gotToPrevState() {
 		int newState = state - 1;
-		if (newState <0) {
-			newState = stateValues.size()-1;
+		if (newState < 0) {
+			newState = stateValues.size() - 1;
 		}
 		setState(newState);
 	}
@@ -213,6 +265,20 @@ public class CdlNStatesButton extends CdlBaseButton {
 		if (stateValues.size() > 0) {
 			setState(0);
 		}
+	}
+
+	public void setList(Object[] stateValues) {
+		for (Object object : stateValues) {
+			addState(object.toString());
+		}
+	}
+
+	public void setNbLig(int nbLig) {
+		this.nbLig = nbLig;
+	}
+
+	private int getNbLig() {
+		return nbLig;
 	}
 
 }

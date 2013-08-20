@@ -192,7 +192,7 @@ public class CdlView extends View implements OnGestureListener {
 			return;
 		if (grid_nbCols <= 0)
 			grid_nbCols = 1;
-		int nbRows = (nbBtn + 1) / grid_nbCols;
+		int nbRows = (nbBtn ) / grid_nbCols;
 		int realNbRow = nbRows;
 		int maxGHforRow = 1;
 		int h_btn = h;
