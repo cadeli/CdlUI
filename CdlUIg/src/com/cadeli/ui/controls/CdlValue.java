@@ -69,11 +69,14 @@ public class CdlValue {
 	}
 
 	public double getValue() {
+		double ret;
 		if (isNormalized()) {
-			return value;
+			ret = value;
 		} else {
-			return computeExternalVal(value);
+			ret= computeExternalVal(value);
 		}
+	//	CdlUtils.cdlLog(TAG, "getValue="+ ret  + " from " +value);
+		return ret;
 	}
 
 	// fader scroll
@@ -83,8 +86,7 @@ public class CdlValue {
 
 	// fader scroll
 	public void setValueFromDistance(double distance, int deviceHeigth, double coef) {
-		double incr = 0;
-		incr = (double) ((double) (distance) / (double) (deviceHeigth * coef));
+		double incr  = (double) ((double) (distance) / (double) (deviceHeigth * coef));
 		double newVal = value + incr;
 		// CdlUtils.cdlLog(TAG, "setValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
 		value = inRange(newVal);

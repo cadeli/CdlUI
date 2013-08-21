@@ -75,7 +75,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 				drawWithArrowBtn(canvas);
 			}
 			if (isBorder()) {
-				rectf.set(rect.left,rect.top,rect.right,rect.bottom);
+				rectf.set(rect.left+padding,rect.top+padding,rect.right-padding,rect.bottom-padding);
 				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
 			}
 		}
@@ -146,7 +146,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 	}
 
 	private void drawCompact(Canvas canvas) {
-		rectf.set(rect.left + 2 * padding, rect.top + 2 * padding, rect.right - 2 * padding, rect.centerY() - 2 * padding);
+		rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.centerY() );
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
 		drawCenterTextUp(canvas, label, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 		drawCenterTextDn(canvas, stateTxt, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));

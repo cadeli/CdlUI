@@ -99,8 +99,9 @@ public class CdlView extends View implements OnGestureListener {
 		}
 	}
 
-	public void draw(Canvas canvas) {
-		super.draw(canvas);
+	protected void onDraw(Canvas canvas) {
+		// CdlUtils.cdlLog(TAG, "onDraw  getW="+ getWidth());
+		super.onDraw(canvas);
 		if (sized == false && cdlLayoutType != CDL_LAYOUT_ABSOLUTE) {
 			size();
 		}
@@ -122,10 +123,6 @@ public class CdlView extends View implements OnGestureListener {
 			}
 			drawScrollBar(canvas, sizeInWCase);
 		}
-	//	urect.set(0, getTop(), padding, getBottom());
-	//	canvas.drawRect(urect, CdlPalette.getBlackPaint()); // TODO this.getBackgroundPaint()
-	//	urect.set(getWidth() - padding, getTop(), getWidth(), getBottom());
-	//	canvas.drawRect(urect, CdlPalette.getBlackPaint());
 	}
 
 	private int computeSizeInWCase() {
@@ -141,7 +138,6 @@ public class CdlView extends View implements OnGestureListener {
 	private void drawBtn(int idBtn, int jPosBtn, Canvas canvas) {
 		if (idBtn < 0 || idBtn >= cdlBaseButtons.size())
 			return;
-		// CdlUtils.cdlLog(TAG, "drawBtn id=" + idBtn + " jPos=" + jPosBtn);
 		CdlBaseButton cdlBaseButton = cdlBaseButtons.get(idBtn);
 		int sLeft = (int) (jPosBtn * w_btn - startXScroll);
 		cdlBaseButton.setSize(sLeft + padding, padding, w_btn * cdlBaseButton.getGrid_width() - padding, getHeight() - scrollBarHeight - padding);
@@ -168,10 +164,10 @@ public class CdlView extends View implements OnGestureListener {
 		canvas.drawRect(urect, CdlPalette.getHilightPaint());
 	}
 
-	private void size() {
+	protected void size() {
 		w = getWidth();
 		h = getHeight();
-		w_btn = w  / grid_nbCols;
+		w_btn = w / grid_nbCols;
 		if (cdlLayoutType == CDL_LAYOUT_GRID) {
 			size_gridMode(w, h);
 		}
@@ -182,8 +178,11 @@ public class CdlView extends View implements OnGestureListener {
 	}
 
 	private void size_flawMode(int w, int h) {
-		// TODO Auto-generated method stub
-
+		int index = 0;
+		for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
+			cdlBaseButton.setSize(w_btn * index, 0, w_btn, h); // real pos recomputed after
+			index++;
+		}
 	}
 
 	private void size_gridMode(int w, int h) {
@@ -192,7 +191,7 @@ public class CdlView extends View implements OnGestureListener {
 			return;
 		if (grid_nbCols <= 0)
 			grid_nbCols = 1;
-		int nbRows = (nbBtn ) / grid_nbCols;
+		int nbRows = (nbBtn) / grid_nbCols;
 		int realNbRow = nbRows;
 		int maxGHforRow = 1;
 		int h_btn = h;
@@ -224,7 +223,7 @@ public class CdlView extends View implements OnGestureListener {
 				}
 			}
 		}
-		CdlUtils.cdlLog(TAG, "realrow=" + realNbRow + " row=" + row);
+		//CdlUtils.cdlLog(TAG, "realrow=" + realNbRow + " row=" + row);
 		if (realNbRow != nbRows) {
 			maxGHforRow = 1;
 			h_btn = h / realNbRow;
@@ -257,8 +256,10 @@ public class CdlView extends View implements OnGestureListener {
 	protected int getIdBtnFromX(float x) {
 		int id = 0;
 		for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
-			if (cdlBaseButton.getLeft() < x && cdlBaseButton.getRight() > x) {
-				return id;
+			if (cdlBaseButton.isVisible()) {
+				if (cdlBaseButton.getLeft() < x && cdlBaseButton.getRight() > x) {
+					return id;
+				}
 			}
 			id++;
 		}
@@ -360,6 +361,7 @@ public class CdlView extends View implements OnGestureListener {
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
+		//CdlUtils.cdlLog(TAG, "onSingleTapUp");
 		if (cdlLayoutType == CDL_LAYOUT_ABSOLUTE || cdlLayoutType == CDL_LAYOUT_GRID) {
 			for (CdlBaseButton cdlBaseButton : cdlBaseButtons) {
 				if (cdlBaseButton.isXYInControl(e.getX(), e.getY())) {
@@ -370,6 +372,7 @@ public class CdlView extends View implements OnGestureListener {
 		}
 		if (cdlLayoutType == CDL_LAYOUT_FLOW) {
 			int idBtn = getIdBtnFromX(e.getX());
+			//CdlUtils.cdlLog(TAG, "onSingleTapUp idbtn=" + idBtn + " max=" + cdlBaseButtons.size());
 			if (idBtn < 0 || idBtn >= cdlBaseButtons.size())
 				return false;
 			CdlBaseButton cdlBaseButton = cdlBaseButtons.get(idBtn);
@@ -389,7 +392,7 @@ public class CdlView extends View implements OnGestureListener {
 			}
 			cdlBaseButton.singleTapUp(e);
 			invalidate(cdlBaseButton.getRect());
-			CdlUtils.cdlLog(TAG, "invalidate : " + cdlBaseButton.getLabel());
+			//CdlUtils.cdlLog(TAG, "invalidate : " + cdlBaseButton.getLabel());
 		}
 	}
 
@@ -428,4 +431,13 @@ public class CdlView extends View implements OnGestureListener {
 	public List<CdlBaseButton> getCdlBaseButtons() {
 		return cdlBaseButtons;
 	}
+
+	public int getStartXScroll() {
+		return startXScroll;
+	}
+
+	public void setStartXScroll(int startXScroll) {
+		this.startXScroll = startXScroll;
+	}
+
 }

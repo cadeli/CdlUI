@@ -43,7 +43,7 @@ public class CdlPalette {
 	private static Paint flashPaint;
 	private static int hilightColor = Color.GREEN;
 	private static float borderSize = 2;
-	private static int defaultAlpha = 192;
+	private static int defaultAlpha = 128;
 	private static float defaulStrokeWidth = 12;
 	private static boolean isGradient = false;
 
@@ -122,9 +122,9 @@ public class CdlPalette {
 			txtPaint.setDither(true);
 		}
 		if (w < h) {
-			txtPaint.setTextSize(w / 4);
+			txtPaint.setTextSize((int)(float)(w / 2.5f));
 		} else {
-			txtPaint.setTextSize(h / 4);
+			txtPaint.setTextSize((int)(float)(h / 2.5f));
 		}
 		txtPaint.setColor(txtPaintColor);
 		return txtPaint;
