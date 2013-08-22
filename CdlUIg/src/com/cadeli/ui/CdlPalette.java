@@ -57,6 +57,12 @@ public class CdlPalette {
 		paint.setDither(true);
 		colorList.add(paint);
 	}
+	
+	
+	public static Paint getPaint(int i) {
+		return  getPaint( i, 0, 0, 100, 100);
+	}
+
 
 	public static Paint getPaint(int i, int x, int y, int w, int h) {
 		int size = colorList.size();
@@ -148,6 +154,7 @@ public class CdlPalette {
 		if (flashPaint == null) {
 			flashPaint = new Paint();
 			flashPaint.setColor(Color.GRAY);
+			flashPaint.setAlpha(100);
 			flashPaint.setAntiAlias(true);
 			flashPaint.setDither(true);
 		}

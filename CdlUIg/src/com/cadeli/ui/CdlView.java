@@ -44,12 +44,12 @@ public class CdlView extends View implements OnGestureListener {
 	protected List<CdlBaseButton> cdlBaseButtons = new ArrayList<CdlBaseButton>();
 	private int cdlLayoutType = CDL_LAYOUT_GRID; // default val
 	private int grid_nbCols = 3; // defaultval
-	private boolean sized;
 	private int padding = 2; // defaultval
+	private boolean sized;
 	private int scrollBarHeight = 8;
 	protected int startXScroll;
 	private int w_btn;
-	private static Rect urect = new Rect();
+	protected static RectF urect = new RectF();
 	protected static Rect bounds = new Rect();
 	protected static RectF rectf = new RectF();
 
