@@ -21,7 +21,9 @@ CdlUI is a library  that provide some basic graphic components
    - FlowLayout with scrollbar
 
 And
-   - Palette tool.
+   - Palette tool
+   - Integrated progress bar
+   - Integrated Custom Message Display (like Toast)
 
 To make this lib as easy as possible for developers,  there is 
   - No XML ( except for one initial view this is all programmatically )
