@@ -46,10 +46,12 @@ public class CdlKnob extends CdlBaseButton {
 			}
 			String text = "" + (int)dispVal;
 			// XmlUtil.myLog(TAG," drawFader " + frameCursorRect);
-			RectF oval2 = new RectF(rect.left + wl, rect.top + wl, rect.right - wl, rect.bottom - wl);
-			canvas.drawArc(oval2, 100f, 340f, false, CdlPalette.getBlackPaintLarge());
-			double alpha = getValueControler().computeAlphaFromVal((int)dispVal, 340, 0);
-			canvas.drawArc(oval2, 100f, (float) alpha, false, CdlPalette.getHilightPaintLarge());
+			RectF oval2 = new RectF(rect.left + wl, rect.top + wl, rect.right - wl, rect.bottom - wl);			
+			float maxAngle = 300f;
+			float minAngle = 120f;
+			canvas.drawArc(oval2, minAngle, maxAngle, false, CdlPalette.getBlackPaintLarge());
+			double alpha = getValueControler().computeAlphaFromVal((int)dispVal, (int)maxAngle, 0);
+			canvas.drawArc(oval2, minAngle, (float) alpha, false, CdlPalette.getHilightPaintLarge());
 			if (isEnable()) {
 				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 			}

@@ -97,9 +97,9 @@ public class CdlNStatesButton extends CdlBaseButton {
 			if (hstart >= rect.top) {
 				if (hstart + h_case <= rect.bottom) {
 					rectf.set(padding + rect.left + (int) round_w / 2, hstart, rect.right - padding - (int) round_w / 2, hstart + h_case);
-					CdlUtils.cdlLog(TAG, "DrawList:" + stateValues.get(0).toString() + "recf=" + rectf);
+					//CdlUtils.cdlLog(TAG, "DrawList:" + stateValues.get(0).toString() + "recf=" + rectf);
 					if (i == getState()) {
-						canvas.drawRect(rectf, CdlPalette.getHilightPaint());
+						canvas.drawRoundRect(rectf,round_w,round_h, CdlPalette.getHilightPaint());
 					} else {
 						canvas.drawRect(rectf, CdlPalette.getPaint(backgroundColor, 0, 0, w, h_case));
 					}
