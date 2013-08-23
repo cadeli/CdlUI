@@ -239,7 +239,7 @@ public class CdlBaseButton {
 		while (text.length() > 2 && bounds2.width() > getWidth() - 2 * padding) {
 			text = text.substring(0, text.length() - 1);
 			paint.getTextBounds(text, 0, text.length(), bounds2);
-			CdlUtils.cdlLog(TAG, "schrinkText " + getLabel() + "b=" + bounds2.width() + " getW=" + getWidth() + " " + text);
+			CdlUtils.cdlLog(TAG, "schrinkText " + getLabel() + "b=" + bounds2.width() + " getW=" + getWidth() + " txt=" + text);
 		}
 		return text;
 	}

@@ -20,7 +20,6 @@ public class CdlMessageView extends CdlView {
 	private int messageType;
 	private int progressVal;
 
-
 	private Runnable runnableMessage = new Runnable() {
 
 		public void run() {
@@ -60,20 +59,19 @@ public class CdlMessageView extends CdlView {
 		this.messageType = messageType;
 		this.messageString = messageString;
 		invalidate();
-		// invalidate((int) bounds2.left - 8, (int) bounds2.top - 8, (int) bounds2.right + 8, (int) bounds2.bottom + 8);
 		timerCountMessage = 2;
 		runnableMessage.run();
 	}
 
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
-		if (progressVal != 0 ) {
+		if (progressVal != 0) {
 			drawProgress(canvas);
 		} else if (messageString.length() > 0) {
 			drawMessage(canvas);
 		}
 	}
-	
+
 	private void drawProgress(Canvas canvas) {
 		String text = "" + progressVal + " " + "%";
 		CdlPalette.getTxtPaint(getWidth() / 4, getHeight() * 3 / 4).getTextBounds(text, 0, text.length(), bounds);
@@ -85,23 +83,18 @@ public class CdlMessageView extends CdlView {
 		int padding = round_h * 3;
 		int dx = (getWidth() / 2 - bounds.centerX());
 		int dy = (int) (getHeight() / 2 - bounds.centerY());
-		int pad = getWidth()/4;
-		int h_start = bounds.top + dy - padding -bounds.height()/2;
-		int h_end   = bounds.bottom + dy +padding;
+		int pad = getWidth() / 4;
+		int h_start = bounds.top + dy - padding - bounds.height() / 2;
+		int h_end = bounds.bottom + dy + padding;
 		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_end);
-		urect.set(getLeft() + pad, h_start, (getRight() - pad)*progressVal/100, h_end);
+		urect.set(getLeft() + pad, h_start, (getRight() - pad) * progressVal / 100, h_end);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
 		canvas.drawRoundRect(urect, round_w, round_h, CdlPalette.getHilightPaint());
-				
-		canvas.drawText(text, x, y,  CdlPalette.getTxtPaint(getWidth() / 4, getHeight() * 3 / 4));
+		canvas.drawText(text, x, y, CdlPalette.getTxtPaint(getWidth() / 4, getHeight() / 4));
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
-		
-		
-		rectf.set(getLeft() + pad, h_start, getRight()-pad,h_start+ urect.height()/3);
-		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(1, x, h_start, (int)rectf.width(),(int) rectf.height()));
-		drawCenterTextInrectCase(canvas,progressMessage,  CdlPalette.getTxtPaint(getWidth() / 8, getHeight() * 3 / 8));		
-
-		
+		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_start + urect.height() / 3);
+		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(1, x, h_start, (int) rectf.width(), (int) rectf.height()));
+		drawCenterTextInrectCase(canvas, progressMessage, CdlPalette.getTxtPaint(getWidth() / 8, getHeight() / 8));
 	}
 
 	private void drawMessage(Canvas canvas) {
@@ -110,7 +103,7 @@ public class CdlMessageView extends CdlView {
 		if (messageType == CdlMessageView.MESSAGETYPE_WARNING) {
 			drawMessage(canvas, messageString, CdlPalette.getHilightPaint());
 		} else {
-			drawMessage(canvas, messageString, CdlPalette.getTxtPaint(getWidth() / 4, getHeight() * 3 / 4));
+			drawMessage(canvas, messageString, CdlPalette.getTxtPaint(getWidth() / 4, getHeight() / 4));
 		}
 	}
 
@@ -129,15 +122,16 @@ public class CdlMessageView extends CdlView {
 		canvas.drawText(text, x, y, paint);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
 	}
-	
+
 	public void setProgress(float min, float max, float val, String progressMessage) {
 		this.progressMessage = progressMessage;
-		float interval = (max -min);
-		progressVal = (int)((val*100)/interval + min);
-		if (getHandler()==null) return;
+		float interval = (max - min);
+		progressVal = (int) ((val * 100) / interval + min);
+		if (getHandler() == null)
+			return;
 		getHandler().post(new Runnable() {
 			public void run() {
-					invalidate();
+				invalidate();
 			}
 		});
 	}
