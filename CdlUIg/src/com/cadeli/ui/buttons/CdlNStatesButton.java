@@ -31,7 +31,7 @@ import com.cadeli.uiDemo.TestElement;
 
 public class CdlNStatesButton extends CdlBaseButton {
 	private static final String TAG = "CdlNStatesButton";
-	private List<Object> stateValues = new ArrayList<Object>();
+	protected List<Object> stateValues = new ArrayList<Object>();
 	private String stateTxt;
 	private int state;
 	private int defaultState = 0;
@@ -75,7 +75,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 				drawWithArrowBtn(canvas);
 			}
 			if (isBorder()) {
-				rectf.set(rect.left+padding,rect.top+padding,rect.right-padding,rect.bottom-padding);
+				rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
 				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
 			}
 		}
@@ -97,14 +97,14 @@ public class CdlNStatesButton extends CdlBaseButton {
 			if (hstart >= rect.top) {
 				if (hstart + h_case <= rect.bottom) {
 					rectf.set(padding + rect.left + (int) round_w / 2, hstart, rect.right - padding - (int) round_w / 2, hstart + h_case);
-					//CdlUtils.cdlLog(TAG, "DrawList:" + stateValues.get(0).toString() + "recf=" + rectf);
+					// CdlUtils.cdlLog(TAG, "DrawList:" + stateValues.get(0).toString() + "recf=" + rectf);
 					if (i == getState()) {
-						canvas.drawRoundRect(rectf,round_w,round_h, CdlPalette.getHilightPaint());
+						canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
 					} else {
 						canvas.drawRect(rectf, CdlPalette.getPaint(backgroundColor, 0, 0, w, h_case));
 					}
-					// canvas.drawRect(rectf, CdlPalette.getBorderPaint());
-					drawCenterTextInrectCase(canvas, stateValues.get(i).toString(), CdlPalette.getTxtPaint(w - 2 * padding, h_case - 2 * padding));
+					String txt = schrinkText(CdlPalette.getTxtPaint(w - 2 * padding, h_case - 2 * padding), bounds, getWidth(), stateValues.get(i).toString());
+					drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(w - 2 * padding, h_case - 2 * padding));
 				}
 			}
 		}
@@ -141,12 +141,13 @@ public class CdlNStatesButton extends CdlBaseButton {
 			if (i == getState()) {
 				canvas.drawRect(rectf, CdlPalette.getHilightPaint());
 			}
-			drawCenterTextInrectCase(canvas, stateValues.get(i).toString(), CdlPalette.getTxtPaint(w_case, bottom - top));
+			String txt = schrinkText(CdlPalette.getTxtPaint(w_case, bottom - top), bounds, (int) rectf.width(), stateValues.get(i).toString());
+			drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(w_case, bottom - top));
 		}
 	}
 
 	private void drawCompact(Canvas canvas) {
-		rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.centerY() );
+		rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.centerY());
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
 		drawCenterTextUp(canvas, label, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 		drawCenterTextDn(canvas, stateTxt, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
@@ -155,7 +156,9 @@ public class CdlNStatesButton extends CdlBaseButton {
 	public void addState(String stateTxt) {
 		stateValues.add(stateTxt.toString());
 		if (stateValues.size() > defaultState) {
-			this.stateTxt = stateValues.get(state).toString();
+			if (state >= 0 && state < stateValues.size()) {
+				this.stateTxt = stateValues.get(state).toString();
+			}
 		}
 	}
 
@@ -268,6 +271,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 	}
 
 	public void setList(Object[] stateValues) {
+		this.stateValues.clear();
 		for (Object object : stateValues) {
 			addState(object.toString());
 		}
