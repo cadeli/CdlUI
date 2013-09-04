@@ -27,7 +27,6 @@ import com.cadeli.ui.CdlBaseButton;
 import com.cadeli.ui.CdlView;
 import com.cadeli.ui.R;
 import com.cadeli.ui.buttons.CdlOnOffButton;
-import com.cadeli.ui.buttons.CdlPushButton;
 import com.cadeli.ui.interfaces.OnLongPressCdlListener;
 import com.cadeli.ui.interfaces.OnTapUpCdlListener;
 

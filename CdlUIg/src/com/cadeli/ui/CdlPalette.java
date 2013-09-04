@@ -34,12 +34,14 @@ public class CdlPalette {
 
 	static List<Paint> colorList = new ArrayList<Paint>();
 	static Paint txtPaint;
+	static Paint txtInversePaint;
 	static Paint borderPaint;
 	static Paint hilightPaint;
 	static Paint hilightPaintLarge;
 	static Paint blackPaint;
 	static Paint blackPaintLarge;
 	static int txtPaintColor = Color.WHITE;
+	static int txtPaintInverseColor = Color.BLACK;
 	private static Paint flashPaint;
 	private static int hilightColor = Color.GREEN;
 	private static float borderSize = 2;
@@ -120,6 +122,12 @@ public class CdlPalette {
 			addColor(Color.rgb(103, 230, 103));
 		}
 	}
+	
+	
+	public static Paint getTxtPaint(int size) {		
+		return getTxtPaint(size, size);
+	}
+
 
 	public static Paint getTxtPaint(int w, int h) {
 		if (txtPaint == null) {
@@ -134,6 +142,26 @@ public class CdlPalette {
 		}
 		txtPaint.setColor(txtPaintColor);
 		return txtPaint;
+	}
+
+	public static Paint getTxtInversePaint(int size) {		
+		return getTxtInversePaint(size, size);
+	}
+
+
+	public static Paint getTxtInversePaint(int w, int h) {
+		if (txtInversePaint == null) {
+			txtInversePaint = new Paint();
+			txtInversePaint.setAntiAlias(true);
+			txtInversePaint.setDither(true);
+		}
+		if (w < h) {
+			txtInversePaint.setTextSize((int)(float)(w / 2.5f));
+		} else {
+			txtInversePaint.setTextSize((int)(float)(h / 2.5f));
+		}
+		txtInversePaint.setColor(txtPaintInverseColor);
+		return txtInversePaint;
 	}
 
 	public static Paint getBorderPaint() {

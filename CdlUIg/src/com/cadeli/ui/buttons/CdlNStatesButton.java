@@ -26,7 +26,6 @@ import android.view.MotionEvent;
 
 import com.cadeli.ui.CdlBaseButton;
 import com.cadeli.ui.CdlPalette;
-import com.cadeli.ui.CdlUtils;
 import com.cadeli.uiDemo.TestElement;
 
 public class CdlNStatesButton extends CdlBaseButton {

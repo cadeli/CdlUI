@@ -58,7 +58,7 @@ public class CdlBaseButton {
 	private float round = 0.1f;
 
 	private boolean flashCapable;
-	private boolean flashing;
+	protected boolean flashing;
 
 	protected String textUp;
 	protected String textDown;
