@@ -37,21 +37,21 @@ public class CdlKnob extends CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		if (isVisible()) {
+		if (isVisible() && !isInvisibleDraw()) {
 			super.draw(canvas);
-			int wl = 12;
+			int wl = (int) CdlPalette.getBlackPaintLarge().getStrokeWidth();
 			double dispVal = valueControler.getValue();
-			if(valueControler.isNormalized()) {
-				dispVal*=100;
+			if (valueControler.isNormalized()) {
+				dispVal *= 100;
 			}
-			String text = "" + (int)dispVal;
+			String text = "" + (int) dispVal;
 			// XmlUtil.myLog(TAG," drawFader " + frameCursorRect);
-			RectF oval2 = new RectF(rect.left + wl, rect.top + wl, rect.right - wl, rect.bottom - wl);			
+			RectF oval2 = new RectF(rect.left + wl, rect.top + wl, rect.right - wl, rect.bottom - wl);
 			float maxAngle = 300f;
 			float minAngle = 120f;
+			float alpha = (float) getValueControler().computeAlphaFromVal((int) dispVal, (int) maxAngle, 0);
+			canvas.drawArc(oval2, minAngle, alpha, false, CdlPalette.getHilightPaintLarge());
 			canvas.drawArc(oval2, minAngle, maxAngle, false, CdlPalette.getBlackPaintLarge());
-			double alpha = getValueControler().computeAlphaFromVal((int)dispVal, (int)maxAngle, 0);
-			canvas.drawArc(oval2, minAngle, (float) alpha, false, CdlPalette.getHilightPaintLarge());
 			if (isEnable()) {
 				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 			}
@@ -59,7 +59,8 @@ public class CdlKnob extends CdlBaseButton {
 	}
 
 	public void scroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		if (!isEnable()) return;
+		if (!isEnable())
+			return;
 		valueControler.setValueFromDistance(distanceY, rect.height(), 2);
 		super.scroll(e1, e2, distanceX, distanceY);
 	}
@@ -70,9 +71,12 @@ public class CdlKnob extends CdlBaseButton {
 
 	public void longPress(MotionEvent e) {
 		CdlUtils.cdlLog(TAG, "longpress" + e);
-		if (!isEnable()) return;
-		valueControler.setValues(0f,1f,0.5f);
+		if (!isEnable())
+			return;
+		valueControler.setValues(0f, 1f, 0.5f);
 		super.longPress(e);
 	}
+
+
 
 }

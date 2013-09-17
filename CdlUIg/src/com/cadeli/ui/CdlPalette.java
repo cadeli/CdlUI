@@ -31,6 +31,7 @@ public class CdlPalette {
 	public static final int COLORSCHEME2 = 20;
 	public static final int COLORSCHEME3 = 30;
 	public static final int COLORSCHEME4 = 40;
+	public static final int COLORSCHEME5 = 50;
 
 	static List<Paint> colorList = new ArrayList<Paint>();
 	static Paint txtPaint;
@@ -57,7 +58,9 @@ public class CdlPalette {
 		paint.setColor(color);
 		paint.setAntiAlias(true);
 		paint.setDither(true);
+		paint.setAlpha(192);
 		colorList.add(paint);
+		CdlUtils.cdlLog(TAG,"AddColor:"+ Integer.toHexString(paint.getColor()));
 	}
 	
 	
@@ -84,38 +87,46 @@ public class CdlPalette {
 	}
 
 	public static void createDefaultColors() {
-		setColorScreme(COLORSCHEME3);
+		setColorScheme(COLORSCHEME3);
 	}
 
-	public static void setColorScreme(int colorscheme) {
+	public static void setColorScheme(int colorscheme) {
+		CdlUtils.cdlLog(TAG, "setColorScreme :" + colorscheme);
 		colorList.clear();
-
-		addColor(Color.rgb(0, 0, 0));
-		if (colorscheme == COLORSCHEME1) {
+		switch (colorscheme) {
+		case COLORSCHEME1:
+			addColor(0x006BC2);
+			addColor(0x39CC00);
+			addColor(0xC6E400);
+			addColor(0xF3DF00);
+			addColor(0xF3AF00);
+		break;
+		case  COLORSCHEME2:
+			addColor(0x737791);
+			addColor(0xDDC71A);
+			addColor(0xD32643);
+			addColor(0x0A3560);
+		break;
+		case  COLORSCHEME3:
+			addColor(Color.rgb(137, 247, 142));
+			addColor(Color.rgb(190, 151, 233));
+			addColor(Color.rgb(252, 248, 132));
 			addColor(Color.rgb(255, 0, 0));
-			addColor(Color.rgb(57, 20, 175));
-			addColor(Color.rgb(255, 211, 0));
-			addColor(Color.rgb(0, 204, 0));
-
-		} else if (colorscheme == COLORSCHEME2) {
-			addColor(Color.rgb(191, 48, 48));
-			addColor(Color.rgb(65, 44, 132));
-			addColor(Color.rgb(191, 167, 48));
-			addColor(Color.rgb(38, 153, 38));
-
-		} else if (colorscheme == COLORSCHEME3) {
-			addColor(Color.rgb(166, 0, 0));
-			addColor(Color.rgb(32, 7, 114));
-			addColor(Color.rgb(166, 137, 0));
-			addColor(Color.rgb(0, 133, 0));
-
-		} else if (colorscheme == COLORSCHEME4) {
+			addColor(Color.rgb(255, 191, 223));			
+		break;
+		case  COLORSCHEME4:
 			addColor(Color.rgb(255, 64, 64));
 			addColor(Color.rgb(106, 72, 215));
 			addColor(Color.rgb(255, 222, 64));
 			addColor(Color.rgb(57, 230, 57));
-
-		} else {
+		break;
+		case  COLORSCHEME5:
+			addColor(0xE19595);//Color.rgb(225, 149, 149));//0xE19595
+			addColor(0x87E4EF);//Color.rgb(135, 228, 239));//0x87E4EF
+			addColor(Color.rgb(149, 255, 149));
+			addColor(Color.rgb(228, 239, 135));
+		break;
+		default:
 			addColor(Color.rgb(255, 115, 115));
 			addColor(Color.rgb(135, 110, 215));
 			addColor(Color.rgb(255, 231, 115));
@@ -182,7 +193,7 @@ public class CdlPalette {
 		if (flashPaint == null) {
 			flashPaint = new Paint();
 			flashPaint.setColor(Color.GRAY);
-			flashPaint.setAlpha(100);
+			flashPaint.setAlpha(170);
 			flashPaint.setAntiAlias(true);
 			flashPaint.setDither(true);
 		}
@@ -200,19 +211,6 @@ public class CdlPalette {
 		return hilightPaint;
 	}
 
-	public static Paint getHilightPaintLarge() {
-		if (hilightPaintLarge == null) {
-			hilightPaintLarge = new Paint();
-			hilightPaintLarge.setStyle(Style.STROKE);
-			hilightPaintLarge.setStrokeWidth(defaulStrokeWidth);
-			hilightPaintLarge.setColor(hilightColor);
-			hilightPaintLarge.setAlpha(defaultAlpha);
-			hilightPaintLarge.setAntiAlias(true);
-			hilightPaintLarge.setDither(true);
-		}
-		return hilightPaintLarge;
-	}
-
 	public static Paint getBlackPaint() {
 		if (blackPaint == null) {
 			blackPaint = new Paint();
@@ -223,14 +221,28 @@ public class CdlPalette {
 		return blackPaint;
 	}
 
+	public static Paint getHilightPaintLarge() {
+		if (hilightPaintLarge == null) {
+			hilightPaintLarge = new Paint();
+			hilightPaintLarge.setStyle(Style.STROKE);
+			hilightPaintLarge.setStrokeWidth(defaulStrokeWidth);
+			hilightPaintLarge.setColor(hilightColor);
+			hilightPaintLarge.setAntiAlias(true);
+			hilightPaintLarge.setDither(true);
+			hilightPaintLarge.setAlpha(128);
+		}
+		return hilightPaintLarge;
+	}
+
 	public static Paint getBlackPaintLarge() {
 		if (blackPaintLarge == null) {
 			blackPaintLarge = new Paint();
-			blackPaintLarge.setColor(Color.DKGRAY);
 			blackPaintLarge.setStyle(Style.STROKE);
 			blackPaintLarge.setStrokeWidth(defaulStrokeWidth);
+			blackPaintLarge.setColor(Color.DKGRAY);
 			blackPaintLarge.setAntiAlias(true);
 			blackPaintLarge.setDither(true);
+			blackPaintLarge.setAlpha(128);
 		}
 		return blackPaintLarge;
 	}

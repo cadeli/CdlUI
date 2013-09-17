@@ -40,8 +40,7 @@ public class CdlFader extends CdlBaseButton {
 
 	public void draw(Canvas canvas) {
 		int yMark = valueControler.computeYMarkFromValue(rect.top + 2 * padding, rect.bottom - 2 * padding);
-		if (isVisible()) {
-			super.draw(canvas);
+		if (isVisible()&& !isInvisibleDraw()) {
 			rect2.left = rect.left + padding;
 			rect2.right = rect.right - padding;
 			int wl = 8;
@@ -60,6 +59,7 @@ public class CdlFader extends CdlBaseButton {
 				String text = "" + (int) dispVal;
 				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w * 1 - 2 * padding, h - 1 * padding));
 			}
+			super.draw(canvas);
 		}
 	}
 

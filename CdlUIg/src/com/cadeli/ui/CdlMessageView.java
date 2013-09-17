@@ -73,28 +73,32 @@ public class CdlMessageView extends CdlView {
 	}
 
 	private void drawProgress(Canvas canvas) {
-		String text = "" + progressVal + " " + "%";
-		CdlPalette.getTxtPaint(getWidth() / 4, getHeight() * 3 / 4).getTextBounds(text, 0, text.length(), bounds);
+		String progressValStr = "" + progressVal + " " + "%";
+		Paint txtPaintValue = CdlPalette.getTxtPaint(getWidth() / 6);
+		Paint txtPaintTitle = CdlPalette.getTxtPaint(getWidth() / 6);
+		txtPaintValue.getTextBounds(progressValStr, 0, progressValStr.length(), bounds);
 		int x = (int) (getWidth() / 2 - bounds.centerX());
-		int y = (int) (getHeight() / 2 - bounds.centerY());
-
+		int y = (int) ((getHeight()/2) - bounds.centerY());
+		
 		int round_h = getWidth() / 100;
 		int round_w = getWidth() / 100;
 		int padding = round_h * 3;
 		int dx = (getWidth() / 2 - bounds.centerX());
 		int dy = (int) (getHeight() / 2 - bounds.centerY());
 		int pad = getWidth() / 4;
-		int h_start = bounds.top + dy - padding - bounds.height() / 2;
-		int h_end = bounds.bottom + dy + padding;
+		int h_start = bounds.top + dy - padding - bounds.height() / 3;
+		int h_end = bounds.bottom + dy + 2*padding;
+		y+=(h_end-h_start)/4;
 		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_end);
 		urect.set(getLeft() + pad, h_start, (getRight() - pad) * progressVal / 100, h_end);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
 		canvas.drawRoundRect(urect, round_w, round_h, CdlPalette.getHilightPaint());
-		canvas.drawText(text, x, y, CdlPalette.getTxtPaint(getWidth() / 4, getHeight() / 4));
+		canvas.drawText(progressValStr, x, y, txtPaintTitle);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
-		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_start + urect.height() / 3);
+		//h_start =(int) rectf.bottom;
+		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_start + urect.height() / 2);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(1, x, h_start, (int) rectf.width(), (int) rectf.height()));
-		drawCenterTextInrectCase(canvas, progressMessage, CdlPalette.getTxtPaint(getWidth() / 8, getHeight() / 8));
+		drawCenterTextInrectCase(canvas, progressMessage, txtPaintValue);
 	}
 
 	private void drawMessage(Canvas canvas) {
@@ -122,6 +126,7 @@ public class CdlMessageView extends CdlView {
 		canvas.drawText(text, x, y, paint);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
 	}
+
 
 	public void setProgress(float min, float max, float val, String progressMessage) {
 		this.progressMessage = progressMessage;

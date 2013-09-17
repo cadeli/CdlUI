@@ -46,11 +46,12 @@ public class CdlOnOffButton extends CdlBaseButton {
 
 	public void draw(Canvas canvas) {
 		// CdlUtils.cdlLog(TAG, "draw "+ getLabel() + "= "+ isState());
-		if (isVisible()) {
+		if (isVisible()&& !isInvisibleDraw()) {
 			super.draw(canvas); // just for compute size (TODO...indirect backColor?)
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
 			drawLabel(canvas);
 			if (state) {
+				rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
 				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
 			}
 		}

@@ -76,7 +76,7 @@ public class AnotherGridDemo extends Activity {
 		mCdlView.setCdlLayoutType(CdlView.CDL_LAYOUT_GRID);
 		
 		//define colorscheme 
-		CdlPalette.setColorScreme(CdlPalette.COLORSCHEME4);
+		//CdlPalette.setColorScheme(CdlPalette.COLORSCHEME4);
 		
 		//create push button
 		CdlPushButton mCdlPushButton = new CdlPushButton("push1 ");

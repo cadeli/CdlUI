@@ -22,7 +22,7 @@ import android.util.Log;
 
 public class CdlUtils {
 	
-	private static final boolean DEVMODE = false;
+	private static final boolean DEVMODE = true;
 
 	public static void cdlLog(String TAG, String msg) {
 		if (DEVMODE == true) {

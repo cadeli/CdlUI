@@ -51,6 +51,7 @@ public class CdlBaseButton {
 	protected int grid_height = 1;
 
 	protected int backgroundColor;
+	protected Paint backgroundPaint = null;
 	protected String label = "Default_Label";
 	private String subLabel;
 	protected int displayMode = DISPLAYMODE_COMPACT;
@@ -73,6 +74,7 @@ public class CdlBaseButton {
 	private boolean isBorder = true;
 	private boolean isEnabled = true;
 	private int id;
+	private boolean invisibleDraw;
 
 	public CdlBaseButton() {
 		super();
@@ -137,14 +139,18 @@ public class CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		if (isVisible()) {
+		if (isVisible() && !isInvisibleDraw()) {
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
 			float rw = round_w;
 			float rh = round_h;
 			if (flashing) {
 				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getFlashPaint());
 			} else {
-				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getPaint(backgroundColor, getLeft(), getTop(), w, h));
+				if (backgroundPaint == null) {
+					canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getPaint(backgroundColor, getLeft(), getTop(), w, h));
+				} else {
+					canvas.drawRoundRect(rectf, rw, rh, backgroundPaint);
+				}
 			}
 			if (isBorder) {
 				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getBorderPaint());
@@ -169,7 +175,7 @@ public class CdlBaseButton {
 	protected void drawCenterText(Canvas canvas, String text, Paint paint) {
 		if (text == null)
 			return;
-		text = schrinkText(paint, bounds, getWidth(),text);
+		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
 		int x = rect.left + rect.width() / 2 - bounds.centerX();
 		int y = rect.top + rect.height() / 2 - bounds.centerY();
@@ -179,7 +185,7 @@ public class CdlBaseButton {
 	protected void drawCenterTextDn(Canvas canvas, String text, Paint paint) {
 		if (text == null)
 			return;
-		text = schrinkText(paint, bounds,getWidth(), text);
+		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
 		rectf.set(getLeft(), getTop() + getHeight() / 2, getRight(), getBottom());
 		drawCenterTextInrectCase(canvas, text, paint);
@@ -188,7 +194,7 @@ public class CdlBaseButton {
 	protected void drawCenterTextUp(Canvas canvas, String text, Paint paint) {
 		if (text == null)
 			return;
-		text = schrinkText(paint, bounds,getWidth(), text);
+		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
 		rectf.set(getLeft(), getTop(), getRight(), getTop() + getHeight() / 2);
 		drawCenterTextInrectCase(canvas, text, paint);
@@ -207,7 +213,7 @@ public class CdlBaseButton {
 	protected void drawBottomText(Canvas canvas, String text, Paint paint) {
 		if (text == null)
 			return;
-		text = schrinkText(paint, bounds,getWidth(), text);
+		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
 		rectf.top = rect.top + rect.height() / 2;
 		rectf.bottom = rect.bottom;
@@ -223,14 +229,13 @@ public class CdlBaseButton {
 	protected void drawTopTextIn(Canvas canvas, String text, Paint paint) {
 		if (text == null)
 			return;
-		text = schrinkText(paint, bounds,getWidth(), text);
+		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
 		int x = rect.left + rect.width() / 2 - bounds.centerX();
-		int y = rect.top + bounds.height();
+		int y = rect.top + bounds.height()+ padding;
 		canvas.drawText(text, x, y, paint);
 		return;
 	}
-
 
 	protected String schrinkText(Paint paint, Rect bounds2, int w_max, String text) {
 		paint.getTextBounds(text, 0, text.length(), bounds2);
@@ -241,11 +246,10 @@ public class CdlBaseButton {
 		while (text.length() > 2 && bounds2.width() > w_max - 2 * padding) {
 			text = text.substring(0, text.length() - 1);
 			paint.getTextBounds(text, 0, text.length(), bounds2);
-			CdlUtils.cdlLog(TAG, "schrinkText " + getLabel() + "b=" + bounds2.width() + " getW=" +w_max + " txt=" + text);
+			CdlUtils.cdlLog(TAG, "schrinkText " + getLabel() + "b=" + bounds2.width() + " getW=" + w_max + " txt=" + text);
 		}
 		return text;
 	}
-
 
 	public boolean isXYInControl(float eventX, float eventY) {
 		if (isVisible()) {
@@ -259,7 +263,7 @@ public class CdlBaseButton {
 	}
 
 	public void singleTapUp(MotionEvent e) {
-		//CdlUtils.cdlLog(TAG, "singleTapUp: " + label);
+		// CdlUtils.cdlLog(TAG, "singleTapUp: " + label);
 		if (!isEnable())
 			return;
 		if (onTapUpCdlListener != null) {
@@ -454,4 +458,15 @@ public class CdlBaseButton {
 		this.enable = enable;
 	}
 
+	public void setBackgroundPaint(Paint backgroundPaint) {
+		this.backgroundPaint = backgroundPaint;
+	}
+
+	public boolean isInvisibleDraw() {
+		return invisibleDraw;
+	}
+
+	public void setInvisibleDraw(boolean invisibleDraw) {
+		this.invisibleDraw = invisibleDraw;
+	}
 }

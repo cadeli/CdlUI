@@ -56,7 +56,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		if (isVisible()) {
+		if (isVisible() && !isInvisibleDraw()) {
 			super.draw(canvas);
 			if (stateValues.size() == 0)
 				return;
@@ -100,7 +100,11 @@ public class CdlNStatesButton extends CdlBaseButton {
 					if (i == getState()) {
 						canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
 					} else {
-						canvas.drawRect(rectf, CdlPalette.getPaint(backgroundColor, 0, 0, w, h_case));
+						if (backgroundPaint == null) {
+							canvas.drawRect(rectf, CdlPalette.getPaint(backgroundColor, 0, 0, w, h_case));
+						} else {
+							canvas.drawRect(rectf, backgroundPaint);
+						}
 					}
 					String txt = schrinkText(CdlPalette.getTxtPaint(w - 2 * padding, h_case - 2 * padding), bounds, getWidth(), stateValues.get(i).toString());
 					drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(w - 2 * padding, h_case - 2 * padding));
@@ -173,11 +177,11 @@ public class CdlNStatesButton extends CdlBaseButton {
 		if (displayMode == DISPLAYMODE_LIST) {
 			int h_case = (h - (2 * padding + (int) round_w / 2)) / getNbLig();
 			startVisuLig += ((float) distanceY / h_case);
-			if (startVisuLig < 0)
-				startVisuLig = 0;
 			if (startVisuLig + getNbLig() >= stateValues.size()) {
 				startVisuLig = stateValues.size() - getNbLig();
 			}
+			if (startVisuLig < 0)
+				startVisuLig = 0;
 		}
 		super.scroll(e1, e2, distanceX, distanceY);
 	}
