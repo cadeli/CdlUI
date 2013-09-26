@@ -71,6 +71,9 @@ public class CdlPalette {
 
 	public static Paint getPaint(int i, int x, int y, int w, int h) {
 		int size = colorList.size();
+		if (size==0) {
+			createDefaultColors();
+		}
 		if (i >= 0 && size > 0) {
 			Paint p = (Paint) colorList.get(i % size);
 			if (isGradient) { // TODO avoid new
