@@ -78,7 +78,7 @@ public class CdlBaseButton {
 
 	public CdlBaseButton() {
 		super();
-		CdlUtils.cdlLog(TAG, "new cdlBaseButton");
+		//CdlUtils.cdlLog(TAG, "new cdlBaseButton");
 	}
 
 	/**
@@ -290,7 +290,7 @@ public class CdlBaseButton {
 	}
 
 	public void setLabel(String s) {
-		CdlUtils.cdlLog(TAG, "setLabel=" + s);
+		//CdlUtils.cdlLog(TAG, "setLabel=" + s);
 		this.label = s;
 		textUp = s;
 		textDown = s;

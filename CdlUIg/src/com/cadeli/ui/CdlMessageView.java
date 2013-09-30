@@ -21,7 +21,6 @@ public class CdlMessageView extends CdlView {
 	private int progressVal;
 
 	private Runnable runnableMessage = new Runnable() {
-
 		public void run() {
 			// XmlUtil.myLog(TAG, "timer " + timerCount);
 			timerCountMessage--;
@@ -90,7 +89,7 @@ public class CdlMessageView extends CdlView {
 		int h_end = bounds.bottom + dy + 2*padding;
 		y+=(h_end-h_start)/4;
 		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_end);
-		urect.set(getLeft() + pad, h_start, (getRight() - pad) * progressVal / 100, h_end);
+		urect.set(getLeft() + pad, h_start, getLeft() + pad +  ((getRight() - pad) -(getLeft() + pad))  * progressVal / 100, h_end);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
 		canvas.drawRoundRect(urect, round_w, round_h, CdlPalette.getHilightPaint());
 		canvas.drawText(progressValStr, x, y, txtPaintTitle);
