@@ -46,7 +46,7 @@ public class CdlOnOffButton extends CdlBaseButton {
 
 	public void draw(Canvas canvas) {
 		// CdlUtils.cdlLog(TAG, "draw "+ getLabel() + "= "+ isState());
-		if (isVisible()&& !isInvisibleDraw()) {
+		if (isVisible()) {
 			super.draw(canvas); // just for compute size (TODO...indirect backColor?)
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
 			drawLabel(canvas);
@@ -58,9 +58,10 @@ public class CdlOnOffButton extends CdlBaseButton {
 	}
 
 	public void singleTapUp(MotionEvent e) {
-		CdlUtils.cdlLog(TAG, "tap on cdl: " + label + "state=" + state);
+		CdlUtils.cdlLog(TAG, "1tap on cdl: " + label + "state=" + state);
 		if (!isEnable()) return;
 		setState(!state);
+		CdlUtils.cdlLog(TAG, "2tap on cdl: " + label + "state=" + state);
 		super.singleTapUp(e);
 	}
 

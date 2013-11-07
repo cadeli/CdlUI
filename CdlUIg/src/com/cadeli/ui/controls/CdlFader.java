@@ -40,7 +40,7 @@ public class CdlFader extends CdlBaseButton {
 
 	public void draw(Canvas canvas) {
 		int yMark = valueControler.computeYMarkFromValue(rect.top + 2 * padding, rect.bottom - 2 * padding);
-		if (isVisible()&& !isInvisibleDraw()) {
+		if (isVisible()) {
 			rect2.left = rect.left + padding;
 			rect2.right = rect.right - padding;
 			int wl = 8;

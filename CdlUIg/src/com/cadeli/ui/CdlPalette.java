@@ -21,12 +21,16 @@ package com.cadeli.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Typeface;
 
 public class CdlPalette {
 	private static final String TAG = "CdlPalette";
+	private static String fontFaceFile="fonts/Roboto/Roboto-BoldCondensed.ttf";
+
 	public static final int COLORSCHEME1 = 10;
 	public static final int COLORSCHEME2 = 20;
 	public static final int COLORSCHEME3 = 30;
@@ -49,6 +53,7 @@ public class CdlPalette {
 	private static int defaultAlpha = 128;
 	private static float defaulStrokeWidth = 12;
 	private static boolean isGradient = false;
+	private static Typeface typeface;
 
 	// protected static final int ACTIVETEXT_COLOR = 0xFFFFFFFF;
 	// private static final int INACTIVETEXT_COLOR = 0xFF808080;
@@ -71,9 +76,9 @@ public class CdlPalette {
 
 	public static Paint getPaint(int i, int x, int y, int w, int h) {
 		int size = colorList.size();
-		if (size==0) {
-			createDefaultColors();
-		}
+//		if (size==0) {
+//			createDefaultColors(null);
+//		}
 		if (i >= 0 && size > 0) {
 			Paint p = (Paint) colorList.get(i % size);
 			if (isGradient) { // TODO avoid new
@@ -89,8 +94,9 @@ public class CdlPalette {
 		return (Paint) colorList.get(0);
 	}
 
-	public static void createDefaultColors() {
-		setColorScheme(COLORSCHEME3);
+	public static void createDefaultColors(final Context context) {
+		setColorScheme(COLORSCHEME2);
+		typeface = Typeface.createFromAsset(context.getAssets(), fontFaceFile);
 	}
 
 	public static void setColorScheme(int colorscheme) {
@@ -148,6 +154,9 @@ public class CdlPalette {
 			txtPaint = new Paint();
 			txtPaint.setAntiAlias(true);
 			txtPaint.setDither(true);
+			if (typeface!=null) {
+			txtPaint.setTypeface(typeface);
+			}
 		}
 		if (w < h) {
 			txtPaint.setTextSize((int)(float)(w / 2.5f));

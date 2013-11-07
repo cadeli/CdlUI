@@ -42,7 +42,7 @@ public class CdlPushButton extends CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		if (isVisible() && !isInvisibleDraw()) {
+		if (isVisible() ) {
 			super.draw(canvas);
 			drawLabel(canvas);
 		}

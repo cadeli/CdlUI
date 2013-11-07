@@ -37,7 +37,7 @@ public class CdlKnob extends CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		if (isVisible() && !isInvisibleDraw()) {
+		if (isVisible() ) {
 			super.draw(canvas);
 			int wl = (int) CdlPalette.getBlackPaintLarge().getStrokeWidth();
 			double dispVal = valueControler.getValue();
@@ -50,8 +50,8 @@ public class CdlKnob extends CdlBaseButton {
 			float maxAngle = 300f;
 			float minAngle = 120f;
 			float alpha = (float) getValueControler().computeAlphaFromVal((int) dispVal, (int) maxAngle, 0);
-			canvas.drawArc(oval2, minAngle, alpha, false, CdlPalette.getHilightPaintLarge());
 			canvas.drawArc(oval2, minAngle, maxAngle, false, CdlPalette.getBlackPaintLarge());
+			canvas.drawArc(oval2, minAngle, alpha, false, CdlPalette.getHilightPaintLarge());
 			if (isEnable()) {
 				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 			}

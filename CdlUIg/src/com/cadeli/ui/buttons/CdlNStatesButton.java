@@ -56,7 +56,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		if (isVisible() && !isInvisibleDraw()) {
+		if (isVisible()) {
 			super.draw(canvas);
 			if (stateValues.size() == 0)
 				return;

@@ -73,8 +73,8 @@ public class CdlBaseButton {
 
 	private boolean isBorder = true;
 	private boolean isEnabled = true;
+	private boolean isFloatingPosition = false;
 	private int id;
-	private boolean invisibleDraw;
 
 	public CdlBaseButton() {
 		super();
@@ -139,7 +139,7 @@ public class CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		if (isVisible() && !isInvisibleDraw()) {
+		if (isVisible()) {
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
 			float rw = round_w;
 			float rh = round_h;
@@ -238,6 +238,7 @@ public class CdlBaseButton {
 	}
 
 	protected String schrinkText(Paint paint, Rect bounds2, int w_max, String text) {
+		if (true) return text;  ///TODO
 		paint.getTextBounds(text, 0, text.length(), bounds2);
 		// CdlUtils.cdlLog(TAG, "schrinkText b="+ bounds2.width() + " getW="+ getWidth());
 		if (bounds2.width() < w_max - 2 * padding) {
@@ -462,11 +463,11 @@ public class CdlBaseButton {
 		this.backgroundPaint = backgroundPaint;
 	}
 
-	public boolean isInvisibleDraw() {
-		return invisibleDraw;
+	public boolean isFloatingPosition() {
+		return isFloatingPosition;
 	}
 
-	public void setInvisibleDraw(boolean invisibleDraw) {
-		this.invisibleDraw = invisibleDraw;
+	public void setFloatingPosition(boolean isFloatingPosition) {
+		this.isFloatingPosition = isFloatingPosition;
 	}
 }
