@@ -35,6 +35,10 @@ public class CdlBaseButton {
 	public static final int DISPLAYMODE_EXPANDED = 1;
 	public static final int DISPLAYMODE_LIST = 2;
 	public static final int DISPLAYMODE_WITH_ARROW_BTN = 3;
+	
+	public static final int FONT_SMALL_SIZE = 1;
+	public static final int FONT_BIG_BIG_SIZE = 2;
+	public static final int FONT_NORMAL_SIZE = 3;
 
 	private boolean visible = true;
 	private boolean enable = true;
@@ -63,6 +67,7 @@ public class CdlBaseButton {
 
 	protected String textUp;
 	protected String textDown;
+	protected int fontSizeType = FONT_NORMAL_SIZE;
 
 	private OnTapUpCdlListener onTapUpCdlListener;
 	private OnLongPressCdlListener onLongPressCdlListener;
@@ -158,19 +163,45 @@ public class CdlBaseButton {
 		}
 	}
 
+//	protected void drawLabel(Canvas canvas) {
+//		if (isEnabled) {
+//			if (getLabel().contains(" ") && getSubLabel() == null) {
+//				drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+//				drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+//			} else {
+//				drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+//				if (getSubLabel() != null) {
+//					drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w - 2 * padding) / 2, (h - 2 * padding) / 2));
+//				}
+//			}
+//		}
+//	}
+//	
+	
 	protected void drawLabel(Canvas canvas) {
 		if (isEnabled) {
+			Paint paint = CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding);
+			if (fontSizeType==FONT_SMALL_SIZE) {
+				 paint = CdlPalette.getTxtPaint(w*2/3 - 2 * padding, h/2 - 2 * padding);
+			}
+			drawLabel(canvas, paint);
+		}
+	}
+
+	protected void drawLabel(Canvas canvas, Paint paint) {
+		if (isEnabled) {
 			if (getLabel().contains(" ") && getSubLabel() == null) {
-				drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-				drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+				drawCenterTextUp(canvas, textUp, paint);
+				drawCenterTextDn(canvas, textDown, paint);
 			} else {
-				drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+				drawCenterText(canvas, getLabel(), paint);
 				if (getSubLabel() != null) {
-					drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w - 2 * padding) / 2, (h - 2 * padding) / 2));
+					drawBottomText(canvas, getSubLabel(),CdlPalette.getTxtPaint((w - 2 * padding) / 2, (h - 2 * padding) / 2));
 				}
 			}
 		}
 	}
+
 
 	protected void drawCenterText(Canvas canvas, String text, Paint paint) {
 		if (text == null)
@@ -300,7 +331,7 @@ public class CdlBaseButton {
 			int end = s.length();
 			textUp = s.substring(0, idx);
 			textDown = s.substring(idx + 1, end);
-			CdlUtils.cdlLog(TAG, "textDn=" + textDown);
+			//CdlUtils.cdlLog(TAG, "textDn=" + textDown);
 		}
 	}
 
@@ -470,4 +501,14 @@ public class CdlBaseButton {
 	public void setFloatingPosition(boolean isFloatingPosition) {
 		this.isFloatingPosition = isFloatingPosition;
 	}
+
+	public int getFontSizeType() {
+		return fontSizeType;
+	}
+
+	public void setFontSizeType(int fontSizeType) {
+		this.fontSizeType = fontSizeType;
+	}
+	
+	
 }

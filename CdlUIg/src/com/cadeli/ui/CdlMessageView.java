@@ -26,6 +26,7 @@ public class CdlMessageView extends CdlView {
 			timerCountMessage--;
 			if (timerCountMessage <= 0) {
 				messageString = "";
+				CdlUtils.cdlLog(TAG, " display message (end)");
 				invalidate();
 				// invalidate((int) bounds2.left - 8, (int) bounds2.top - 8, (int) bounds2.right + 8, (int) bounds2.bottom + 8);
 			} else {
@@ -128,6 +129,7 @@ public class CdlMessageView extends CdlView {
 
 
 	public void setProgress(float min, float max, float val, String progressMessage) {
+		CdlUtils.cdlLog(TAG, "setProgress =" + val + "="+ progressMessage);
 		this.progressMessage = progressMessage;
 		float interval = (max - min);
 		progressVal = (int) ((val * 100) / interval + min);
