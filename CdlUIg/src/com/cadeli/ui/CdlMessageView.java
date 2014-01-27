@@ -107,7 +107,7 @@ public class CdlMessageView extends CdlView {
 		if (messageType == CdlMessageView.MESSAGETYPE_WARNING) {
 			drawMessage(canvas, messageString, CdlPalette.getHilightPaint());
 		} else {
-			drawMessage(canvas, messageString, CdlPalette.getTxtPaint(getWidth() / 4, getHeight() / 4));
+			drawMessage(canvas, messageString, CdlPalette.getTxtPaint(getWidth() / 8, getHeight() / 8));
 		}
 	}
 

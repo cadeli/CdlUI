@@ -157,6 +157,7 @@ public class CdlBaseButton {
 					canvas.drawRoundRect(rectf, rw, rh, backgroundPaint);
 				}
 			}
+			
 			if (isBorder) {
 				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getBorderPaint());
 			}
@@ -218,7 +219,7 @@ public class CdlBaseButton {
 			return;
 		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
-		rectf.set(getLeft(), getTop() + getHeight() / 2, getRight(), getBottom());
+		rectf.set(getLeft(), getTop() + getHeight() / 2, getRight(), getBottom()- getHeight()/8);
 		drawCenterTextInrectCase(canvas, text, paint);
 	}
 
@@ -227,7 +228,7 @@ public class CdlBaseButton {
 			return;
 		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
-		rectf.set(getLeft(), getTop(), getRight(), getTop() + getHeight() / 2);
+		rectf.set(getLeft(), getTop()+ getHeight()/8, getRight(), getTop() + getHeight() / 2);
 		drawCenterTextInrectCase(canvas, text, paint);
 	}
 

@@ -29,7 +29,6 @@ import android.graphics.Typeface;
 
 public class CdlPalette {
 	private static final String TAG = "CdlPalette";
-	private static String fontFaceFile = "fonts/Roboto/Roboto-BoldCondensed.ttf";
 
 	public static final int COLORSCHEME1 = 10;
 	public static final int COLORSCHEME2 = 20;
@@ -53,11 +52,12 @@ public class CdlPalette {
 	private static int defaultAlpha = 128;
 	private static float defaulStrokeWidth = 12;
 	private static boolean isGradient = false;
-	private static Typeface typeface;
+	private static Typeface typeface=null;
 	private static Paint tdPaint;
 	private static Paint bordeNoterPaint;
 	private static Paint stepBarPaint;
 	private static Paint measureBarPaint;
+	private  Context context;
 
 	// protected static final int ACTIVETEXT_COLOR = 0xFFFFFFFF;
 	// private static final int INACTIVETEXT_COLOR = 0xFF808080;
@@ -96,9 +96,8 @@ public class CdlPalette {
 		return (Paint) colorList.get(0);
 	}
 
-	public static void createDefaultColors(final Context context) {
+	public static void createDefaultColors() {
 		setColorScheme(COLORSCHEME2);
-		//typeface = Typeface.createFromAsset(context.getAssets(), fontFaceFile);
 	}
 
 	public static void setColorScheme(int colorscheme) {
@@ -138,10 +137,14 @@ public class CdlPalette {
 			addColor(Color.rgb(228, 239, 135));
 			break;
 		default:
-			addColor(Color.rgb(255, 115, 115));
-			addColor(Color.rgb(135, 110, 215));
-			addColor(Color.rgb(255, 231, 115));
-			addColor(Color.rgb(103, 230, 103));
+			addColor(0xfff9b3);
+			addColor(0xefa0ff);
+			addColor(0xade1af);
+			addColor(0x94cbff);
+			addColor(0xffd9a3);
+			addColor(0xffc6b3);
+			addColor(0xc4fcca);
+			addColor(0xdeea86);
 		}
 	}
 
@@ -306,11 +309,15 @@ public class CdlPalette {
 			tdPaint = new Paint();
 			tdPaint.setAntiAlias(true);
 			tdPaint.setDither(true);
+CdlUtils.cdlLog(TAG, "typeface = " + typeface);
 			if (typeface != null) {
 				tdPaint.setTypeface(typeface);
+				CdlUtils.cdlLog(TAG, "typeface bold= " + typeface.isBold());
 			}
+			
 			tdPaint.setTextSize(size);
-			tdPaint.setColor(txtPaintColor);
+			tdPaint.setColor(0x80506060);
+			tdPaint.setShadowLayer(6, 2, 2, 0xF0F0F0);
 		}
 		return tdPaint;
 	}
@@ -322,4 +329,9 @@ public class CdlPalette {
 		return tdPaint;
 	}
 
+	public static void setTypeFace(Typeface typeface) {
+		CdlUtils.cdlLog(TAG, "setTypeFace = " + typeface);
+		CdlPalette.typeface = typeface;
+	}
+	
 }
