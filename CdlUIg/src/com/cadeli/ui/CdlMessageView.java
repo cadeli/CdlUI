@@ -129,7 +129,7 @@ public class CdlMessageView extends CdlView {
 
 
 	public void setProgress(float min, float max, float val, String progressMessage) {
-		CdlUtils.cdlLog(TAG, "setProgress =" + val + "="+ progressMessage);
+		//CdlUtils.cdlLog(TAG, "setProgress =" + val + "="+ progressMessage);
 		this.progressMessage = progressMessage;
 		float interval = (max - min);
 		progressVal = (int) ((val * 100) / interval + min);

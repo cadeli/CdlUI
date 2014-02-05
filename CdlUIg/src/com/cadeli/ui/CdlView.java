@@ -114,7 +114,7 @@ public class CdlView extends View implements OnGestureListener {
 	protected void onDraw(Canvas canvas) {
 		// CdlUtils.cdlLog(TAG, " onDraw  getW=" + getWidth() + " layout=" + cdlLayoutType);
 		super.onDraw(canvas);
-		majMenu(canvas);
+		majMenu();
 		if (sized == false && cdlLayoutType != CDL_LAYOUT_ABSOLUTE) {
 			size();
 		}
@@ -145,7 +145,7 @@ public class CdlView extends View implements OnGestureListener {
 		}
 	}
 
-	protected void majMenu(Canvas canvas) {
+	protected void majMenu() {
 		CdlUtils.cdlLog(TAG, "majMenu ");
 		if (cdlBaseButtonsMenu.size() == 0)
 			return;
