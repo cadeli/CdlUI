@@ -498,9 +498,18 @@ public class CdlView extends View implements OnGestureListener {
 		if ( cdlBaseButtonsMenu.size()==0) return false;
 		boolean ret = false;
 		CdlBaseButton menuSelector = cdlBaseButtonsMenu.get(0);
+		CdlBaseButton menuBarLine = cdlBaseButtonsMenu.get(1);
 		CdlUtils.cdlLog(TAG, "Click on menu " + menuSelector.isHilight());
 		if (menuSelector.isVisible()) {
 			if (menuSelector.getRect().contains((int) e.getX(), (int) e.getY())) {
+				setMustDrawMenu(!isMustDrawMenu());
+				CdlUtils.cdlLog(TAG, "click on selector");
+				invalidate();
+				ret =true;
+			}
+		}
+		if (menuBarLine.isVisible()) {
+			if (menuBarLine.getRect().contains((int) e.getX(), (int) e.getY())) {
 				setMustDrawMenu(!isMustDrawMenu());
 				CdlUtils.cdlLog(TAG, "click on selector");
 				invalidate();

@@ -52,12 +52,12 @@ public class CdlPalette {
 	private static int defaultAlpha = 128;
 	private static float defaulStrokeWidth = 12;
 	private static boolean isGradient = false;
-	private static Typeface typeface=null;
+	private static Typeface typeface = null;
 	private static Paint tdPaint;
 	private static Paint bordeNoterPaint;
 	private static Paint stepBarPaint;
 	private static Paint measureBarPaint;
-	private  Context context;
+	private Context context;
 
 	// protected static final int ACTIVETEXT_COLOR = 0xFFFFFFFF;
 	// private static final int INACTIVETEXT_COLOR = 0xFF808080;
@@ -209,12 +209,12 @@ public class CdlPalette {
 			bordeNoterPaint.setDither(true);
 			bordeNoterPaint.setAlpha(defaultAlpha);
 			bordeNoterPaint.setStyle(Style.STROKE);
-			bordeNoterPaint.setStrokeWidth(borderSize*2);
+			bordeNoterPaint.setStrokeWidth(borderSize * 2);
 		}
 		bordeNoterPaint.setColor(Color.YELLOW);
 		return bordeNoterPaint;
 	}
-	
+
 	public static Paint getStepBarPaint() {
 		if (stepBarPaint == null) {
 			stepBarPaint = new Paint();
@@ -236,7 +236,6 @@ public class CdlPalette {
 		}
 		return measureBarPaint;
 	}
-
 
 	public static Paint getFlashPaint() {
 		if (flashPaint == null) {
@@ -298,6 +297,7 @@ public class CdlPalette {
 
 	public static void setHilightColor(int hilightColor) {
 		CdlPalette.hilightColor = hilightColor;
+		hilightPaint=null;
 	}
 
 	public static int getLastColorIndex() {
@@ -309,21 +309,21 @@ public class CdlPalette {
 			tdPaint = new Paint();
 			tdPaint.setAntiAlias(true);
 			tdPaint.setDither(true);
-CdlUtils.cdlLog(TAG, "typeface = " + typeface);
+			CdlUtils.cdlLog(TAG, "typeface = " + typeface);
 			if (typeface != null) {
 				tdPaint.setTypeface(typeface);
 				CdlUtils.cdlLog(TAG, "typeface bold= " + typeface.isBold());
 			}
-			
+
 			tdPaint.setTextSize(size);
 			tdPaint.setColor(0x80506060);
 			tdPaint.setShadowLayer(6, 2, 2, 0xF0F0F0);
 		}
 		return tdPaint;
 	}
-	
+
 	public static Paint getTdPaint() {
-		if (tdPaint==null) {
+		if (tdPaint == null) {
 			return getTdPaint(12);
 		}
 		return tdPaint;
@@ -333,5 +333,5 @@ CdlUtils.cdlLog(TAG, "typeface = " + typeface);
 		CdlUtils.cdlLog(TAG, "setTypeFace = " + typeface);
 		CdlPalette.typeface = typeface;
 	}
-	
+
 }
