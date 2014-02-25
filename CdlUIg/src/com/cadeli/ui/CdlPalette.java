@@ -318,6 +318,8 @@ public class CdlPalette {
 			tdPaint.setTextSize(size);
 			tdPaint.setColor(0x80506060);
 			tdPaint.setShadowLayer(6, 2, 2, 0xF0F0F0);
+		} else {
+			 tdPaint.setTextSize(size);
 		}
 		return tdPaint;
 	}

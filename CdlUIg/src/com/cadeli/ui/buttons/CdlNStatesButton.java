@@ -95,7 +95,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 			float hstart = (i - startVisuLig) * h_case + rect.top + (int) round_w / 2;
 			if (hstart >= rect.top) {
 				if (hstart + h_case <= rect.bottom) {
-					rectf.set(padding + rect.left + (int) round_w / 2, hstart, rect.right - padding - (int) round_w / 2, hstart + h_case);
+					rectf.set(padding + rect.left + (int) round_w / 2, hstart, rect.right - padding - (int) round_w , hstart + h_case);
 					// CdlUtils.cdlLog(TAG, "DrawList:" + stateValues.get(0).toString() + "recf=" + rectf);
 					if (i == getState()) {
 						canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
