@@ -42,7 +42,7 @@ public class SimpleRowOfVariousButtonsActivity extends Activity {
 	}
 
 	private void createCdlGrid() {
-		// Create callback 
+		// Create callback
 		OnTapUpCdlListener onTapUpCdlListener = new OnTapUpCdlListener() {
 			@Override
 			public void tapUp(CdlBaseButton cdlBaseButton, MotionEvent e) {
@@ -62,24 +62,24 @@ public class SimpleRowOfVariousButtonsActivity extends Activity {
 		mCdlView.setPadding(4);
 		mCdlView.setGrid_nbCols(6); // define nb buttons per row
 		mCdlView.setCdlLayoutType(CdlView.CDL_LAYOUT_FLOW);
-		
-		// Create push  buttons 
-		for (int i=0; i < 12; i++) {
-			createCdlButton(i, mCdlView,onTapUpCdlListener, onLongPressCdlListener );
+
+		// Create push buttons
+		for (int i = 0; i < 12; i++) {
+			createCdlButton(i, mCdlView, onTapUpCdlListener, onLongPressCdlListener);
 		}
 	}
 
 	private void createCdlButton(int i, CdlView mCdlView, OnTapUpCdlListener onTapUpCdlListener, OnLongPressCdlListener onLongPressCdlListener) {
-		//create push button
-		CdlOnOffButton mCdlButton = new CdlOnOffButton("btn "+ (i+1));
-		//in this sample, we use same listeners for all buttons
+		// create push button
+		CdlOnOffButton mCdlButton = new CdlOnOffButton("btn " + (i + 1));
+		// in this sample, we use same listeners for all buttons
 		mCdlButton.setOnTapUpCdlListener(onTapUpCdlListener);
 		mCdlButton.setOnLongPressCdlListener(onLongPressCdlListener);
 		// add to the view
-		mCdlView.addCdlBaseButton(mCdlButton);	
-		//change color
+		mCdlView.addCdlBaseButton(mCdlButton);
+		// change color
 		int colorPaletteIndex = 0;
-		mCdlButton.setBackgroundColor(colorPaletteIndex);  //same color for all the buttons
+		mCdlButton.setBackgroundColor(colorPaletteIndex); // same color for all the buttons
 	}
-	
+
 }

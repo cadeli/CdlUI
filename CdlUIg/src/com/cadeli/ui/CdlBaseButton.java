@@ -145,6 +145,13 @@ public class CdlBaseButton {
 
 	public void draw(Canvas canvas) {
 		if (isVisible()) {
+			
+			
+			
+			
+			
+			
+			
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
 			float rw = round_w;
 			float rh = round_h;
