@@ -2,14 +2,8 @@ package com.cadeli.uiDemo;
 
 public class TestElement {
 
-	private String label="defaultValue";
-
 	public TestElement(String string) {
-		this.label =string;
+		// TODO Auto-generated constructor stub
 	}
 
-	public String toString() {
-		return label;
-	}
-	
 }

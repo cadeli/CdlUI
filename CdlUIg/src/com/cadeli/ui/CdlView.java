@@ -155,7 +155,6 @@ public class CdlView extends View implements OnGestureListener {
 			for (CdlBaseButton cdlBaseButton : cdlBaseButtonsMenu) {
 				cdlBaseButton.setVisible(true);
 			}
-
 		} else {
 			menuSelector.setHilight(false);
 			for (CdlBaseButton cdlBaseButton : cdlBaseButtonsMenu) {
@@ -247,13 +246,13 @@ public class CdlView extends View implements OnGestureListener {
 		for (CdlBaseButton cdlBaseButton : cdlBaseButtonsMenu) {
 			if (cdlBaseButton.isVisible()) {
 				if (id == 0) {
-					cdlBaseButton.setSize(0, 0, w_menu, h_menu / 2);
+					cdlBaseButton.setSize(0, 0, w_menu, h_menu / 1);
 				}
 				if (id == 1) {
-					cdlBaseButton.setSize(w_menu, 0, getWidth() - w_menu, h_menu / 2);
+					cdlBaseButton.setSize(w_menu, 0, getWidth() - w_menu, h_menu / 1);
 				}
 				if (id > 1) {
-					cdlBaseButton.setSize(0, (id - 2) * h_menu + h_menu / 2, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, (id - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
 				}
 				id++;
 			}

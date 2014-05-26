@@ -150,7 +150,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 	}
 
 	private void drawCompact(Canvas canvas) {
-		if (!label.isEmpty()) {
+		if (label.length()>0 ) {
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.centerY());
 			canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
 			drawCenterTextUp(canvas, label, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
