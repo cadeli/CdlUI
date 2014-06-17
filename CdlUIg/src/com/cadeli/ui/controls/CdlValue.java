@@ -18,6 +18,8 @@ limitations under the License.
 
 package com.cadeli.ui.controls;
 
+import android.telephony.cdma.CdmaCellLocation;
+
 import com.cadeli.ui.CdlUtils;
 
 public class CdlValue {
@@ -65,7 +67,11 @@ public class CdlValue {
 		} else {
 			value = newVal;
 		}
-		//CdlUtils.cdlLog(TAG, "3setvalue: " + newVal + " max=" + maxVal + " min=" + minVal + " " + name);
+		CdlUtils.cdlLog(TAG, "setvalue: " + newVal + " max=" + maxVal + " min=" + minVal + " " + name);
+	}
+
+	public double getNormalizedValue() {
+		return value;
 	}
 
 	public double getValue() {
@@ -73,9 +79,9 @@ public class CdlValue {
 		if (isNormalized()) {
 			ret = value;
 		} else {
-			ret= computeExternalVal(value);
+			ret = computeExternalVal(value);
 		}
-	//	CdlUtils.cdlLog(TAG, "getValue="+ ret  + " from " +value);
+		CdlUtils.cdlLog(TAG, " getValue=" + name + " >" + ret + " from " + value + "  min=" + minVal + " max=" + maxVal + " normalized=" + isNormalized());
 		return ret;
 	}
 
@@ -86,7 +92,7 @@ public class CdlValue {
 
 	// fader scroll
 	public void setValueFromDistance(double distance, int deviceHeigth, double coef) {
-		double incr  = (double) ((double) (distance) / (double) (deviceHeigth * coef));
+		double incr = (double) ((double) (distance) / (double) (deviceHeigth * coef));
 		double newVal = value + incr;
 		// CdlUtils.cdlLog(TAG, "setValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
 		value = inRange(newVal);
@@ -97,19 +103,19 @@ public class CdlValue {
 		double incr = 0;
 		incr = (double) ((double) (distance) / (double) deviceHeigth);
 		double newVal = incr;
-		//CdlUtils.cdlLog(TAG, "setAbsValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
+		// CdlUtils.cdlLog(TAG, "setAbsValueFromDistance " + distance + "/" + deviceHeigth + " incr=" + incr + " newVal=" + newVal + " val=" + value);
 		value = inRange(newVal);
 	}
 
 	protected int computeYMarkFromValue(double top, double bottom) {
-		double y = bottom - (bottom - top) * value ;
-//		CdlUtils.cdlLog(TAG, "computeYMarkFromValue" + value + " -> " + y + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal + " " + name);
+		double y = bottom - (bottom - top) * value;
+		// CdlUtils.cdlLog(TAG, "computeYMarkFromValue" + value + " -> " + y + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal + " " + name);
 		return (int) y;
 	}
 
 	protected double computeValueFromYMark(double y, double top, double bottom) {
 		double newVal = (bottom - y) / (bottom - top);
-//		CdlUtils.cdlLog(TAG, "computeValueFromYMark y=" + y + " val-> " + newVal + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal);
+		// CdlUtils.cdlLog(TAG, "computeValueFromYMark y=" + y + " val-> " + newVal + " t=" + top + " b=" + bottom + " max:" + maxVal + " mi:" + minVal);
 		value = inRange(newVal);
 		return newVal;
 	}
@@ -127,7 +133,7 @@ public class CdlValue {
 			CdlUtils.cdlLog(TAG, "*** ERROR " + " min=" + minVal + " max=" + maxVal);
 			return 0;
 		}
-		double ret = bottom - ((bottom - top) * value) ;
+		double ret = bottom - ((bottom - top) * value);
 		return ret;
 	}
 
@@ -163,6 +169,12 @@ public class CdlValue {
 
 	public boolean isNormalized() {
 		return normalized;
+	}
+
+	public void setValuesToMiddle() {
+		// double intervalle = (maxVal - minVal);
+		value = 0.5f;
+		// CdlUtils.cdlLog(TAG, "setValuesToMiddle "+name);
 	}
 
 }

@@ -39,6 +39,30 @@ public class CdlBaseButton {
 	public static final int FONT_SMALL_SIZE = 1;
 	public static final int FONT_BIG_BIG_SIZE = 2;
 	public static final int FONT_NORMAL_SIZE = 3;
+	
+	public static final int UTILPOS_MENU_CORNER=0;
+	public static final int UTILPOS_MENU_BAR =1;
+	public static final int UTILPOS_MENU_POS_0_0 =2;
+	public static final int UTILPOS_MENU_POS_0_1 =3;
+	public static final int UTILPOS_MENU_POS_0_2 =4;
+	public static final int UTILPOS_MENU_POS_0_3 =5;
+	public static final int UTILPOS_MENU_POS_0_4 =6;
+	public static final int UTILPOS_MENU_POS_0_5 =7;
+	public static final int UTILPOS_MENU_POS_0_6 =8;
+	public static final int UTILPOS_MENU_POS_0_7 =9;
+	public static final int UTILPOS_MENU_POS_0_8 =10;
+	public static final int UTILPOS_MENU_POS_0_9 =11;
+	public static final int UTILPOS_TOOLBAR_BOTOM_0=50;
+	public static final int UTILPOS_TOOLBAR_BOTOM_1=51;
+	public static final int UTILPOS_TOOLBAR_BOTOM_2=52;
+	public static final int UTILPOS_TOOLBAR_BOTOM_3=53;
+	public static final int UTILPOS_TOOLBAR_BOTOM_4=54;
+	public static final int UTILPOS_TOOLBAR_BOTOM_5=55;
+	public static final int UTILPOS_TOOLBAR_BOTOM_6=56;
+	public static final int UTILPOS_TOOLBAR_BOTOM_7=57;
+	public static final int UTILPOS_TOOLBAR_BOTOM_8=58;
+	public static final int UTILPOS_TOOLBAR_BOTOM_9=59;
+
 
 	private boolean visible = true;
 	private boolean enable = true;
@@ -80,7 +104,8 @@ public class CdlBaseButton {
 	private boolean isEnabled = true;
 	private boolean isFloatingPosition = false;
 	private int id;
-
+	private int utilpos;
+	
 	public CdlBaseButton() {
 		super();
 		//CdlUtils.cdlLog(TAG, "new cdlBaseButton");
@@ -145,13 +170,6 @@ public class CdlBaseButton {
 
 	public void draw(Canvas canvas) {
 		if (isVisible()) {
-			
-			
-			
-			
-			
-			
-			
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.bottom - padding);
 			float rw = round_w;
 			float rh = round_h;
@@ -260,7 +278,8 @@ public class CdlBaseButton {
 		rectf.right = rect.right;
 
 		int x = (int) (rectf.left + rectf.width() / 2 - bounds.centerX());
-		int y = (int) (rectf.top + rectf.height() / 2 - bounds.centerY());
+		//int y = (int) (rectf.top + rectf.height() / 2 - bounds.centerY());
+		int y = (int) (rectf.bottom - bounds.bottom - round_w);
 		canvas.drawText(text, x, y, paint);
 		return;
 	}
@@ -516,6 +535,14 @@ public class CdlBaseButton {
 
 	public void setFontSizeType(int fontSizeType) {
 		this.fontSizeType = fontSizeType;
+	}
+
+	public int getUtilpos() {
+		return utilpos;
+	}
+
+	public void setUtilpos(int utilpos) {
+		this.utilpos = utilpos;
 	}
 	
 	

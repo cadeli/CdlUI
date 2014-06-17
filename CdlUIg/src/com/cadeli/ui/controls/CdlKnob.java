@@ -29,6 +29,7 @@ import com.cadeli.ui.CdlUtils;
 public class CdlKnob extends CdlBaseButton {
 	private static final String TAG = "CdlKnob";
 	private CdlValue valueControler;
+	private boolean clickOnIncr=false;
 
 	public CdlKnob(String label) {
 		super();
@@ -55,6 +56,9 @@ public class CdlKnob extends CdlBaseButton {
 			if (isEnable()) {
 				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 			}
+			if (getLabel()!=null) {
+				drawBottomText(canvas, getLabel(), CdlPalette.getTxtPaint(w/2 - 2 * padding, h/2 - 2 * padding));
+			}
 		}
 	}
 
@@ -73,10 +77,21 @@ public class CdlKnob extends CdlBaseButton {
 		CdlUtils.cdlLog(TAG, "longpress" + e);
 		if (!isEnable())
 			return;
-		valueControler.setValues(0f, 1f, 0.5f);
+		valueControler.setValuesToMiddle();
 		super.longPress(e);
 	}
+	
+	public void singleTapUp(MotionEvent e){
+		if (e.getX() < rect.centerX()) {
+			clickOnIncr=false;
+		} else {
+			clickOnIncr=true;
+		}
+		super.singleTapUp(e);
+	}
 
-
+    public boolean isClickOnIncr() {
+    	return clickOnIncr;
+    }
 
 }

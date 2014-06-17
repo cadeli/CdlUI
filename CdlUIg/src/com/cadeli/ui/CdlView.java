@@ -100,7 +100,7 @@ public class CdlView extends View implements OnGestureListener {
 		gestureDetector = new GestureDetector(context, this);
 		this.context = context;
 		CdlPalette.createDefaultColors();
-		String fontFaceFile = "fonts/Roboto/Roboto-BoldCondensed.ttf";
+		String fontFaceFile = "fonts/Roboto-BoldCondensed.ttf";
 		Typeface typeface = Typeface.createFromAsset(context.getAssets(), fontFaceFile);
 		CdlPalette.setTypeFace(typeface);
 	}
@@ -158,7 +158,7 @@ public class CdlView extends View implements OnGestureListener {
 		} else {
 			menuSelector.setHilight(false);
 			for (CdlBaseButton cdlBaseButton : cdlBaseButtonsMenu) {
-				if (cdlBaseButton.getId() > 1) {
+				if (cdlBaseButton.getUtilpos() >= cdlBaseButton.UTILPOS_MENU_POS_0_0 && cdlBaseButton.getUtilpos() < cdlBaseButton.UTILPOS_TOOLBAR_BOTOM_0) {
 					cdlBaseButton.setVisible(false);
 				}
 			}
@@ -240,21 +240,67 @@ public class CdlView extends View implements OnGestureListener {
 	}
 
 	private void size_menu(int w, int h) {
-		int id = 0;
 		int w_menu = getWidth() / 12;
 		int h_menu = getHeight() / 16;
+		
+		int w_toolbar = getWidth()/5;
+		int h_toolbar =  getHeight() / 16;
 		for (CdlBaseButton cdlBaseButton : cdlBaseButtonsMenu) {
 			if (cdlBaseButton.isVisible()) {
-				if (id == 0) {
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_CORNER) {
 					cdlBaseButton.setSize(0, 0, w_menu, h_menu / 1);
 				}
-				if (id == 1) {
+				if (cdlBaseButton.getUtilpos()== CdlBaseButton.UTILPOS_MENU_BAR) {
 					cdlBaseButton.setSize(w_menu, 0, getWidth() - w_menu, h_menu / 1);
 				}
-				if (id > 1) {
-					cdlBaseButton.setSize(0, (id - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_0) {
+					cdlBaseButton.setSize(0, (2 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
 				}
-				id++;
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_1) {
+					cdlBaseButton.setSize(0, (3 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_2) {
+					cdlBaseButton.setSize(0, (4 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_3) {
+					cdlBaseButton.setSize(0, (5 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_4) {
+					cdlBaseButton.setSize(0, (6 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_5) {
+					cdlBaseButton.setSize(0, (7 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_6) {
+					cdlBaseButton.setSize(0, (8 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_7) {
+					cdlBaseButton.setSize(0, (9 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_8) {
+					cdlBaseButton.setSize(0, (10 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_MENU_POS_0_9) {
+					cdlBaseButton.setSize(0, (11 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+				}
+				
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_0) {
+					cdlBaseButton.setSize(w_toolbar*0,getHeight()- h_toolbar,w_toolbar,h_toolbar);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_1) {
+					cdlBaseButton.setSize(w_toolbar*1,getHeight()- h_toolbar,w_toolbar,h_toolbar);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_2) {
+					cdlBaseButton.setSize(w_toolbar*2,getHeight()- h_toolbar,w_toolbar,h_toolbar);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_3) {
+					cdlBaseButton.setSize(w_toolbar*3,getHeight()- h_toolbar,w_toolbar,h_toolbar);
+				}
+				if (cdlBaseButton.getUtilpos()==CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_4) {
+					cdlBaseButton.setSize(w_toolbar*4,getHeight()- h_toolbar,w_toolbar,h_toolbar);
+				}
+
+				
 			}
 		}
 	}
