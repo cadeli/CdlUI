@@ -78,7 +78,7 @@ public class NstatesBtnDemo extends Activity {
 		stateValuesForButtons.add(new TestElement("---"));
 
 		CdlNStatesButton cdlNStatesButton = new CdlNStatesButton("testlist");
-		mCdlView.addCdlBaseButton(cdlNStatesButton);
+		mCdlView.addCdlBaseButton(cdlNStatesButton,0);
 		cdlNStatesButton.setList((List<Object> )(List<?>)stateValuesForButtons);
 		cdlNStatesButton.setGridSize(4, 1);
 		cdlNStatesButton.setDisplayMode(CdlBaseButton.DISPLAYMODE_WITH_ARROW_BTN);

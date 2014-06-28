@@ -35,6 +35,7 @@ import com.cadeli.ui.interfaces.OnTapUpCdlListener;
 public class AnotherGridDemo extends Activity {
 
 	Context context;
+	private int screenId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class AnotherGridDemo extends Activity {
 		mCdlPushButton.setBorder(false);
 		mCdlPushButton.setRound(0);
 		// add to the view
-		mCdlView.addCdlBaseButton(mCdlPushButton);
+		mCdlView.addCdlBaseButton(mCdlPushButton,0);
 
 		// create push button
 		mCdlPushButton = new CdlPushButton("push2 push2");
@@ -93,7 +94,7 @@ public class AnotherGridDemo extends Activity {
 		mCdlPushButton.setBorder(false);
 		mCdlPushButton.setRound(0);
 		// add to the view
-		mCdlView.addCdlBaseButton(mCdlPushButton);
+		mCdlView.addCdlBaseButton(mCdlPushButton,0);
 
 		// create push button
 		mCdlPushButton = new CdlPushButton("push3");
@@ -102,7 +103,7 @@ public class AnotherGridDemo extends Activity {
 		mCdlPushButton.setBorder(false);
 		mCdlPushButton.setRound(0);
 		// add to the view
-		mCdlView.addCdlBaseButton(mCdlPushButton);
+		mCdlView.addCdlBaseButton(mCdlPushButton,0);
 
 		// create push button
 		mCdlPushButton = new CdlPushButton("push4");
@@ -111,7 +112,7 @@ public class AnotherGridDemo extends Activity {
 		// add to the view
 		mCdlPushButton.setBorder(false);
 		mCdlPushButton.setRound(0);
-		mCdlView.addCdlBaseButton(mCdlPushButton);
+		mCdlView.addCdlBaseButton(mCdlPushButton,0);
 
 		// create push button
 		mCdlPushButton = new CdlPushButton("push5");
@@ -120,7 +121,7 @@ public class AnotherGridDemo extends Activity {
 		// add to the view
 		mCdlPushButton.setBorder(false);
 		mCdlPushButton.setRound(0);
-		mCdlView.addCdlBaseButton(mCdlPushButton);
+		mCdlView.addCdlBaseButton(mCdlPushButton,0);
 
 	}
 

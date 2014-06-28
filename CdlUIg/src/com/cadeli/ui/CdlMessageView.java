@@ -19,6 +19,7 @@ public class CdlMessageView extends CdlView {
 	private String messageString = "";
 	private int messageType;
 	private int progressVal;
+	private String progressMessage = "";
 
 	private Runnable runnableMessage = new Runnable() {
 		public void run() {
@@ -34,7 +35,6 @@ public class CdlMessageView extends CdlView {
 			}
 		}
 	};
-	private String progressMessage;
 
 	public CdlMessageView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -63,23 +63,29 @@ public class CdlMessageView extends CdlView {
 		runnableMessage.run();
 	}
 
-	public void draw(Canvas canvas) {
-		super.draw(canvas);
-		if (progressVal != 0) {
-			drawProgress(canvas);
-		} else if (messageString.length() > 0) {
-			drawMessage(canvas);
-		}
+	protected void onDraw(Canvas canvas) {
+		draw(canvas, 0); // compatibilty (hem)
 	}
 
-	private void drawProgress(Canvas canvas) {
+	public void draw(Canvas canvas, int screenId) {
+		super.draw(canvas, screenId);
+		if (messageString.length() > 0) {
+			drawMessage(canvas);
+		}
+		drawProgress(canvas);
+	}
+
+	protected void drawProgress(Canvas canvas) {
+		if (progressMessage.length() < 1)
+			return;
+		// if (progressVal>=1) return;
 		String progressValStr = "" + progressVal + " " + "%";
 		Paint txtPaintValue = CdlPalette.getTxtPaint(getWidth() / 6);
 		Paint txtPaintTitle = CdlPalette.getTxtPaint(getWidth() / 6);
 		txtPaintValue.getTextBounds(progressValStr, 0, progressValStr.length(), bounds);
 		int x = (int) (getWidth() / 2 - bounds.centerX());
-		int y = (int) ((getHeight()/2) - bounds.centerY());
-		
+		int y = (int) ((getHeight() / 2) - bounds.centerY());
+
 		int round_h = getWidth() / 100;
 		int round_w = getWidth() / 100;
 		int padding = round_h * 3;
@@ -87,27 +93,29 @@ public class CdlMessageView extends CdlView {
 		int dy = (int) (getHeight() / 2 - bounds.centerY());
 		int pad = getWidth() / 4;
 		int h_start = bounds.top + dy - padding - bounds.height() / 3;
-		int h_end = bounds.bottom + dy + 2*padding;
-		y+=(h_end-h_start)/4;
+		int h_end = bounds.bottom + dy + 2 * padding;
+		y += (h_end - h_start) / 4;
 		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_end);
-		urect.set(getLeft() + pad, h_start, getLeft() + pad +  ((getRight() - pad) -(getLeft() + pad))  * progressVal / 100, h_end);
+		urect.set(getLeft() + pad, h_start, getLeft() + pad + ((getRight() - pad) - (getLeft() + pad)) * progressVal / 100, h_end);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
 		canvas.drawRoundRect(urect, round_w, round_h, CdlPalette.getHilightPaint());
 		canvas.drawText(progressValStr, x, y, txtPaintTitle);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
-		//h_start =(int) rectf.bottom;
+		// h_start =(int) rectf.bottom;
 		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_start + urect.height() / 2);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(1, x, h_start, (int) rectf.width(), (int) rectf.height()));
 		drawCenterTextInrectCase(canvas, progressMessage, txtPaintValue);
 	}
 
-	private void drawMessage(Canvas canvas) {
+	protected void drawMessage(Canvas canvas) {
 		// CdlUtils.cdlLog(TAG, "message is: >" + messageString + "<");
-		CdlBaseButton.getRectf().set(0, 0, getWidth(), getHeight());
-		if (messageType == CdlMessageView.MESSAGETYPE_WARNING) {
-			drawMessage(canvas, messageString, CdlPalette.getHilightPaint());
-		} else {
-			drawMessage(canvas, messageString, CdlPalette.getTxtPaint(getWidth() / 8, getHeight() / 8));
+		if (messageString.length() > 0) {
+			CdlBaseButton.getRectf().set(0, 0, getWidth(), getHeight());
+			if (messageType == CdlMessageView.MESSAGETYPE_WARNING) {
+				drawMessage(canvas, messageString, CdlPalette.getHilightPaint());
+			} else {
+				drawMessage(canvas, messageString, CdlPalette.getTxtPaint(getWidth() / 8, getHeight() / 8));
+			}
 		}
 	}
 
@@ -127,9 +135,8 @@ public class CdlMessageView extends CdlView {
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
 	}
 
-
 	public void setProgress(float min, float max, float val, String progressMessage) {
-		//CdlUtils.cdlLog(TAG, "setProgress =" + val + "="+ progressMessage);
+		// CdlUtils.cdlLog(TAG, "setProgress =" + val + "="+ progressMessage);
 		this.progressMessage = progressMessage;
 		float interval = (max - min);
 		progressVal = (int) ((val * 100) / interval + min);

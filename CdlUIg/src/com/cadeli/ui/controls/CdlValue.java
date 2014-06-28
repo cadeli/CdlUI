@@ -18,8 +18,6 @@ limitations under the License.
 
 package com.cadeli.ui.controls;
 
-import android.telephony.cdma.CdmaCellLocation;
-
 import com.cadeli.ui.CdlUtils;
 
 public class CdlValue {

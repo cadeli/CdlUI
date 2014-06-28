@@ -94,7 +94,7 @@ public class SimpleGridDemoActivity extends Activity {
 		mCdlPushButton.setOnTapUpCdlListener(onTapUpCdlListener);
 		mCdlPushButton.setOnLongPressCdlListener(onLongPressCdlListener);
 		// add to the view
-		mCdlView.addCdlBaseButton(mCdlPushButton);		
+		mCdlView.addCdlBaseButton(mCdlPushButton,0);		
 	}
 	
 }

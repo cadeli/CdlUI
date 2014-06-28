@@ -29,6 +29,7 @@ public class FakeAudioMixerActivity extends Activity {
 	private OnScrollCdlListener onScrollCdlKnobListener;
 	private CdlView mCdlView;
 	private OnTapUpCdlListener onTapUpCdlListener;
+	private int screenId=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,21 +92,21 @@ public class FakeAudioMixerActivity extends Activity {
 		// trigg action
 		if (cdlNStatesButton.getId() == 25 && cdlNStatesButton.getState() == 3) {
 			for (int id = 7; id <= 12; id++) {
-				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id);
+				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id,0);
 				cdlFader.getValueControler().setValues(0f,1f,(id - 7) / 6.0);
 			}
 		}
 		// trigg action
 		if (cdlNStatesButton.getId() == 25 && cdlNStatesButton.getState() == 2) {
 			for (int id = 7; id <= 12; id++) {
-				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id);
+				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id,0);
 				cdlFader.getValueControler().setValues(0f,1f,(12-id ) / 6.0);
 			}
 		}
 		// trigg action
 		if (cdlNStatesButton.getId() == 25 && cdlNStatesButton.getState() == 1) {
 			for (int id = 7; id <= 12; id++) {
-				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id);
+				CdlFader cdlFader = (CdlFader) mCdlView.getButtonFromId(id,0);
 				cdlFader.getValueControler().setValues(0f,1f,0.4f);
 			}
 		}
@@ -128,7 +129,7 @@ public class FakeAudioMixerActivity extends Activity {
 		{
 			mStatusButton = new CdlOnOffButton("");
 			mStatusButton.setBorder(false);
-			mCdlView.addCdlBaseButton(mStatusButton);
+			mCdlView.addCdlBaseButton(mStatusButton,0);
 			mStatusButton.setBackgroundColor(1);
 			mStatusButton.setGridSize(6, 1);
 		}
@@ -136,14 +137,14 @@ public class FakeAudioMixerActivity extends Activity {
 		for (int i = 0; i < 6; i++) {
 			CdlOnOffButton mCdlButton = new CdlOnOffButton("btn_" + (i + 1));
 			mCdlButton.setBorder(false);
-			mCdlView.addCdlBaseButton(mCdlButton);
+			mCdlView.addCdlBaseButton(mCdlButton,0);
 			mCdlButton.setBackgroundColor(1);
 		}
 		// create fader button
 		for (int i = 0; i < 6; i++) {
 			CdlFader mCdlButton = new CdlFader("fader_" + (i + 1));
 			mCdlButton.setGridSize(1, 3);
-			mCdlView.addCdlBaseButton(mCdlButton);
+			mCdlView.addCdlBaseButton(mCdlButton,0);
 			mCdlButton.setBackgroundColor(0);
 			mCdlButton.setOnScrollCdlListener(onScrollCdlFaderListener);
 		}
@@ -151,7 +152,7 @@ public class FakeAudioMixerActivity extends Activity {
 		for (int i = 0; i < 12; i++) {
 			CdlKnob mCdlButton = new CdlKnob("knob_" + (i + 1));
 			mCdlButton.getValueControler().setValues(0, 1, (float) (i * 1.3) / 12.0f);
-			mCdlView.addCdlBaseButton(mCdlButton);
+			mCdlView.addCdlBaseButton(mCdlButton,0);
 			mCdlButton.setBackgroundColor(0);
 			mCdlButton.setOnScrollCdlListener(onScrollCdlKnobListener);
 		}
@@ -166,7 +167,7 @@ public class FakeAudioMixerActivity extends Activity {
 		for (int i = 0; i < 6; i++) {
 			CdlNStatesButton mCdlButton = new CdlNStatesButton("dummy");
 			mCdlButton.setList((List<Object> )(List<?>)stateValuesForButtons);
-			mCdlView.addCdlBaseButton(mCdlButton);
+			mCdlView.addCdlBaseButton(mCdlButton,0);
 			mCdlButton.setBackgroundColor(colorIndexForBlack);
 			mCdlButton.setOnTapUpCdlListener(onTapUpCdlListener);
 		}

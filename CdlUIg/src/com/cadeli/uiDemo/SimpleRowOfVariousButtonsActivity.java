@@ -76,7 +76,7 @@ public class SimpleRowOfVariousButtonsActivity extends Activity {
 		mCdlButton.setOnTapUpCdlListener(onTapUpCdlListener);
 		mCdlButton.setOnLongPressCdlListener(onLongPressCdlListener);
 		// add to the view
-		mCdlView.addCdlBaseButton(mCdlButton);
+		mCdlView.addCdlBaseButton(mCdlButton,0);
 		// change color
 		int colorPaletteIndex = 0;
 		mCdlButton.setBackgroundColor(colorPaletteIndex); // same color for all the buttons

@@ -105,6 +105,7 @@ public class CdlBaseButton {
 	private boolean isFloatingPosition = false;
 	private int id;
 	private int utilpos;
+	//private int screenId;
 	
 	public CdlBaseButton() {
 		super();
@@ -322,7 +323,7 @@ public class CdlBaseButton {
 	}
 
 	public void singleTapUp(MotionEvent e) {
-		// CdlUtils.cdlLog(TAG, "singleTapUp: " + label);
+		CdlUtils.cdlLog(TAG, "singleTapUp: " + label);
 		if (!isEnable())
 			return;
 		if (onTapUpCdlListener != null) {
@@ -544,6 +545,14 @@ public class CdlBaseButton {
 	public void setUtilpos(int utilpos) {
 		this.utilpos = utilpos;
 	}
+
+//	public int getScreenId() {
+//		return screenId;
+//	}
+//
+//	public void setScreenId(int screenId) {
+//		this.screenId = screenId;
+//	}
 	
 	
 }
