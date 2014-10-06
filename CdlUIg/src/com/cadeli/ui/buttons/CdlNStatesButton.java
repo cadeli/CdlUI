@@ -106,8 +106,8 @@ public class CdlNStatesButton extends CdlBaseButton {
 							canvas.drawRect(rectf, backgroundPaint);
 						}
 					}
-					String txt = schrinkText(CdlPalette.getTxtPaint(w - 2 * padding, h_case - 2 * padding), bounds, getWidth(), stateValues.get(i).toString());
-					drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(w - 2 * padding, h_case - 2 * padding));
+					String txt = schrinkText(CdlPalette.getTxtPaint(stateValues.get(i).toString().length(),w - 2 * padding, h_case +2*padding), bounds, getWidth(), stateValues.get(i).toString());
+					drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(txt.length(),w - 2 * padding, h_case+2*padding ));
 				}
 			}
 		}
@@ -153,8 +153,8 @@ public class CdlNStatesButton extends CdlBaseButton {
 		if (label.length()>0 ) {
 			rectf.set(rect.left + padding, rect.top + padding, rect.right - padding, rect.centerY());
 			canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
-			drawCenterTextUp(canvas, label, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-			drawCenterTextDn(canvas, stateTxt, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+			drawCenterTextUp(canvas, label, CdlPalette.getTxtPaint(w - 2 * padding, h*2/3 ));
+			drawCenterTextDn(canvas, stateTxt, CdlPalette.getTxtPaint(w - 2 * padding, h*2/3 ));
 		} else {
 			drawCenterText(canvas, stateTxt, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 		}

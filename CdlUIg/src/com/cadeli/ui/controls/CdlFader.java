@@ -39,27 +39,32 @@ public class CdlFader extends CdlBaseButton {
 	}
 
 	public void draw(Canvas canvas) {
-		int yMark = valueControler.computeYMarkFromValue(rect.top + 2 * padding, rect.bottom - 2 * padding);
+		float yMark = valueControler.computeYMarkFromValue(rect.top + 2 * padding, rect.bottom - 2 * padding);
 		if (isVisible()) {
+			super.draw(canvas);
 			rect2.left = rect.left + padding;
 			rect2.right = rect.right - padding;
-			int wl = 8;
-			if (yMark - wl < rect.top)
+			float wl = CdlPalette.computeStrockWidth(0.2f, rect.width(), rect.height()); // hum TODO
+
+			if (yMark - wl < rect.top) {
 				yMark = rect.top + wl;
-			if (yMark + wl > rect.bottom)
+			}
+			if (yMark + wl > rect.bottom) {
 				yMark = rect.bottom - wl;
+			}
 			rect2.top = yMark - wl;
 			rect2.bottom = yMark + wl;
 			if (isEnable()) {
-				canvas.drawRoundRect(rect2, 5f, 5f, CdlPalette.getHilightPaint());
+//				CdlPalette.getFaderPaintLarge().setColor(CdlPalette.computeHiColor(getBackgroundPaint().getColor()));
+				CdlPalette.getFaderPaintLarge().setColor(getHilightColor());
+				canvas.drawRect(rect2, CdlPalette.getFaderPaintLarge());
 				double dispVal = valueControler.getValue();
 				if (valueControler.isNormalized()) {
 					dispVal *= 100;
 				}
 				String text = "" + (int) dispVal;
-				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w * 1 - 2 * padding, h - 1 * padding));
+				drawCenterText(canvas, text, CdlPalette.getTxtPaint(text.length(), w * 1 - 2 * padding, h - 2 * padding));
 			}
-			super.draw(canvas);
 		}
 	}
 

@@ -80,8 +80,8 @@ public class CdlMessageView extends CdlView {
 			return;
 		// if (progressVal>=1) return;
 		String progressValStr = "" + progressVal + " " + "%";
-		Paint txtPaintValue = CdlPalette.getTxtPaint(getWidth() / 6);
-		Paint txtPaintTitle = CdlPalette.getTxtPaint(getWidth() / 6);
+		Paint txtPaintValue = CdlPalette.getTxtPaint(progressValStr.length(),  getWidth() / 6);
+		Paint txtPaintTitle = CdlPalette.getTxtPaint(progressValStr.length(), getWidth() / 6);
 		txtPaintValue.getTextBounds(progressValStr, 0, progressValStr.length(), bounds);
 		int x = (int) (getWidth() / 2 - bounds.centerX());
 		int y = (int) ((getHeight() / 2) - bounds.centerY());

@@ -43,20 +43,22 @@ public class CdlPalette {
 	static Paint hilightPaint;
 	static Paint hilightPaintLarge;
 	static Paint blackPaint;
-	static Paint blackPaintLarge;
+	static Paint backgroundPaint;
+	static Paint knobPaintLarge;
+	static Paint faderPaintLarge;
 	static int txtPaintColor = Color.WHITE;
 	static int txtPaintInverseColor = Color.BLACK;
 	private static Paint flashPaint;
-	private static int hilightColor = Color.GREEN;
+	private static int hilightColor = Color.rgb(20, 192, 120);
 	private static float borderSize = 2;
-	private static int defaultAlpha = 128;
+	private static int defaultAlpha = 255;
 	private static float defaulStrokeWidth = 12;
 	private static boolean isGradient = false;
 	private static Typeface typeface = null;
+	private static Typeface typefaceLight = null;
 	private static Paint tdPaint;
-	private static Paint bordeNoterPaint;
-	private static Paint stepBarPaint;
-	private static Paint measureBarPaint;
+
+	private static int backgroundColor = Color.rgb(0, 0, 0);
 	private Context context;
 
 	// protected static final int ACTIVETEXT_COLOR = 0xFFFFFFFF;
@@ -67,7 +69,7 @@ public class CdlPalette {
 		paint.setColor(color);
 		paint.setAntiAlias(true);
 		paint.setDither(true);
-		paint.setAlpha(192);
+		paint.setAlpha(defaultAlpha);
 		colorList.add(paint);
 		CdlUtils.cdlLog(TAG, "AddColor:" + Integer.toHexString(paint.getColor()));
 	}
@@ -78,19 +80,16 @@ public class CdlPalette {
 
 	public static Paint getPaint(int i, int x, int y, int w, int h) {
 		int size = colorList.size();
-		// if (size==0) {
-		// createDefaultColors(null);
-		// }
 		if (i >= 0 && size > 0) {
 			Paint p = (Paint) colorList.get(i % size);
-			if (isGradient) { // TODO avoid new
-				// p.setShader(new LinearGradient(x, y, x, y+h,
-				// p.getColor(),
-				// Color.parseColor("#FF000000"), Shader.TileMode.REPEAT));
-				// Shader s = p.getShader();
-				// LinearGradient lg = s.getLocalMatrix(localM);
-				CdlUtils.cdlLog(TAG, "new Grdient");
-			}
+			// if (isGradient) { // TODO avoid new
+			// // p.setShader(new LinearGradient(x, y, x, y+h,
+			// // p.getColor(),
+			// // Color.parseColor("#FF000000"), Shader.TileMode.REPEAT));
+			// // Shader s = p.getShader();
+			// // LinearGradient lg = s.getLocalMatrix(localM);
+			// CdlUtils.cdlLog(TAG, "new Grdient");
+			// }
 			return p;
 		}
 		return (Paint) colorList.get(0);
@@ -115,7 +114,8 @@ public class CdlPalette {
 			addColor(0x737791);
 			addColor(0xDDC71A);
 			addColor(0xD32643);
-			addColor(0x0A3560);
+			addColor(0x0505D0);
+//			addColor(0x0A3560);
 			break;
 		case COLORSCHEME3:
 			addColor(Color.rgb(137, 247, 142));
@@ -148,24 +148,35 @@ public class CdlPalette {
 		}
 	}
 
-	public static Paint getTxtPaint(int size) {
-		return getTxtPaint(size, size);
+	public static Paint getTxtPaint(int len, int size) {
+		return getTxtPaint(len, size, size);
 	}
 
-	public static Paint getTxtPaint(int w, int h) {
+	public static Paint getTxtPaint(int len, int w, int h) {
 		if (txtPaint == null) {
 			txtPaint = new Paint();
 			txtPaint.setAntiAlias(true);
 			txtPaint.setDither(true);
+		}
+		int size = 22;
+		if (w < h) {
+			size = (int) (float) (w / 2.5f);
+		} else {
+			size = (int) (float) (h / 2.5f);
+		}
+
+		if (size > 26) {
+			if (typefaceLight != null) {
+				txtPaint.setTypeface(typefaceLight);
+			}
+		} else {
 			if (typeface != null) {
 				txtPaint.setTypeface(typeface);
 			}
 		}
-		if (w < h) {
-			txtPaint.setTextSize((int) (float) (w / 2.5f));
-		} else {
-			txtPaint.setTextSize((int) (float) (h / 2.5f));
-		}
+		if (len < 4) { size *=1.1f;}
+		txtPaint.setTextSize(size);
+
 		txtPaint.setColor(txtPaintColor);
 		return txtPaint;
 	}
@@ -202,41 +213,6 @@ public class CdlPalette {
 		return borderPaint;
 	}
 
-	public static Paint getBorderNotePaint() {
-		if (bordeNoterPaint == null) {
-			bordeNoterPaint = new Paint();
-			bordeNoterPaint.setAntiAlias(true);
-			bordeNoterPaint.setDither(true);
-			bordeNoterPaint.setAlpha(defaultAlpha);
-			bordeNoterPaint.setStyle(Style.STROKE);
-			bordeNoterPaint.setStrokeWidth(borderSize * 2);
-		}
-		bordeNoterPaint.setColor(Color.YELLOW);
-		return bordeNoterPaint;
-	}
-
-	public static Paint getStepBarPaint() {
-		if (stepBarPaint == null) {
-			stepBarPaint = new Paint();
-			stepBarPaint.setColor(Color.GRAY);
-			stepBarPaint.setAlpha(170);
-			stepBarPaint.setAntiAlias(true);
-			stepBarPaint.setDither(true);
-		}
-		return stepBarPaint;
-	}
-
-	public static Paint getMeasureBarPaint() {
-		if (measureBarPaint == null) {
-			measureBarPaint = new Paint();
-			measureBarPaint.setColor(Color.GRAY);
-			measureBarPaint.setAlpha(70);
-			measureBarPaint.setAntiAlias(true);
-			measureBarPaint.setDither(true);
-		}
-		return measureBarPaint;
-	}
-
 	public static Paint getFlashPaint() {
 		if (flashPaint == null) {
 			flashPaint = new Paint();
@@ -269,35 +245,63 @@ public class CdlPalette {
 		return blackPaint;
 	}
 
+	public static void setBackgroundColor(int c) {
+		backgroundColor = c;
+	}
+
+	public static Paint getBackgroundPaint() {
+		if (backgroundPaint == null) {
+			backgroundPaint = new Paint();
+			backgroundPaint.setColor(backgroundColor);
+			backgroundPaint.setAlpha(255);
+			backgroundPaint.setAntiAlias(true);
+			backgroundPaint.setDither(true);
+		}
+		return backgroundPaint;
+	}
+
 	public static Paint getHilightPaintLarge() {
 		if (hilightPaintLarge == null) {
 			hilightPaintLarge = new Paint();
-			hilightPaintLarge.setStyle(Style.STROKE);
-			hilightPaintLarge.setStrokeWidth(defaulStrokeWidth);
+			hilightPaintLarge.setStyle(Style.FILL);
+			//hilightPaintLarge.setStrokeWidth(defaulStrokeWidth);
 			hilightPaintLarge.setColor(hilightColor);
 			hilightPaintLarge.setAntiAlias(true);
 			hilightPaintLarge.setDither(true);
-			hilightPaintLarge.setAlpha(128);
+			hilightPaintLarge.setAlpha(255);
 		}
 		return hilightPaintLarge;
 	}
 
-	public static Paint getBlackPaintLarge() {
-		if (blackPaintLarge == null) {
-			blackPaintLarge = new Paint();
-			blackPaintLarge.setStyle(Style.STROKE);
-			blackPaintLarge.setStrokeWidth(defaulStrokeWidth);
-			blackPaintLarge.setColor(Color.DKGRAY);
-			blackPaintLarge.setAntiAlias(true);
-			blackPaintLarge.setDither(true);
-			blackPaintLarge.setAlpha(128);
+	public static Paint getKnobPaintLarge() {
+		if (knobPaintLarge == null) {
+			knobPaintLarge = new Paint();
+			knobPaintLarge.setStyle(Style.STROKE);
+			knobPaintLarge.setStrokeWidth(defaulStrokeWidth);
+			knobPaintLarge.setColor(Color.DKGRAY);
+			knobPaintLarge.setAntiAlias(true);
+			knobPaintLarge.setDither(true);
+			knobPaintLarge.setAlpha(255);
 		}
-		return blackPaintLarge;
+		return knobPaintLarge;
+	}
+
+	public static Paint getFaderPaintLarge() {
+		if (faderPaintLarge == null) {
+			faderPaintLarge = new Paint();
+			faderPaintLarge.setStyle(Style.FILL);
+			faderPaintLarge.setStrokeWidth(defaulStrokeWidth);
+			faderPaintLarge.setColor(Color.DKGRAY);
+			faderPaintLarge.setAntiAlias(true);
+			faderPaintLarge.setDither(true);
+			faderPaintLarge.setAlpha(255);
+		}
+		return faderPaintLarge;
 	}
 
 	public static void setHilightColor(int hilightColor) {
 		CdlPalette.hilightColor = hilightColor;
-		hilightPaint=null;
+		hilightPaint = null;
 	}
 
 	public static int getLastColorIndex() {
@@ -310,16 +314,25 @@ public class CdlPalette {
 			tdPaint.setAntiAlias(true);
 			tdPaint.setDither(true);
 			CdlUtils.cdlLog(TAG, "typeface = " + typeface);
-			if (typeface != null) {
-				tdPaint.setTypeface(typeface);
-				CdlUtils.cdlLog(TAG, "typeface bold= " + typeface.isBold());
+			// if (typeface != null) {
+			// tdPaint.setTypeface(typeface);
+			// CdlUtils.cdlLog(TAG, "typeface bold= " + typeface.isBold());
+			// }
+			if (size > 14) {
+				if (typefaceLight != null) {
+					tdPaint.setTypeface(typefaceLight);
+				}
+			} else {
+				if (typeface != null) {
+					tdPaint.setTypeface(typeface);
+				}
 			}
-
 			tdPaint.setTextSize(size);
-			tdPaint.setColor(0x80506060);
+			tdPaint.setColor(0x506060);
 			tdPaint.setShadowLayer(6, 2, 2, 0xF0F0F0);
+			tdPaint.setAlpha(defaultAlpha);
 		} else {
-			 tdPaint.setTextSize(size);
+			tdPaint.setTextSize(size);
 		}
 		return tdPaint;
 	}
@@ -336,4 +349,49 @@ public class CdlPalette {
 		CdlPalette.typeface = typeface;
 	}
 
+	public static void setTypeFaceLight(Typeface typeface) {
+		CdlUtils.cdlLog(TAG, "setTypeFaceLight = " + typeface);
+		CdlPalette.typefaceLight = typeface;
+	}
+	
+	static float[] hsv = new float[3];
+	/**
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public static int computeLowColor(int color) {		
+		Color.colorToHSV(color, hsv);
+		hsv[2] *= 0.5f; 
+		color = Color.HSVToColor(hsv);
+		return color;
+	}
+	
+	/**
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public static int computeHiColor(int color) {		
+		Color.colorToHSV(color, hsv);
+		hsv[2] = 1.0f - 0.2f * (1.0f - hsv[2]);
+		color = Color.HSVToColor(hsv);
+		return color;
+	}
+	
+	/**
+	 * 
+	 * @param coef
+	 * @param w
+	 * @param h
+	 */
+	public static float computeStrockWidth(float coef, float w, float h) {
+		float strockWidth = 1;
+		if (w < h) {
+			strockWidth = w/5f;
+		} else {
+			strockWidth = h/5f;			
+		}
+		return strockWidth*coef;
+	}
 }

@@ -35,34 +35,33 @@ public class CdlBaseButton {
 	public static final int DISPLAYMODE_EXPANDED = 1;
 	public static final int DISPLAYMODE_LIST = 2;
 	public static final int DISPLAYMODE_WITH_ARROW_BTN = 3;
-	
+
 	public static final int FONT_SMALL_SIZE = 1;
 	public static final int FONT_BIG_BIG_SIZE = 2;
 	public static final int FONT_NORMAL_SIZE = 3;
-	
-	public static final int UTILPOS_MENU_CORNER=0;
-	public static final int UTILPOS_MENU_BAR =1;
-	public static final int UTILPOS_MENU_POS_0_0 =2;
-	public static final int UTILPOS_MENU_POS_0_1 =3;
-	public static final int UTILPOS_MENU_POS_0_2 =4;
-	public static final int UTILPOS_MENU_POS_0_3 =5;
-	public static final int UTILPOS_MENU_POS_0_4 =6;
-	public static final int UTILPOS_MENU_POS_0_5 =7;
-	public static final int UTILPOS_MENU_POS_0_6 =8;
-	public static final int UTILPOS_MENU_POS_0_7 =9;
-	public static final int UTILPOS_MENU_POS_0_8 =10;
-	public static final int UTILPOS_MENU_POS_0_9 =11;
-	public static final int UTILPOS_TOOLBAR_BOTOM_0=50;
-	public static final int UTILPOS_TOOLBAR_BOTOM_1=51;
-	public static final int UTILPOS_TOOLBAR_BOTOM_2=52;
-	public static final int UTILPOS_TOOLBAR_BOTOM_3=53;
-	public static final int UTILPOS_TOOLBAR_BOTOM_4=54;
-	public static final int UTILPOS_TOOLBAR_BOTOM_5=55;
-	public static final int UTILPOS_TOOLBAR_BOTOM_6=56;
-	public static final int UTILPOS_TOOLBAR_BOTOM_7=57;
-	public static final int UTILPOS_TOOLBAR_BOTOM_8=58;
-	public static final int UTILPOS_TOOLBAR_BOTOM_9=59;
 
+	public static final int UTILPOS_MENU_CORNER = 0;
+	public static final int UTILPOS_MENU_BAR = 1;
+	public static final int UTILPOS_MENU_POS_0_0 = 2;
+	public static final int UTILPOS_MENU_POS_0_1 = 3;
+	public static final int UTILPOS_MENU_POS_0_2 = 4;
+	public static final int UTILPOS_MENU_POS_0_3 = 5;
+	public static final int UTILPOS_MENU_POS_0_4 = 6;
+	public static final int UTILPOS_MENU_POS_0_5 = 7;
+	public static final int UTILPOS_MENU_POS_0_6 = 8;
+	public static final int UTILPOS_MENU_POS_0_7 = 9;
+	public static final int UTILPOS_MENU_POS_0_8 = 10;
+	public static final int UTILPOS_MENU_POS_0_9 = 11;
+	public static final int UTILPOS_TOOLBAR_BOTOM_0 = 50;
+	public static final int UTILPOS_TOOLBAR_BOTOM_1 = 51;
+	public static final int UTILPOS_TOOLBAR_BOTOM_2 = 52;
+	public static final int UTILPOS_TOOLBAR_BOTOM_3 = 53;
+	public static final int UTILPOS_TOOLBAR_BOTOM_4 = 54;
+	public static final int UTILPOS_TOOLBAR_BOTOM_5 = 55;
+	public static final int UTILPOS_TOOLBAR_BOTOM_6 = 56;
+	public static final int UTILPOS_TOOLBAR_BOTOM_7 = 57;
+	public static final int UTILPOS_TOOLBAR_BOTOM_8 = 58;
+	public static final int UTILPOS_TOOLBAR_BOTOM_9 = 59;
 
 	private boolean visible = true;
 	private boolean enable = true;
@@ -80,6 +79,9 @@ public class CdlBaseButton {
 
 	protected int backgroundColor;
 	protected Paint backgroundPaint = null;
+
+	private int hilightColor;
+
 	protected String label = "Default_Label";
 	private String subLabel;
 	protected int displayMode = DISPLAYMODE_COMPACT;
@@ -105,11 +107,12 @@ public class CdlBaseButton {
 	private boolean isFloatingPosition = false;
 	private int id;
 	private int utilpos;
-	//private int screenId;
-	
+
+	// private int screenId;
+
 	public CdlBaseButton() {
 		super();
-		//CdlUtils.cdlLog(TAG, "new cdlBaseButton");
+		// CdlUtils.cdlLog(TAG, "new cdlBaseButton");
 	}
 
 	/**
@@ -155,6 +158,12 @@ public class CdlBaseButton {
 			round_w = round * h2;
 			round_h = round * h2;
 		}
+		if (round_w > 10) {
+			round_w=10; // TODO
+		}
+		if (round_h > 10) {
+			round_h=10; //TODO 
+		}
 	}
 
 	/**
@@ -183,33 +192,33 @@ public class CdlBaseButton {
 					canvas.drawRoundRect(rectf, rw, rh, backgroundPaint);
 				}
 			}
-			
+
 			if (isBorder) {
 				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getBorderPaint());
 			}
 		}
 	}
 
-//	protected void drawLabel(Canvas canvas) {
-//		if (isEnabled) {
-//			if (getLabel().contains(" ") && getSubLabel() == null) {
-//				drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-//				drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-//			} else {
-//				drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-//				if (getSubLabel() != null) {
-//					drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w - 2 * padding) / 2, (h - 2 * padding) / 2));
-//				}
-//			}
-//		}
-//	}
-//	
-	
+	// protected void drawLabel(Canvas canvas) {
+	// if (isEnabled) {
+	// if (getLabel().contains(" ") && getSubLabel() == null) {
+	// drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+	// drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+	// } else {
+	// drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+	// if (getSubLabel() != null) {
+	// drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w - 2 * padding) / 2, (h - 2 * padding) / 2));
+	// }
+	// }
+	// }
+	// }
+	//
+
 	protected void drawLabel(Canvas canvas) {
 		if (isEnabled) {
 			Paint paint = CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding);
-			if (fontSizeType==FONT_SMALL_SIZE) {
-				 paint = CdlPalette.getTxtPaint(w*2/3 - 2 * padding, h/2 - 2 * padding);
+			if (fontSizeType == FONT_SMALL_SIZE) {
+				paint = CdlPalette.getTxtPaint(w * 2 / 3 - 2 * padding, h / 2 - 2 * padding);
 			}
 			drawLabel(canvas, paint);
 		}
@@ -223,12 +232,11 @@ public class CdlBaseButton {
 			} else {
 				drawCenterText(canvas, getLabel(), paint);
 				if (getSubLabel() != null) {
-					drawBottomText(canvas, getSubLabel(),CdlPalette.getTxtPaint((w - 2 * padding) / 2, (h - 2 * padding) / 2));
+					drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint(getSubLabel().length(), (w - 2 * padding) / 2, (h - 2 * padding) / 2));
 				}
 			}
 		}
 	}
-
 
 	protected void drawCenterText(Canvas canvas, String text, Paint paint) {
 		if (text == null)
@@ -245,7 +253,7 @@ public class CdlBaseButton {
 			return;
 		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
-		rectf.set(getLeft(), getTop() + getHeight() / 2, getRight(), getBottom()- getHeight()/8);
+		rectf.set(getLeft(), getTop() + getHeight() / 2, getRight(), getBottom() - getHeight() / 8);
 		drawCenterTextInrectCase(canvas, text, paint);
 	}
 
@@ -254,7 +262,7 @@ public class CdlBaseButton {
 			return;
 		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
-		rectf.set(getLeft(), getTop()+ getHeight()/8, getRight(), getTop() + getHeight() / 2);
+		rectf.set(getLeft(), getTop() + getHeight() / 8, getRight(), getTop() + getHeight() / 2);
 		drawCenterTextInrectCase(canvas, text, paint);
 	}
 
@@ -279,7 +287,7 @@ public class CdlBaseButton {
 		rectf.right = rect.right;
 
 		int x = (int) (rectf.left + rectf.width() / 2 - bounds.centerX());
-		//int y = (int) (rectf.top + rectf.height() / 2 - bounds.centerY());
+		// int y = (int) (rectf.top + rectf.height() / 2 - bounds.centerY());
 		int y = (int) (rectf.bottom - bounds.bottom - round_w);
 		canvas.drawText(text, x, y, paint);
 		return;
@@ -291,13 +299,14 @@ public class CdlBaseButton {
 		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
 		int x = rect.left + rect.width() / 2 - bounds.centerX();
-		int y = rect.top + bounds.height()+ padding;
+		int y = rect.top + bounds.height() + padding;
 		canvas.drawText(text, x, y, paint);
 		return;
 	}
 
 	protected String schrinkText(Paint paint, Rect bounds2, int w_max, String text) {
-		if (true) return text;  ///TODO
+		if (true)
+			return text; // /TODO
 		paint.getTextBounds(text, 0, text.length(), bounds2);
 		// CdlUtils.cdlLog(TAG, "schrinkText b="+ bounds2.width() + " getW="+ getWidth());
 		if (bounds2.width() < w_max - 2 * padding) {
@@ -350,7 +359,7 @@ public class CdlBaseButton {
 	}
 
 	public void setLabel(String s) {
-		//CdlUtils.cdlLog(TAG, "setLabel=" + s);
+		// CdlUtils.cdlLog(TAG, "setLabel=" + s);
 		this.label = s;
 		textUp = s;
 		textDown = s;
@@ -359,7 +368,7 @@ public class CdlBaseButton {
 			int end = s.length();
 			textUp = s.substring(0, idx);
 			textDown = s.substring(idx + 1, end);
-			//CdlUtils.cdlLog(TAG, "textDn=" + textDown);
+			// CdlUtils.cdlLog(TAG, "textDn=" + textDown);
 		}
 	}
 
@@ -421,10 +430,6 @@ public class CdlBaseButton {
 
 	public void setPadding(int padding) {
 		this.padding = padding;
-	}
-
-	public void setBackgroundColor(int backgroundColor) {
-		this.backgroundColor = backgroundColor;
 	}
 
 	public boolean isFlashCapable() {
@@ -522,6 +527,22 @@ public class CdlBaseButton {
 		this.backgroundPaint = backgroundPaint;
 	}
 
+	public void setBackgroundColor(int backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public int getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setHilightColor(int hilightColor) {
+		this.hilightColor = hilightColor;
+	}
+	
+	public int getHilightColor() {
+		return hilightColor;
+	}
+
 	public boolean isFloatingPosition() {
 		return isFloatingPosition;
 	}
@@ -546,13 +567,18 @@ public class CdlBaseButton {
 		this.utilpos = utilpos;
 	}
 
-//	public int getScreenId() {
-//		return screenId;
-//	}
-//
-//	public void setScreenId(int screenId) {
-//		this.screenId = screenId;
-//	}
+	public Paint getBackgroundPaint() {
+		return backgroundPaint;
+	}
 	
 	
+
+	// public int getScreenId() {
+	// return screenId;
+	// }
+	//
+	// public void setScreenId(int screenId) {
+	// this.screenId = screenId;
+	// }
+
 }

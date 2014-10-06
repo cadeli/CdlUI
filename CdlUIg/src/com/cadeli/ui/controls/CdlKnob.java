@@ -19,6 +19,7 @@ limitations under the License.
 package com.cadeli.ui.controls;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
@@ -35,12 +36,14 @@ public class CdlKnob extends CdlBaseButton {
 		super();
 		setLabel(label);
 		valueControler = new CdlValue(label);
+		setHilightColor(Color.rgb(255, 0, 0));
 	}
 
 	public void draw(Canvas canvas) {
 		if (isVisible() ) {
-			super.draw(canvas);
-			int wl = (int) CdlPalette.getBlackPaintLarge().getStrokeWidth();
+			//super.draw(canvas);
+			CdlPalette.getKnobPaintLarge().setStrokeWidth(CdlPalette.computeStrockWidth(1,rect.width(),rect.height()));
+			int wl = (int) CdlPalette.getKnobPaintLarge().getStrokeWidth();
 			double dispVal = valueControler.getValue();
 			if (valueControler.isNormalized()) {
 				dispVal *= 100;
@@ -51,8 +54,12 @@ public class CdlKnob extends CdlBaseButton {
 			float maxAngle = 300f;
 			float minAngle = 120f;
 			float alpha = (float) getValueControler().computeAlphaFromVal((int) dispVal, (int) maxAngle, 0);
-			canvas.drawArc(oval2, minAngle, maxAngle, false, CdlPalette.getBlackPaintLarge());
-			canvas.drawArc(oval2, minAngle, alpha, false, CdlPalette.getHilightPaintLarge());
+			
+			CdlPalette.getKnobPaintLarge().setColor(CdlPalette.computeLowColor(getHilightColor()));
+			canvas.drawArc(oval2, minAngle, maxAngle, false, CdlPalette.getKnobPaintLarge());
+			CdlPalette.getKnobPaintLarge().setColor(getHilightColor());
+			canvas.drawArc(oval2, minAngle, alpha, false, CdlPalette.getKnobPaintLarge());
+			
 			if (isEnable()) {
 				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
 			}
