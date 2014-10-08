@@ -19,6 +19,7 @@ limitations under the License.
 package com.cadeli.ui.controls;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
@@ -27,7 +28,7 @@ import com.cadeli.ui.CdlPalette;
 import com.cadeli.ui.CdlUtils;
 
 public class CdlFader extends CdlBaseButton {
-	private static final String TAG = "OrFader";
+	private static final String TAG = "CdlFader";
 	private String title = "notitle";
 	private CdlValue valueControler;
 	private RectF rect2 = new RectF();
@@ -41,6 +42,8 @@ public class CdlFader extends CdlBaseButton {
 	public void draw(Canvas canvas) {
 		float yMark = valueControler.computeYMarkFromValue(rect.top + 2 * padding, rect.bottom - 2 * padding);
 		if (isVisible()) {
+			CdlUtils.cdlLog(TAG, "draw:" +getLabel()+" id="+getId()+ " c="+ getBackgroundPaint().getColor() + " = "+ getBackgroundColor());
+			getBackgroundPaint().setColor(getBackgroundColor());  //TODO (fix should never happens)
 			super.draw(canvas);
 			rect2.left = rect.left + padding;
 			rect2.right = rect.right - padding;
@@ -100,4 +103,12 @@ public class CdlFader extends CdlBaseButton {
 		valueControler.setValues(valueControler.minVal, valueControler.maxVal, val);
 		super.longPress(e);
 	}
+	
+//	public void setBackgroundPaint(Paint backgroundPaint) {
+//		int color = backgroundPaint.getColor();
+//		super.setBackgroundPaint(backgroundPaint);
+//		CdlUtils.cdlLog(TAG, "setBackgroundPaint:" +getLabel()+" id="+getId()+ " c="+ color);
+//	}
+
+
 }

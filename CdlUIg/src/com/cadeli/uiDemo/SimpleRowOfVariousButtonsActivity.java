@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.cadeli.ui.CdlBaseButton;
+import com.cadeli.ui.CdlPalette;
 import com.cadeli.ui.CdlView;
 import com.cadeli.ui.R;
 import com.cadeli.ui.buttons.CdlOnOffButton;
@@ -79,7 +80,7 @@ public class SimpleRowOfVariousButtonsActivity extends Activity {
 		mCdlView.addCdlBaseButton(mCdlButton,0);
 		// change color
 		int colorPaletteIndex = 0;
-		mCdlButton.setBackgroundColor(colorPaletteIndex); // same color for all the buttons
+		mCdlButton.setBackgroundPaint(CdlPalette.getPaint(colorPaletteIndex)); // same color for all the buttons
 	}
 
 }

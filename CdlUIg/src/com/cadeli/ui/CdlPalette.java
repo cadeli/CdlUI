@@ -78,21 +78,16 @@ public class CdlPalette {
 		return getPaint(i, 0, 0, 100, 100);
 	}
 
-	public static Paint getPaint(int i, int x, int y, int w, int h) {
-		int size = colorList.size();
-		if (i >= 0 && size > 0) {
-			Paint p = (Paint) colorList.get(i % size);
-			// if (isGradient) { // TODO avoid new
-			// // p.setShader(new LinearGradient(x, y, x, y+h,
-			// // p.getColor(),
-			// // Color.parseColor("#FF000000"), Shader.TileMode.REPEAT));
-			// // Shader s = p.getShader();
-			// // LinearGradient lg = s.getLocalMatrix(localM);
-			// CdlUtils.cdlLog(TAG, "new Grdient");
-			// }
-			return p;
-		}
-		return (Paint) colorList.get(0);
+	public static Paint getPaint(int nb, int x, int y, int w, int h) {
+		int len = colorList.size();
+		Paint p = colorList.get(0);
+		if (nb >= 0) {
+			int index = nb % len;
+			p =  colorList.get(index);
+			int color = p.getColor();
+			CdlUtils.cdlLog(TAG, "Returncolor for "+nb + "="+ index+ " c="+ color);
+		}	
+		return p;
 	}
 
 	public static void createDefaultColors() {
@@ -115,7 +110,7 @@ public class CdlPalette {
 			addColor(0xDDC71A);
 			addColor(0xD32643);
 			addColor(0x0505D0);
-//			addColor(0x0A3560);
+			// addColor(0x0A3560);
 			break;
 		case COLORSCHEME3:
 			addColor(Color.rgb(137, 247, 142));
@@ -165,7 +160,7 @@ public class CdlPalette {
 			size = (int) (float) (h / 2.5f);
 		}
 
-		if (size > 26) {
+		if (size > 30) {
 			if (typefaceLight != null) {
 				txtPaint.setTypeface(typefaceLight);
 			}
@@ -174,7 +169,9 @@ public class CdlPalette {
 				txtPaint.setTypeface(typeface);
 			}
 		}
-		if (len < 4) { size *=1.1f;}
+		if (len < 4) {
+			size *= 1.1f;
+		}
 		txtPaint.setTextSize(size);
 
 		txtPaint.setColor(txtPaintColor);
@@ -264,7 +261,7 @@ public class CdlPalette {
 		if (hilightPaintLarge == null) {
 			hilightPaintLarge = new Paint();
 			hilightPaintLarge.setStyle(Style.FILL);
-			//hilightPaintLarge.setStrokeWidth(defaulStrokeWidth);
+			// hilightPaintLarge.setStrokeWidth(defaulStrokeWidth);
 			hilightPaintLarge.setColor(hilightColor);
 			hilightPaintLarge.setAntiAlias(true);
 			hilightPaintLarge.setDither(true);
@@ -307,7 +304,7 @@ public class CdlPalette {
 	public static int getLastColorIndex() {
 		return colorList.size() - 1;
 	}
-
+	
 	public static Paint getTdPaint(float size) {
 		if (tdPaint == null) {
 			tdPaint = new Paint();
@@ -318,7 +315,8 @@ public class CdlPalette {
 			// tdPaint.setTypeface(typeface);
 			// CdlUtils.cdlLog(TAG, "typeface bold= " + typeface.isBold());
 			// }
-			if (size > 14) {
+//			if (size > 14) {
+				if (size > 28) {
 				if (typefaceLight != null) {
 					tdPaint.setTypeface(typefaceLight);
 				}
@@ -328,8 +326,8 @@ public class CdlPalette {
 				}
 			}
 			tdPaint.setTextSize(size);
-			tdPaint.setColor(0x506060);
-			tdPaint.setShadowLayer(6, 2, 2, 0xF0F0F0);
+			//tdPaint.setColor(0x506060);
+			//tdPaint.setShadowLayer(6, 2, 2, 0xF0F0F0);
 			tdPaint.setAlpha(defaultAlpha);
 		} else {
 			tdPaint.setTextSize(size);
@@ -353,32 +351,33 @@ public class CdlPalette {
 		CdlUtils.cdlLog(TAG, "setTypeFaceLight = " + typeface);
 		CdlPalette.typefaceLight = typeface;
 	}
-	
+
 	static float[] hsv = new float[3];
+
 	/**
 	 * 
 	 * @param color
 	 * @return
 	 */
-	public static int computeLowColor(int color) {		
+	public static int computeLowColor(int color) {
 		Color.colorToHSV(color, hsv);
-		hsv[2] *= 0.5f; 
+		hsv[2] *= 0.5f;
 		color = Color.HSVToColor(hsv);
 		return color;
 	}
-	
+
 	/**
 	 * 
 	 * @param color
 	 * @return
 	 */
-	public static int computeHiColor(int color) {		
+	public static int computeHiColor(int color) {
 		Color.colorToHSV(color, hsv);
 		hsv[2] = 1.0f - 0.2f * (1.0f - hsv[2]);
 		color = Color.HSVToColor(hsv);
 		return color;
 	}
-	
+
 	/**
 	 * 
 	 * @param coef
@@ -388,10 +387,14 @@ public class CdlPalette {
 	public static float computeStrockWidth(float coef, float w, float h) {
 		float strockWidth = 1;
 		if (w < h) {
-			strockWidth = w/5f;
+			strockWidth = w / 5f;
 		} else {
-			strockWidth = h/5f;			
+			strockWidth = h / 5f;
 		}
-		return strockWidth*coef;
+		return strockWidth * coef;
+	}
+
+	public static int getDefaultHilightColor() {
+		return hilightColor;
 	}
 }

@@ -88,7 +88,7 @@ public class FakeAudioMixerActivity extends Activity {
 	protected void stateButtonPressed(CdlNStatesButton cdlNStatesButton) {
 		String s = cdlNStatesButton.getLabel() + " set to label " + cdlNStatesButton.getStateTxt() + " state #" + cdlNStatesButton.getState();
 		mStatusButton.setLabel(s);
-		mStatusButton.setBackgroundColor(4);
+		mStatusButton.setBackgroundPaint(CdlPalette.getPaint(4));
 		// trigg action
 		if (cdlNStatesButton.getId() == 25 && cdlNStatesButton.getState() == 3) {
 			for (int id = 7; id <= 12; id++) {
@@ -115,13 +115,13 @@ public class FakeAudioMixerActivity extends Activity {
 	protected void faderValueChanged(CdlFader cdlFader) {
 		String s = cdlFader.getLabel() + " set to " + cdlFader.getValueControler().getValue();
 		mStatusButton.setLabel(s);
-		mStatusButton.setBackgroundColor(3);
+		mStatusButton.setBackgroundPaint(CdlPalette.getPaint(3));
 	}
 
 	private void knobValueChanged(CdlKnob cdlKnob) {
 		String s = cdlKnob.getLabel() + " set to " + cdlKnob.getValueControler().getValue();
 		mStatusButton.setLabel(s);
-		mStatusButton.setBackgroundColor(4);
+		mStatusButton.setBackgroundPaint(CdlPalette.getPaint(4));
 	}
 
 	private void createStrips() {
@@ -130,7 +130,7 @@ public class FakeAudioMixerActivity extends Activity {
 			mStatusButton = new CdlOnOffButton("");
 			mStatusButton.setBorder(false);
 			mCdlView.addCdlBaseButton(mStatusButton,0);
-			mStatusButton.setBackgroundColor(1);
+			mStatusButton.setBackgroundPaint(CdlPalette.getPaint(1));
 			mStatusButton.setGridSize(6, 1);
 		}
 		// create push button
@@ -138,14 +138,14 @@ public class FakeAudioMixerActivity extends Activity {
 			CdlOnOffButton mCdlButton = new CdlOnOffButton("btn_" + (i + 1));
 			mCdlButton.setBorder(false);
 			mCdlView.addCdlBaseButton(mCdlButton,0);
-			mCdlButton.setBackgroundColor(1);
+			mStatusButton.setBackgroundPaint(CdlPalette.getPaint(1));
 		}
 		// create fader button
 		for (int i = 0; i < 6; i++) {
 			CdlFader mCdlButton = new CdlFader("fader_" + (i + 1));
 			mCdlButton.setGridSize(1, 3);
 			mCdlView.addCdlBaseButton(mCdlButton,0);
-			mCdlButton.setBackgroundColor(0);
+			mStatusButton.setBackgroundPaint(CdlPalette.getPaint(1));
 			mCdlButton.setOnScrollCdlListener(onScrollCdlFaderListener);
 		}
 		// create knob button
@@ -153,7 +153,7 @@ public class FakeAudioMixerActivity extends Activity {
 			CdlKnob mCdlButton = new CdlKnob("knob_" + (i + 1));
 			mCdlButton.getValueControler().setValues(0, 1, (float) (i * 1.3) / 12.0f);
 			mCdlView.addCdlBaseButton(mCdlButton,0);
-			mCdlButton.setBackgroundColor(0);
+			mStatusButton.setBackgroundPaint(CdlPalette.getPaint(0));
 			mCdlButton.setOnScrollCdlListener(onScrollCdlKnobListener);
 		}
 		
@@ -168,7 +168,7 @@ public class FakeAudioMixerActivity extends Activity {
 			CdlNStatesButton mCdlButton = new CdlNStatesButton("dummy");
 			mCdlButton.setList((List<Object> )(List<?>)stateValuesForButtons);
 			mCdlView.addCdlBaseButton(mCdlButton,0);
-			mCdlButton.setBackgroundColor(colorIndexForBlack);
+			mStatusButton.setBackgroundPaint(CdlPalette.getPaint(colorIndexForBlack));
 			mCdlButton.setOnTapUpCdlListener(onTapUpCdlListener);
 		}
 	}

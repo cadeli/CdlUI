@@ -417,9 +417,9 @@ public class CdlView extends View implements OnGestureListener {
 
 	public void addCdlBaseButton(CdlBaseButton cdlBaseButton, int screenId) {
 		CdlUtils.cdlLog(TAG, "addCdlBaseButton " + cdlBaseButton.getLabel()+" idbtn="+getCdlBaseButtons(screenId).size() + " scr=" + screenId);
-		int color = getCdlBaseButtons(screenId).size() % (CdlPalette.getLastColorIndex());// avoid first color index
-		cdlBaseButton.setBackgroundColor(color + 1);
 		cdlBaseButton.setId(getCdlBaseButtons(screenId).size());
+		int color = getCdlBaseButtons(screenId).size() % (CdlPalette.getLastColorIndex());// avoid first color index
+		cdlBaseButton.setBackgroundPaint(CdlPalette.getPaint(  color + 1));
 		switch (screenId) {
 		case 0:
 			cdlBaseButtons0.add(cdlBaseButton);
@@ -444,7 +444,7 @@ public class CdlView extends View implements OnGestureListener {
 
 	public void addCdlBaseButtonMenu(CdlBaseButton cdlBaseButton) {
 		int color = cdlBaseButtonsMenu.size() % (CdlPalette.getLastColorIndex());// avoid first color index
-		cdlBaseButton.setBackgroundColor(color + 1);
+		cdlBaseButton.setBackgroundPaint(CdlPalette.getPaint(color + 1));
 		cdlBaseButton.setId(cdlBaseButtonsMenu.size());
 		// cdlBaseButton.setScreenId(0);
 		cdlBaseButtonsMenu.add(cdlBaseButton);

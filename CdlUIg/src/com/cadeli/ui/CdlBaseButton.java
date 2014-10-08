@@ -78,7 +78,7 @@ public class CdlBaseButton {
 	protected int grid_height = 1;
 
 	protected int backgroundColor;
-	protected Paint backgroundPaint = null;
+	protected Paint backgroundPaint ;
 
 	private int hilightColor;
 
@@ -198,21 +198,6 @@ public class CdlBaseButton {
 			}
 		}
 	}
-
-	// protected void drawLabel(Canvas canvas) {
-	// if (isEnabled) {
-	// if (getLabel().contains(" ") && getSubLabel() == null) {
-	// drawCenterTextUp(canvas, textUp, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-	// drawCenterTextDn(canvas, textDown, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-	// } else {
-	// drawCenterText(canvas, getLabel(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
-	// if (getSubLabel() != null) {
-	// drawBottomText(canvas, getSubLabel(), CdlPalette.getTxtPaint((w - 2 * padding) / 2, (h - 2 * padding) / 2));
-	// }
-	// }
-	// }
-	// }
-	//
 
 	protected void drawLabel(Canvas canvas) {
 		if (isEnabled) {
@@ -525,10 +510,8 @@ public class CdlBaseButton {
 
 	public void setBackgroundPaint(Paint backgroundPaint) {
 		this.backgroundPaint = backgroundPaint;
-	}
-
-	public void setBackgroundColor(int backgroundColor) {
-		this.backgroundColor = backgroundColor;
+		this.backgroundColor = backgroundPaint.getColor();
+		CdlUtils.cdlLog(TAG, "setBackgroundPaint:" +getLabel()+" id="+getId()+ " c="+ backgroundColor);
 	}
 
 	public int getBackgroundColor() {
