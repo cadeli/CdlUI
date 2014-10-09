@@ -143,9 +143,9 @@ public class CdlPalette {
 		}
 	}
 
-	public static Paint getTxtPaint(int len, int size) {
-		return getTxtPaint(len, size, size);
-	}
+//	public static Paint getTxtPaint(int len, int size) {
+//		return getTxtPaint(len, size, size);
+//	}
 
 	public static Paint getTxtPaint(int len, int w, int h) {
 		if (txtPaint == null) {
@@ -160,7 +160,7 @@ public class CdlPalette {
 			size = (int) (float) (h / 2.5f);
 		}
 
-		if (size > 30) {
+		if (size > 28) {
 			if (typefaceLight != null) {
 				txtPaint.setTypeface(typefaceLight);
 			}

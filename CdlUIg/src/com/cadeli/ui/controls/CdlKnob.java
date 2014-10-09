@@ -61,10 +61,10 @@ public class CdlKnob extends CdlBaseButton {
 			canvas.drawArc(oval2, minAngle, alpha, false, CdlPalette.getKnobPaintLarge());
 			
 			if (isEnable()) {
-				drawCenterText(canvas, text, CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+				drawCenterText(canvas, text, CdlPalette.getTxtPaint(text.length(),w - 2 * padding, h - 2 * padding));
 			}
 			if (getLabel()!=null) {
-				drawBottomText(canvas, getLabel(), CdlPalette.getTxtPaint(w/2 - 2 * padding, h/2 - 2 * padding));
+				drawBottomText(canvas, getLabel(), CdlPalette.getTxtPaint(getLabel().length(),w/2 - 2 * padding, h/2 - 2 * padding));
 			}
 		}
 	}

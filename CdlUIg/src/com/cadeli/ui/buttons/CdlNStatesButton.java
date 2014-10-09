@@ -82,11 +82,11 @@ public class CdlNStatesButton extends CdlBaseButton {
 
 	private void drawWithArrowBtn(Canvas canvas) {
 		rectf.set(getLeft(), getTop(), getLeft() + w, getTop() + h);
-		drawCenterTextInrectCase(canvas, "" + (state + 1) + "/" + (stateValues.size()) + " - " + stateValues.get(state).toString(), CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+		drawCenterTextInrectCase(canvas, "" + (state + 1) + "/" + (stateValues.size()) + " - " + stateValues.get(state).toString(), CdlPalette.getTxtPaint(5,w - 2 * padding, h - 2 * padding));
 		rectf.set(getLeft(), getTop(), getLeft() + w / 5, getTop() + h);
-		drawCenterTextInrectCase(canvas, "<", CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+		drawCenterTextInrectCase(canvas, "<", CdlPalette.getTxtPaint(1,w - 2 * padding, h - 2 * padding));
 		rectf.set(getRight() - w / 5, getTop(), getRight(), getTop() + h);
-		drawCenterTextInrectCase(canvas, ">", CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding));
+		drawCenterTextInrectCase(canvas, ">", CdlPalette.getTxtPaint(1,w - 2 * padding, h - 2 * padding));
 	}
 
 	private void drawList(Canvas canvas) {
@@ -148,8 +148,8 @@ public class CdlNStatesButton extends CdlBaseButton {
 				canvas.drawRect(rectf, CdlPalette.getHilightPaint());
 				CdlPalette.getHilightPaint().setColor(CdlPalette.getDefaultHilightColor()); //TODO
 			} 
-			String txt = schrinkText(CdlPalette.getTxtPaint(w_case, bottom - top), bounds, (int) rectf.width(), stateValues.get(i).toString());
-			drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(w_case, bottom - top));
+			String txt = schrinkText(CdlPalette.getTxtPaint(4,w_case, bottom - top), bounds, (int) rectf.width(), stateValues.get(i).toString());
+			drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(txt.length(),w_case, bottom - top));
 		}
 	}
 

@@ -201,9 +201,9 @@ public class CdlBaseButton {
 
 	protected void drawLabel(Canvas canvas) {
 		if (isEnabled) {
-			Paint paint = CdlPalette.getTxtPaint(w - 2 * padding, h - 2 * padding);
+			Paint paint = CdlPalette.getTxtPaint(getLabel().length(),w - 2 * padding, h - 2 * padding);
 			if (fontSizeType == FONT_SMALL_SIZE) {
-				paint = CdlPalette.getTxtPaint(w * 2 / 3 - 2 * padding, h / 2 - 2 * padding);
+				paint = CdlPalette.getTxtPaint(getLabel().length(),w * 2 / 3 - 2 * padding, h / 2 - 2 * padding);
 			}
 			drawLabel(canvas, paint);
 		}

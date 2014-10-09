@@ -80,8 +80,8 @@ public class CdlMessageView extends CdlView {
 			return;
 		// if (progressVal>=1) return;
 		String progressValStr = "" + progressVal + " " + "%";
-		Paint txtPaintValue = CdlPalette.getTxtPaint(progressValStr.length(),  getWidth() / 6);
-		Paint txtPaintTitle = CdlPalette.getTxtPaint(progressValStr.length(), getWidth() / 6);
+		Paint txtPaintValue = CdlPalette.getTxtPaint(progressValStr.length(),  getWidth()/4 ,getHeight()/4);
+		Paint txtPaintTitle = CdlPalette.getTxtPaint(progressValStr.length(), getWidth()/4 ,getHeight()/4);
 		txtPaintValue.getTextBounds(progressValStr, 0, progressValStr.length(), bounds);
 		int x = (int) (getWidth() / 2 - bounds.centerX());
 		int y = (int) ((getHeight() / 2) - bounds.centerY());
@@ -104,6 +104,7 @@ public class CdlMessageView extends CdlView {
 		// h_start =(int) rectf.bottom;
 		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_start + urect.height() / 2);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(1, x, h_start, (int) rectf.width(), (int) rectf.height()));
+		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(1, x, h_start, (int) rectf.width(), (int) rectf.height()));
 		drawCenterTextInrectCase(canvas, progressMessage, txtPaintValue);
 	}
 
@@ -114,7 +115,7 @@ public class CdlMessageView extends CdlView {
 			if (messageType == CdlMessageView.MESSAGETYPE_WARNING) {
 				drawMessage(canvas, messageString, CdlPalette.getHilightPaint());
 			} else {
-				drawMessage(canvas, messageString, CdlPalette.getTxtPaint(getWidth() / 8, getHeight() / 8));
+				drawMessage(canvas, messageString, CdlPalette.getTxtPaint(messageString.length(),getWidth() / 8, getHeight() / 8));
 			}
 		}
 	}
