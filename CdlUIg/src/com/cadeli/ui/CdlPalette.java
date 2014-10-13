@@ -85,7 +85,7 @@ public class CdlPalette {
 			int index = nb % len;
 			p =  colorList.get(index);
 			int color = p.getColor();
-			CdlUtils.cdlLog(TAG, "Returncolor for "+nb + "="+ index+ " c="+ color);
+			//CdlUtils.cdlLog(TAG, "Returncolor for "+nb + "="+ index+ " c="+ color);
 		}	
 		return p;
 	}

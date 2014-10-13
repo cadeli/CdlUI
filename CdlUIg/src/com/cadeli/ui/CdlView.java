@@ -49,6 +49,9 @@ public class CdlView extends View implements OnGestureListener {
 	protected List<CdlBaseButton> cdlBaseButtons3 = new ArrayList<CdlBaseButton>();
 	protected List<CdlBaseButton> cdlBaseButtons4 = new ArrayList<CdlBaseButton>();
 	protected List<CdlBaseButton> cdlBaseButtons5 = new ArrayList<CdlBaseButton>();
+	protected List<CdlBaseButton> cdlBaseButtons6 = new ArrayList<CdlBaseButton>();
+	protected List<CdlBaseButton> cdlBaseButtons7 = new ArrayList<CdlBaseButton>();
+	protected List<CdlBaseButton> cdlBaseButtons8 = new ArrayList<CdlBaseButton>();
 	protected List<CdlBaseButton> cdlBaseButtonsMenu = new ArrayList<CdlBaseButton>();
 	private int cdlLayoutType = CDL_LAYOUT_GRID; // default val
 	private int grid_nbCols = 3; // defaultval
@@ -439,6 +442,15 @@ public class CdlView extends View implements OnGestureListener {
 		case 5:
 			cdlBaseButtons5.add(cdlBaseButton);
 			break;
+		case 6:
+			cdlBaseButtons6.add(cdlBaseButton);
+			break;
+		case 7:
+			cdlBaseButtons7.add(cdlBaseButton);
+			break;
+		case 8:
+			cdlBaseButtons8.add(cdlBaseButton);
+			break;
 		}
 	}
 
@@ -663,6 +675,12 @@ public class CdlView extends View implements OnGestureListener {
 			return cdlBaseButtons4.get(id);
 		case 5:
 			return cdlBaseButtons5.get(id);
+		case 6:
+			return cdlBaseButtons6.get(id);
+		case 7:
+			return cdlBaseButtons7.get(id);
+		case 8:
+			return cdlBaseButtons8.get(id);
 		}
 		return cdlBaseButtons0.get(id);
 	}
@@ -698,6 +716,12 @@ public class CdlView extends View implements OnGestureListener {
 			return cdlBaseButtons4;
 		case 5:
 			return cdlBaseButtons5;
+		case 6:
+			return cdlBaseButtons6;
+		case 7:
+			return cdlBaseButtons7;
+		case 8:
+			return cdlBaseButtons8;
 		}
 		return cdlBaseButtons0;
 	}

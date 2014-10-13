@@ -75,38 +75,41 @@ public class CdlMessageView extends CdlView {
 		drawProgress(canvas);
 	}
 
-	protected void drawProgress(Canvas canvas) {
+	protected void drawProgress(Canvas canvas) { // TODO simplify
 		if (progressMessage.length() < 1)
 			return;
-		// if (progressVal>=1) return;
-		String progressValStr = "" + progressVal + " " + "%";
-		Paint txtPaintValue = CdlPalette.getTxtPaint(progressValStr.length(),  getWidth()/4 ,getHeight()/4);
-		Paint txtPaintTitle = CdlPalette.getTxtPaint(progressValStr.length(), getWidth()/4 ,getHeight()/4);
-		txtPaintValue.getTextBounds(progressValStr, 0, progressValStr.length(), bounds);
-		int x = (int) (getWidth() / 2 - bounds.centerX());
-		int y = (int) ((getHeight() / 2) - bounds.centerY());
-
 		int round_h = getWidth() / 100;
 		int round_w = getWidth() / 100;
-		int padding = round_h * 3;
-		int dx = (getWidth() / 2 - bounds.centerX());
-		int dy = (int) (getHeight() / 2 - bounds.centerY());
-		int pad = getWidth() / 4;
-		int h_start = bounds.top + dy - padding - bounds.height() / 3;
-		int h_end = bounds.bottom + dy + 2 * padding;
-		y += (h_end - h_start) / 4;
-		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_end);
-		urect.set(getLeft() + pad, h_start, getLeft() + pad + ((getRight() - pad) - (getLeft() + pad)) * progressVal / 100, h_end);
-		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getFlashPaint());
+		int pad = getWidth()/4;
+		Paint txtPaintTitle = CdlPalette.getTxtPaint(progressMessage.length(), getWidth()/6 ,getHeight());
+		txtPaintTitle.getTextBounds(progressMessage, 0, progressMessage.length(), bounds);
+		int padding = bounds.height()/2;
+	    int x1 = (int) (getWidth() / 4);
+	    int x2 = (int) (getRight() - getWidth()/4);
+		int y1 = (int) ((getHeight() / 2) - bounds.height());
+		int y2 = (int) (y1+bounds.height()+padding);
+		int y3 = (int) (y2+bounds.height());
+		
+		rectf.set(x1-padding,y1-padding,x2+padding,y3+2*padding);
+		canvas.drawRect(rectf,  CdlPalette.getFlashPaint());
+		
+		urect.set(x1, y2, x2, y3+padding);
+		canvas.drawRoundRect(urect, round_w, round_h, CdlPalette.getBlackPaint());
+		urect.set(x1, y2, x1+(x2-x1)* progressVal / 100, y3+padding);
 		canvas.drawRoundRect(urect, round_w, round_h, CdlPalette.getHilightPaint());
-		canvas.drawText(progressValStr, x, y, txtPaintTitle);
+		
+		rectf.set(x1,y1,x2,y2);
+		drawCenterTextInrectCase(canvas, progressMessage, txtPaintTitle);
+
+		String progressValStr = "" + progressVal + " " + "%";
+		rectf.set(x1,y2+padding,x2,y3);
+		drawCenterTextInrectCase(canvas, progressValStr, txtPaintTitle);
+		
+		rectf.set(x1-padding,y1-padding,x2+padding,y3+2*padding);
 		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getBorderPaint());
-		// h_start =(int) rectf.bottom;
-		rectf.set(getLeft() + pad, h_start, getRight() - pad, h_start + urect.height() / 2);
-		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(1, x, h_start, (int) rectf.width(), (int) rectf.height()));
-		canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getPaint(1, x, h_start, (int) rectf.width(), (int) rectf.height()));
-		drawCenterTextInrectCase(canvas, progressMessage, txtPaintValue);
+
 	}
+
 
 	protected void drawMessage(Canvas canvas) {
 		// CdlUtils.cdlLog(TAG, "message is: >" + messageString + "<");

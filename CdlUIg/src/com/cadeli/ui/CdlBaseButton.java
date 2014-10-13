@@ -78,7 +78,7 @@ public class CdlBaseButton {
 	protected int grid_height = 1;
 
 	protected int backgroundColor;
-	protected Paint backgroundPaint ;
+	protected Paint backgroundPaint;
 
 	private int hilightColor;
 
@@ -107,6 +107,8 @@ public class CdlBaseButton {
 	private boolean isFloatingPosition = false;
 	private int id;
 	private int utilpos;
+
+	private int screenId;
 
 	// private int screenId;
 
@@ -159,10 +161,10 @@ public class CdlBaseButton {
 			round_h = round * h2;
 		}
 		if (round_w > 10) {
-			round_w=10; // TODO
+			round_w = 10; // TODO
 		}
 		if (round_h > 10) {
-			round_h=10; //TODO 
+			round_h = 10; // TODO
 		}
 	}
 
@@ -186,13 +188,13 @@ public class CdlBaseButton {
 			if (flashing) {
 				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getFlashPaint());
 			} else {
-				if (backgroundPaint == null) {
-					canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getPaint(backgroundColor, getLeft(), getTop(), w, h));
-				} else {
+				// if (backgroundPaint == null) {
+				// canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getPaint(backgroundColor, getLeft(), getTop(), w, h));
+				// } else
+				{
 					canvas.drawRoundRect(rectf, rw, rh, backgroundPaint);
 				}
 			}
-
 			if (isBorder) {
 				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getBorderPaint());
 			}
@@ -201,9 +203,9 @@ public class CdlBaseButton {
 
 	protected void drawLabel(Canvas canvas) {
 		if (isEnabled) {
-			Paint paint = CdlPalette.getTxtPaint(getLabel().length(),w - 2 * padding, h - 2 * padding);
+			Paint paint = CdlPalette.getTxtPaint(getLabel().length(), w - 2 * padding, h - 2 * padding);
 			if (fontSizeType == FONT_SMALL_SIZE) {
-				paint = CdlPalette.getTxtPaint(getLabel().length(),w * 2 / 3 - 2 * padding, h / 2 - 2 * padding);
+				paint = CdlPalette.getTxtPaint(getLabel().length(), w * 2 / 3 - 2 * padding, h / 2 - 2 * padding);
 			}
 			drawLabel(canvas, paint);
 		}
@@ -266,8 +268,8 @@ public class CdlBaseButton {
 			return;
 		text = schrinkText(paint, bounds, getWidth(), text);
 		paint.getTextBounds(text, 0, text.length(), bounds);
-		rectf.top = rect.top + rect.height() / 2;
-		rectf.bottom = rect.bottom;
+		rectf.top = rect.top + rect.height() / 2 + padding;
+		rectf.bottom = rect.bottom - padding;
 		rectf.left = rect.left;
 		rectf.right = rect.right;
 
@@ -511,7 +513,7 @@ public class CdlBaseButton {
 	public void setBackgroundPaint(Paint backgroundPaint) {
 		this.backgroundPaint = backgroundPaint;
 		this.backgroundColor = backgroundPaint.getColor();
-		CdlUtils.cdlLog(TAG, "setBackgroundPaint:" +getLabel()+" id="+getId()+ " c="+ backgroundColor);
+		//CdlUtils.cdlLog(TAG, "setBackgroundPaint:" + getLabel() + " id=" + getId() + " c=" + backgroundColor);
 	}
 
 	public int getBackgroundColor() {
@@ -521,7 +523,7 @@ public class CdlBaseButton {
 	public void setHilightColor(int hilightColor) {
 		this.hilightColor = hilightColor;
 	}
-	
+
 	public int getHilightColor() {
 		return hilightColor;
 	}
@@ -553,15 +555,13 @@ public class CdlBaseButton {
 	public Paint getBackgroundPaint() {
 		return backgroundPaint;
 	}
-	
-	
 
-	// public int getScreenId() {
-	// return screenId;
-	// }
-	//
-	// public void setScreenId(int screenId) {
-	// this.screenId = screenId;
-	// }
+//	public int getScreenId() {
+//		return screenId;
+//	}
+//
+//	public void setScreenId(int screenId) {
+//		this.screenId = screenId;
+//	}
 
 }
