@@ -18,9 +18,13 @@ limitations under the License.
 
 package com.cadeli.ui;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 
 public class CdlUtils {
+	private static Rect bounds = new Rect();
 	
 	private static final boolean DEVMODE = false;  // ATT XmlUtils.DEVMODE CdmUtils.DEVMODE CdmDef.DEVMODE UiUtil.DEVMODE CdlUtils.DEVMODE
 
@@ -29,4 +33,13 @@ public class CdlUtils {
 			Log.v(TAG, msg);
 		}
 	}
+	
+	public static void drawCenterText(Canvas canvas, String text, Paint paint, Rect rect) {
+		paint.getTextBounds(text, 0, text.length(), bounds);
+		int x = (int) (rect.left + rect.width() / 2 - bounds.centerX());
+		int y = (int) (rect.top + rect.height() / 2 - bounds.centerY());
+		//Log.v(TAG," x="+x + " y="+y + " "+ text);
+		canvas.drawText(text, x,y, paint);
+	}
+
 }

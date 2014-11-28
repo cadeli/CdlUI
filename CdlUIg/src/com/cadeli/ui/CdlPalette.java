@@ -59,6 +59,8 @@ public class CdlPalette {
 	private static Paint tdPaint;
 
 	private static int backgroundColor = Color.rgb(0, 0, 0);
+
+	private static Paint dialogPanelPaint;
 	private Context context;
 
 	// protected static final int ACTIVETEXT_COLOR = 0xFFFFFFFF;
@@ -295,6 +297,18 @@ public class CdlPalette {
 		}
 		return faderPaintLarge;
 	}
+	
+	public static Paint getDialogPanelPaint() {
+		if (dialogPanelPaint == null) {
+			dialogPanelPaint = new Paint();
+			dialogPanelPaint.setStyle(Style.FILL);
+			dialogPanelPaint.setColor(Color.DKGRAY);
+			dialogPanelPaint.setAntiAlias(true);
+			dialogPanelPaint.setDither(true);
+			dialogPanelPaint.setAlpha(127);
+		}
+		return dialogPanelPaint;
+	}
 
 	public static void setHilightColor(int hilightColor) {
 		CdlPalette.hilightColor = hilightColor;
@@ -397,4 +411,6 @@ public class CdlPalette {
 	public static int getDefaultHilightColor() {
 		return hilightColor;
 	}
+
+
 }

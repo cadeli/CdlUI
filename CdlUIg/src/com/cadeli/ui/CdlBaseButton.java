@@ -63,12 +63,23 @@ public class CdlBaseButton {
 	public static final int UTILPOS_TOOLBAR_BOTOM_8 = 58;
 	public static final int UTILPOS_TOOLBAR_BOTOM_9 = 59;
 
+	public static final int UTILPOS_DIALOG_0 = 100;
+	public static final int UTILPOS_DIALOG_1 = 101;
+	public static final int UTILPOS_DIALOG_2 = 102;
+	public static final int UTILPOS_DIALOG_3 = 103;
+	public static final int UTILPOS_DIALOG_4 = 104;
+	public static final int UTILPOS_DIALOG_5 = 105;
+	public static final int UTILPOS_DIALOG_6 = 106;
+	public static final int UTILPOS_DIALOG_7 = 107;
+	public static final int UTILPOS_DIALOG_8 = 108;
+	public static final int UTILPOS_DIALOG_9 = 109;
+
 	private boolean visible = true;
 	private boolean enable = true;
 	private boolean hilight = false;
 
 	protected Rect rect = new Rect(100, 10, 200, 200);
-	protected Rect rect2 = new Rect(100, 10, 200, 200);
+	protected RectF rect2 = new RectF(100, 10, 200, 200);
 	protected static Rect bounds = new Rect();
 	protected static RectF rectf = new RectF();
 

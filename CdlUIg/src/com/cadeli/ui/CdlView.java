@@ -53,6 +53,7 @@ public class CdlView extends View implements OnGestureListener {
 	protected List<CdlBaseButton> cdlBaseButtons7 = new ArrayList<CdlBaseButton>();
 	protected List<CdlBaseButton> cdlBaseButtons8 = new ArrayList<CdlBaseButton>();
 	protected List<CdlBaseButton> cdlBaseButtonsMenu = new ArrayList<CdlBaseButton>();
+	protected List<CdlBaseButton> cdlBaseButtonsDialog = new ArrayList<CdlBaseButton>();
 	private int cdlLayoutType = CDL_LAYOUT_GRID; // default val
 	private int grid_nbCols = 3; // defaultval
 	private int padding = 2; // defaultval
@@ -92,6 +93,12 @@ public class CdlView extends View implements OnGestureListener {
 	private int currentScreenId = 0;
 
 	private boolean mustDrawMenu;
+	private boolean mustDrawDialog;
+
+	private float pad_w_dialog;
+	private float pad_h_dialog;
+
+	private static Rect rectDialog = new Rect();
 
 	public CdlView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -118,6 +125,8 @@ public class CdlView extends View implements OnGestureListener {
 		Typeface typefaceLight = Typeface.createFromAsset(context.getAssets(), fontFaceLightFile);
 		CdlPalette.setTypeFace(typeface);
 		CdlPalette.setTypeFaceLight(typefaceLight);
+		mustDrawMenu = false;
+		mustDrawDialog = false;
 	}
 
 	@Override
@@ -134,9 +143,19 @@ public class CdlView extends View implements OnGestureListener {
 		CdlUtils.cdlLog(TAG, " draw  getW=" + getWidth() + " layout=" + cdlLayoutType);
 		// super.onDraw(canvas);
 		majMenu();
+		majDialog();
 		if (sized == false && cdlLayoutType != CDL_LAYOUT_ABSOLUTE) {
 			size(screenId);
 		}
+		CdlUtils.cdlLog(TAG, " drawdialog = "+ mustDrawDialog);
+		if (mustDrawDialog) {
+			drawDialogPanel(canvas);
+			for (CdlBaseButton cdlBaseButton : cdlBaseButtonsDialog) {
+				cdlBaseButton.draw(canvas);
+			}
+			// return;
+		}
+
 		if (cdlLayoutType == CDL_LAYOUT_GRID || cdlLayoutType == CDL_LAYOUT_ABSOLUTE) {
 			for (CdlBaseButton cdlBaseButton : getCdlBaseButtons(screenId)) {
 				cdlBaseButton.draw(canvas);
@@ -163,6 +182,18 @@ public class CdlView extends View implements OnGestureListener {
 			drawScrollBar(canvas, sizeInWCase, screenId);
 		}
 	}
+
+	
+	protected void majDialog() {
+		for (CdlBaseButton cdlBaseButton : getCdlBaseButtonsDialog()) {
+			if (isMustDrawDialog()) {
+				cdlBaseButton.setVisible(true);
+			} else {
+				cdlBaseButton.setVisible(false);
+			}
+		}
+	}
+
 
 	protected void majMenu() {
 		CdlUtils.cdlLog(TAG, "majMenu ");
@@ -216,7 +247,7 @@ public class CdlView extends View implements OnGestureListener {
 		// CdlUtils.cdlLog(TAG, " drawbtn = " + cdlBaseButton.getLabel());
 		if (!cdlBaseButton.isFloatingPosition()) {
 			int sLeft = (int) (jPosBtn * w_btn - startXScroll);
-			cdlBaseButton.setSize(sLeft + padding, padding, w_btn * cdlBaseButton.getGrid_width() - padding, getHeight() - scrollBarHeight - 2*padding);
+			cdlBaseButton.setSize(sLeft + padding, padding, w_btn * cdlBaseButton.getGrid_width() - padding, getHeight() - scrollBarHeight - 2 * padding);
 		}
 		cdlBaseButton.draw(canvas);
 	}
@@ -246,7 +277,7 @@ public class CdlView extends View implements OnGestureListener {
 	public void size(int screenId) {
 		w = getWidth();
 		h = getHeight();
-		w_btn =( w - 2*padding) / grid_nbCols;
+		w_btn = (w - 2 * padding) / grid_nbCols;
 		if (cdlLayoutType == CDL_LAYOUT_GRID) {
 			size_gridMode(w, h, screenId);
 
@@ -255,70 +286,141 @@ public class CdlView extends View implements OnGestureListener {
 			size_flawMode(w, h, screenId);
 		}
 		size_menu(w, h);
+		size_dialog(w, h);
 		sized = true;
+	}
+
+	
+	public void drawDialogPanel(Canvas canvas) {
+		rectDialog.set((int)pad_w_dialog, (int)pad_h_dialog,(int)( getWidth() - pad_w_dialog),(int)( getHeight() - pad_h_dialog));
+		canvas.drawRect(rectDialog, CdlPalette.getDialogPanelPaint());
+		canvas.drawRect(rectDialog, CdlPalette.getBorderPaint());
+	}
+
+	private void size_dialog(int w, int h) {
+		pad_w_dialog = getWidth() / 6;
+		pad_h_dialog = getHeight() / 4;
+		float w_dialog = (getWidth() -pad_w_dialog*2)/2;
+		float nb = (getCdlBaseButtonsDialog().size()+1)/2;
+		float h_dialog =2* (getHeight() - pad_h_dialog*(nb))/nb;
+		float pad_y = h_dialog/6;
+		float pad_x = w_dialog/8;
+		float w1 =  pad_w_dialog+pad_x;
+		float w2 = getWidth()/2 +pad_x;
+		float y = pad_h_dialog+pad_y;
+		for (CdlBaseButton cdlBaseButton : cdlBaseButtonsDialog) {
+			cdlBaseButton.setRound(pad_y);
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_0) {
+				cdlBaseButton.setSize((int)w1,(int)(y+ 0 * h_dialog),(int)( w_dialog- 2*pad_x),(int)( h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_1) {
+				cdlBaseButton.setSize((int)w2,(int)(y+ 0 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_2) {
+				cdlBaseButton.setSize((int)w1,(int)(y+ 1 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_3) {
+				cdlBaseButton.setSize((int)w2,(int)(y+ 1 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_4) {
+				cdlBaseButton.setSize((int)w1,(int)(y+ 2 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_5) {
+				cdlBaseButton.setSize((int)w2,(int)(y+ 2 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_6) {
+				cdlBaseButton.setSize((int)w1,(int)(y+ 3 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_7) {
+				cdlBaseButton.setSize((int)w2,(int)(y+ 3 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_8) {
+				cdlBaseButton.setSize((int)w1,(int)(y+ 4 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+			if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_DIALOG_9) {
+				cdlBaseButton.setSize((int)w2,(int)(y+ 4 * h_dialog),(int)( w_dialog- 2*pad_x),(int) (h_dialog- 2*pad_y));
+			}
+		}
 	}
 
 	private void size_menu(int w, int h) {
 		int w_menu = getWidth() / 12;
 		int h_menu = getHeight() / 16;
 
-		int w_toolbar = getWidth() / 5;
+		int w_toolbar = getWidth() / 6;
 		int h_toolbar = getHeight() / 16;
+		int pad = getWidth() / (6 * 8);
 		for (CdlBaseButton cdlBaseButton : cdlBaseButtonsMenu) {
 			if (cdlBaseButton.isVisible()) {
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_CORNER) {
-					cdlBaseButton.setSize(0, 0, w_menu, h_menu / 1);
+					cdlBaseButton.setSize(0, 0, w_menu, h_menu);
+					cdlBaseButton.setBorder(true);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_BAR) {
+					cdlBaseButton.setBorder(true);
 					cdlBaseButton.setSize(w_menu, 0, getWidth() - w_menu, h_menu / 1);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_0) {
-					cdlBaseButton.setSize(0, (2 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 1 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_1) {
-					cdlBaseButton.setSize(0, (3 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 2 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_2) {
-					cdlBaseButton.setSize(0, (4 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 3 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_3) {
-					cdlBaseButton.setSize(0, (5 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 4 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_4) {
-					cdlBaseButton.setSize(0, (6 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 5 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_5) {
-					cdlBaseButton.setSize(0, (7 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 6 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_6) {
-					cdlBaseButton.setSize(0, (8 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 7 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_7) {
-					cdlBaseButton.setSize(0, (9 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 8 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_8) {
-					cdlBaseButton.setSize(0, (10 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 9 * h_menu, w_menu * 5, h_menu);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_MENU_POS_0_9) {
-					cdlBaseButton.setSize(0, (11 - 2) * h_menu + h_menu / 1, w_menu * 5, h_menu);
+					cdlBaseButton.setSize(0, 10 * h_menu, w_menu * 5, h_menu);
 				}
 
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_0) {
-					cdlBaseButton.setSize(w_toolbar * 0, getHeight() - h_toolbar, w_toolbar, h_toolbar);
+					cdlBaseButton.setBorder(false);
+					cdlBaseButton.setRound(h_toolbar / 8);
+					cdlBaseButton.setSize(w_toolbar * 0 + pad, getHeight() - h_toolbar, w_toolbar - pad, h_toolbar);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_1) {
-					cdlBaseButton.setSize(w_toolbar * 1, getHeight() - h_toolbar, w_toolbar, h_toolbar);
+					cdlBaseButton.setBorder(false);
+					cdlBaseButton.setRound(h_toolbar / 8);
+					cdlBaseButton.setSize(w_toolbar * 1 + pad, getHeight() - h_toolbar, w_toolbar - pad, h_toolbar);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_2) {
-					cdlBaseButton.setSize(w_toolbar * 2, getHeight() - h_toolbar, w_toolbar, h_toolbar);
+					cdlBaseButton.setBorder(false);
+					cdlBaseButton.setRound(h_toolbar / 8);
+					cdlBaseButton.setSize(w_toolbar * 2 + pad, getHeight() - h_toolbar, w_toolbar - pad, h_toolbar);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_3) {
-					cdlBaseButton.setSize(w_toolbar * 3, getHeight() - h_toolbar, w_toolbar, h_toolbar);
+					cdlBaseButton.setBorder(false);
+					cdlBaseButton.setRound(h_toolbar / 8);
+					cdlBaseButton.setSize(w_toolbar * 3 + pad, getHeight() - h_toolbar, w_toolbar - pad, h_toolbar);
 				}
 				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_4) {
-					cdlBaseButton.setSize(w_toolbar * 4, getHeight() - h_toolbar, w_toolbar, h_toolbar);
+					cdlBaseButton.setBorder(false);
+					cdlBaseButton.setRound(h_toolbar / 8);
+					cdlBaseButton.setSize(w_toolbar * 4 + pad, getHeight() - h_toolbar, w_toolbar - pad, h_toolbar);
 				}
-
+				if (cdlBaseButton.getUtilpos() == CdlBaseButton.UTILPOS_TOOLBAR_BOTOM_5) {
+					cdlBaseButton.setBorder(false);
+					cdlBaseButton.setRound(h_toolbar / 8);
+					cdlBaseButton.setSize(w_toolbar * 5 + pad, getHeight() - h_toolbar, w_toolbar - pad, h_toolbar);
+				}
 			}
 		}
 	}
@@ -419,10 +521,10 @@ public class CdlView extends View implements OnGestureListener {
 	}
 
 	public void addCdlBaseButton(CdlBaseButton cdlBaseButton, int screenId) {
-		CdlUtils.cdlLog(TAG, "addCdlBaseButton " + cdlBaseButton.getLabel()+" idbtn="+getCdlBaseButtons(screenId).size() + " scr=" + screenId);
+		CdlUtils.cdlLog(TAG, "addCdlBaseButton " + cdlBaseButton.getLabel() + " idbtn=" + getCdlBaseButtons(screenId).size() + " scr=" + screenId);
 		cdlBaseButton.setId(getCdlBaseButtons(screenId).size());
 		int color = getCdlBaseButtons(screenId).size() % (CdlPalette.getLastColorIndex());// avoid first color index
-		cdlBaseButton.setBackgroundPaint(CdlPalette.getPaint(  color + 1));
+		cdlBaseButton.setBackgroundPaint(CdlPalette.getPaint(color + 1));
 		switch (screenId) {
 		case 0:
 			cdlBaseButtons0.add(cdlBaseButton);
@@ -463,6 +565,14 @@ public class CdlView extends View implements OnGestureListener {
 		CdlUtils.cdlLog(TAG, "addCdlBaseButtonMenu " + cdlBaseButton.getLabel());
 	}
 
+	public void addCdlBaseButtonDialog(CdlBaseButton cdlBaseButton) {
+		int color = cdlBaseButtonsMenu.size() % (CdlPalette.getLastColorIndex());// avoid first color index
+		cdlBaseButton.setBackgroundPaint(CdlPalette.getPaint(color + 1));
+		cdlBaseButton.setId(cdlBaseButtonsDialog.size());
+		cdlBaseButtonsDialog.add(cdlBaseButton);
+		CdlUtils.cdlLog(TAG, "addCdlBaseButtonDialog " + cdlBaseButton.getLabel());
+	}
+
 	public void setButtonsEnabled(boolean b, int screenId) {
 		for (CdlBaseButton cdlBaseButton : getCdlBaseButtons(screenId)) {
 			cdlBaseButton.setEnabled(b);
@@ -487,6 +597,9 @@ public class CdlView extends View implements OnGestureListener {
 
 	@Override
 	public void onLongPress(MotionEvent e) {
+		if (mustDrawDialog) {
+			return;
+		}
 		if (cdlLayoutType == CDL_LAYOUT_ABSOLUTE || cdlLayoutType == CDL_LAYOUT_GRID) {
 			for (CdlBaseButton cdlBaseButton : getCdlBaseButtons(currentScreenId)) {
 				if (cdlBaseButton.isXYInControl(e.getX(), e.getY())) {
@@ -524,6 +637,10 @@ public class CdlView extends View implements OnGestureListener {
 	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 		// CdlUtils.cdlLog(TAG, "onScroll dx:" + distanceX);
+		if (mustDrawDialog) {
+			return false;
+		}
+
 		if (cdlLayoutType == CDL_LAYOUT_FLOW) {
 			sizeInWCase = computeSizeInWCase();
 			if (sizeInWCase <= w) {
@@ -564,7 +681,23 @@ public class CdlView extends View implements OnGestureListener {
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
 		CdlUtils.cdlLog(TAG, "onSingleTapUp: screenId=" + currentScreenId);
-		clickOnMenu(e);
+		if (mustDrawDialog) {
+			for (CdlBaseButton cdlBaseButton : getCdlBaseButtonsDialog()) {
+				if (cdlBaseButton.isXYInControl(e.getX(), e.getY())) {
+					tapUpOnCdlBaseButton(cdlBaseButton, e, false);
+				}
+			}
+			setMustDrawDialog ( false);
+			return false;
+		}
+
+		if (clickOnMenu(e))
+			return false;
+		if (mustDrawMenu) {
+			setMustDrawMenu(false);
+			return false;
+		}
+
 		if (cdlLayoutType == CDL_LAYOUT_ABSOLUTE || cdlLayoutType == CDL_LAYOUT_GRID) {
 			for (CdlBaseButton cdlBaseButton : getCdlBaseButtons(currentScreenId)) {
 				if (cdlBaseButton.isXYInControl(e.getX(), e.getY())) {
@@ -594,6 +727,17 @@ public class CdlView extends View implements OnGestureListener {
 		return this.mustDrawMenu;
 	}
 
+	public boolean isMustDrawDialog() {
+		return mustDrawDialog;
+	}
+
+	public void setMustDrawDialog(boolean mustDrawDialog) {
+		this.mustDrawDialog = mustDrawDialog;
+		if (this.mustDrawDialog) {
+			this.mustDrawMenu=false;
+		}
+	}
+
 	private boolean clickOnMenu(MotionEvent e) {
 		if (cdlBaseButtonsMenu.size() == 0)
 			return false;
@@ -611,8 +755,8 @@ public class CdlView extends View implements OnGestureListener {
 		}
 		if (menuBarLine.isVisible()) {
 			if (menuBarLine.getRect().contains((int) e.getX(), (int) e.getY())) {
-				setMustDrawMenu(!isMustDrawMenu());
-				CdlUtils.cdlLog(TAG, "click on selector mustDraw=" + isMustDrawMenu());
+				setMustDrawDialog(!isMustDrawDialog());
+				CdlUtils.cdlLog(TAG, "click on selector isMustDrawDialog=" + isMustDrawDialog());
 				invalidate();
 				ret = true;
 			}
@@ -622,6 +766,7 @@ public class CdlView extends View implements OnGestureListener {
 				if (cdlBaseButton.isXYInControl(e.getX(), e.getY())) {
 					CdlUtils.cdlLog(TAG, "clickOnMenu click= " + cdlBaseButton.getLabel());
 					tapUpOnCdlBaseButton(cdlBaseButton, e, true);
+					ret = true;
 				}
 			}
 		}
@@ -661,7 +806,7 @@ public class CdlView extends View implements OnGestureListener {
 	}
 
 	public CdlBaseButton getButtonFromId(int id, int screenId) {
-		//CdlUtils.cdlLog(TAG, "getButtonFromId screen="+screenId + " btnid="+ id);
+		// CdlUtils.cdlLog(TAG, "getButtonFromId screen="+screenId + " btnid="+ id);
 		switch (screenId) {
 		case 0:
 			return cdlBaseButtons0.get(id);
@@ -701,8 +846,12 @@ public class CdlView extends View implements OnGestureListener {
 		return cdlBaseButtonsMenu;
 	}
 
+	public List<CdlBaseButton> getCdlBaseButtonsDialog() {
+		return cdlBaseButtonsDialog;
+	}
+
 	public List<CdlBaseButton> getCdlBaseButtons(int screenId) {
-		//CdlUtils.cdlLog(TAG, "getCdlBaseButtons screen="+ screenId);
+		// CdlUtils.cdlLog(TAG, "getCdlBaseButtons screen="+ screenId);
 		switch (screenId) {
 		case 0:
 			return cdlBaseButtons0;
@@ -734,18 +883,18 @@ public class CdlView extends View implements OnGestureListener {
 		this.startXScroll = startXScroll;
 	}
 
-	 public int getCurrentScreenId() {
-	 return currentScreenId;
-	 }
-	
+	public int getCurrentScreenId() {
+		return currentScreenId;
+	}
+
 	public void setCurrentScreenId(int currentScreenId) {
 		CdlUtils.cdlLog(TAG, "setCurrentScreenId: " + currentScreenId);
 		this.currentScreenId = currentScreenId;
 	}
-	
+
 	public void cleanFlash() {
 		flashing = false;
-		for (CdlBaseButton cdlBaseButton: cdlBaseButtonsMenu ) {
+		for (CdlBaseButton cdlBaseButton : cdlBaseButtonsMenu) {
 			cdlBaseButton.setFlashing(false);
 		}
 	}
