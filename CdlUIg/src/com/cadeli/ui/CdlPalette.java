@@ -155,6 +155,14 @@ public class CdlPalette {
 			txtPaint.setAntiAlias(true);
 			txtPaint.setDither(true);
 		}
+		int size = getTxtSize(len, w, h);
+		txtPaint.setTextSize(size);
+
+		txtPaint.setColor(txtPaintColor);
+		return txtPaint;
+	}
+
+	public static int getTxtSize(int len, int w, int h) {
 		int size = 22;
 		if (w < h) {
 			size = (int) (float) (w / 2.5f);
@@ -174,10 +182,7 @@ public class CdlPalette {
 		if (len < 4) {
 			size *= 1.1f;
 		}
-		txtPaint.setTextSize(size);
-
-		txtPaint.setColor(txtPaintColor);
-		return txtPaint;
+		return size;
 	}
 
 	public static Paint getTxtInversePaint(int size) {

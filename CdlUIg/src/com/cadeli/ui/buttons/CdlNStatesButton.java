@@ -88,6 +88,20 @@ public class CdlNStatesButton extends CdlBaseButton {
 		rectf.set(getRight() - w / 5, getTop(), getRight(), getTop() + h);
 		drawCenterTextInrectCase(canvas, ">", CdlPalette.getTxtPaint(1,w - 2 * padding, h - 2 * padding));
 	}
+	
+	private void drawVScrollbar(Canvas canvas) {
+		int sLeft = rect.right - 8 - padding - (int) round_w / 2;
+		int sRight = rect.right - padding - (int) round_w / 2;
+		int sTop = rect.top + padding + (int) round_w / 2;
+		int sBottom = rect.bottom - padding - (int) round_w / 2;
+		int sHeigth = sBottom - sTop;
+		rectf.set(sLeft, sTop, sRight, sBottom);
+		canvas.drawRect(rectf, CdlPalette.getFlashPaint());
+		sTop = (int) ((startVisuLig * sHeigth) / stateValues.size()) + sTop;
+		sBottom = (int) (( getNbLig() * sHeigth) / stateValues.size()+sTop);
+		rectf.set(sLeft, sTop, sRight,  sBottom);
+		canvas.drawRect(rectf, CdlPalette.getHilightPaint());
+	}
 
 	private void drawList(Canvas canvas) {
 		int h_case = (h - (2 * padding + (int) round_w / 2)) / getNbLig();
@@ -109,7 +123,7 @@ public class CdlNStatesButton extends CdlBaseButton {
 						}
 					}
 					String txt = schrinkText(CdlPalette.getTxtPaint(stateValues.get(i).toString().length(),w - 2 * padding, h_case +2*padding), bounds, getWidth(), stateValues.get(i).toString());
-					drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(txt.length(),w - 2 * padding, h_case+2*padding ));
+					drawCenterTextInrectCase(canvas, txt, CdlPalette.getTxtPaint(txt.length(),w - 2 * padding, h_case+2*padding ));					
 				}
 			}
 		}
@@ -118,20 +132,6 @@ public class CdlNStatesButton extends CdlBaseButton {
 		} else {
 			startVisuLig = 0;
 		}
-	}
-
-	private void drawVScrollbar(Canvas canvas) {
-		int sLeft = rect.right - 8 - padding - (int) round_w / 2;
-		int sRight = rect.right - padding - (int) round_w / 2;
-		int sTop = rect.top + padding + (int) round_w / 2;
-		int sBottom = rect.bottom - padding - (int) round_w / 2;
-		int sHeigth = sBottom - sTop;
-		rectf.set(sLeft, sTop, sRight, sBottom);
-		canvas.drawRect(rectf, CdlPalette.getFlashPaint());
-		sTop = (int) ((startVisuLig * sHeigth) / stateValues.size()) + sTop;
-		sBottom = (int) (( getNbLig() * sHeigth) / stateValues.size()+sTop);
-		rectf.set(sLeft, sTop, sRight,  sBottom);
-		canvas.drawRect(rectf, CdlPalette.getHilightPaint());
 	}
 
 	private void drawExpanded(Canvas canvas) {

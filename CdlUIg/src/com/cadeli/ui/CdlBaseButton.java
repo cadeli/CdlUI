@@ -113,7 +113,7 @@ public class CdlBaseButton {
 	protected float round_h;
 	protected float round_w;
 
-	private boolean isBorder = true;
+	protected boolean isBorder = true;
 	private boolean isEnabled = true;
 	private boolean isFloatingPosition = false;
 	private int id;

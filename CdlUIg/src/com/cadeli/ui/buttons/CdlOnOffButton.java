@@ -66,6 +66,9 @@ public class CdlOnOffButton extends CdlBaseButton {
 				canvas.drawRoundRect(rectf, round_w, round_h, CdlPalette.getHilightPaint());
 				CdlPalette.getHilightPaint().setColor(CdlPalette.getDefaultHilightColor());
 			}
+			if (isBorder) {
+				canvas.drawRoundRect(rectf, rw, rh, CdlPalette.getBorderPaint());
+			}
 			drawLabel(canvas);
 		}
 	}
