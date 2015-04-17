@@ -28,7 +28,7 @@ import com.cadeli.ui.interfaces.OnLongPressCdlListener;
 import com.cadeli.ui.interfaces.OnScrollCdlListener;
 import com.cadeli.ui.interfaces.OnTapUpCdlListener;
 
-public class CdlBaseButton {
+public abstract class CdlBaseButton {
 	private static final String TAG = "CdlBaseButton";
 
 	public static final int DISPLAYMODE_COMPACT = 0;
@@ -235,6 +235,15 @@ public class CdlBaseButton {
 			}
 		}
 	}
+	
+	public static void drawCenterText(Canvas canvas, Rect rect, String text, Paint paint) {
+		paint.getTextBounds(text, 0, text.length(), bounds);
+		int x = (int) (rect.left + rect.width() / 2 - bounds.centerX());
+		int y = (int) (rect.top + rect.height() / 2 - bounds.centerY());
+		// XmlUtil.myLog(TAG," x="+x + " y="+y);
+		canvas.drawText(text, x, y, paint);
+	}
+
 
 	protected void drawCenterText(Canvas canvas, String text, Paint paint) {
 		if (text == null)
